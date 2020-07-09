@@ -2,7 +2,7 @@
 
 
 [puppetmaster]
-centos7.0-master
+centos7.0-master ansible_host=192.168.25.197
 
 [agent]
 freebsd-master

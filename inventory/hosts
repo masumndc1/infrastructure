@@ -1,0 +1,14 @@
+[all]
+
+
+[puppetmaster]
+centos7.0-master
+
+[agent]
+freebsd-master
+freebsd-devel
+
+[compute]
+ubuntu16.04-cmp1-prod 
+ubuntu16.04-cmp2-devel
+

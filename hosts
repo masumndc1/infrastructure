@@ -1,0 +1,3 @@
+# add following entries in your /etc/hosts file
+#
+centos7.0-master 192.168.25.197

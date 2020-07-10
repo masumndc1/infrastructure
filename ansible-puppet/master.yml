@@ -1,0 +1,4 @@
+---
+- hosts: centos7.0-master
+  gather_facts: yes
+  become: yes

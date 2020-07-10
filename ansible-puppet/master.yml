@@ -1,4 +1,54 @@
 ---
 - hosts: centos7.0-master
-  gather_facts: yes
+  user: masum
   become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: Disable SElinux
+    selinux:
+      state: disabled
+
+  - name: Install puppet repository rpm
+    yum: 
+      name: https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm
+      state: present
+    when: ansible_distribution == "CentOS"
+
+  - name: Install required packages
+    yum:
+      name: ['ntp',
+             'ntpdate',
+	     'vim',
+	     'net-tools',
+	     'puppetserver'
+            ]
+      state: latest	    
+    when: ansible_distribution == "CentOS"
+
+  - name: Enabling firewall ports for puppetmaster
+    firewalld:
+      port: 8140/tcp
+      permanent: yes
+      state: enabled
+
+  - name: Allocating 1gb ram for puppet server
+    lineinfile:
+      path: /etc/sysconfig/puppetserver
+      regexp: 'JAVA_ARGS="-Xms2g -Xmx2g -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"'
+      line: JAVA_ARGS="-Xms1g -Xmx1g -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"
+
+  - name: Enable ntpdate service but dont start
+    service: 
+      name: ntpdate
+      enabled: yes
+
+  - name: Enable ntp and puppetserver service
+    service: 
+      name: "{{ item }}"
+      enabled: yes
+      state: started
+    with_items:
+      - ntpd
+      - puppetserver
+

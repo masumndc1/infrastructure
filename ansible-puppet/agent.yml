@@ -1,0 +1,26 @@
+# puppet agent configuraiton on freebsd
+# here we will install puppet agent 5 as our
+# server running on centos7.0 is version of 5
+- hosts: agent
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: Install puppet agent
+    pkgng: 
+      name: puppet5
+      state: present
+    when: ansible_distribution == "FreeBSD"
+    tags: freebsd
+    
+  - name: Enabling entry in /etc/rc.conf
+    lineinfile:
+      path: /etc/rc.conf
+      line: puppet_enable="YES"
+    tags: freebsd
+
+  - name: Enable puppet agent service
+    service:
+      name: puppet
+      state: started
+    tags: freebsd

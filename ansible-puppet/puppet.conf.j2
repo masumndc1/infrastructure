@@ -7,7 +7,7 @@
     statedir = /var/puppet/state
     rundir = /var/run/puppet
     libdir = /var/puppet/lib
-    environmentpath = /usr/local/etc/puppet/environments
+    environmentpath = /usr/local/etc/puppet/environments/{{ environment }}
     diff_args = -u
     route_file = /usr/local/etc/puppet/routes.yaml
     node_terminus = rest
@@ -22,7 +22,7 @@
     filetimeout = 15
     environment_timeout = 0
     preview_outputdir = /var/puppet/preview
-    certname = 121amd64-quarterly-job-04.nyi.freebsd.org
+    certname = {{ certname }}
     csr_attributes = /usr/local/etc/puppet/csr_attributes.yaml
     certdir = /var/puppet/ssl/certs
     publickeydir = /var/puppet/ssl/public_keys
@@ -30,10 +30,10 @@
     privatekeydir = /var/puppet/ssl/private_keys
     privatedir = /var/puppet/ssl/private
     passfile = /var/puppet/ssl/private/password
-    hostcsr = /var/puppet/ssl/csr_121amd64-quarterly-job-04.nyi.freebsd.org.pem
-    hostcert = /var/puppet/ssl/certs/121amd64-quarterly-job-04.nyi.freebsd.org.pem
-    hostprivkey = /var/puppet/ssl/private_keys/121amd64-quarterly-job-04.nyi.freebsd.org.pem
-    hostpubkey = /var/puppet/ssl/public_keys/121amd64-quarterly-job-04.nyi.freebsd.org.pem
+    hostcsr = /var/puppet/ssl/{{ certname }}.pem
+    hostcert = /var/puppet/ssl/certs/{{ certname }}.pem
+    hostprivkey = /var/puppet/ssl/private_keys/{{ certname }}.pem
+    hostpubkey = /var/puppet/ssl/public_keys/{{ certname }}.pem
     localcacert = /var/puppet/ssl/certs/ca.pem
     hostcrl = /var/puppet/ssl/crl.pem
     certificate_revocation = chain

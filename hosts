@@ -1,3 +1,5 @@
 # add following entries in your /etc/hosts file
 #
 centos7.0-master 192.168.25.197
+freebsd-prod	 192.168.25.212
+freebsd-devel	 192.168.25.199

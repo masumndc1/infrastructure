@@ -1,10 +1,16 @@
+[all:children]
+puppetmaster
+agent
+compute
+
 [all:vars]
+ansible_user=masum
 
 [puppetmaster]
 centos7.0-master
 
 [agent]
-freebsd-master
+freebsd-prod
 freebsd-devel
 
 [compute]

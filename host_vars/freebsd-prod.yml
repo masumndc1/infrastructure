@@ -1,0 +1,4 @@
+---
+hostname: prod.masum.local
+certname: prod.masum.local
+environment: production

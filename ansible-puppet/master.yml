@@ -17,11 +17,12 @@
 
   - name: Install required packages
     yum:
-      name: ['ntp',
-             'ntpdate',
-	     'vim',
-	     'net-tools',
-	     'puppetserver'
+      name: [ 'vim',
+	      'tree',
+	      'net-tools',
+	      'ntp',
+	      'ntpdate',
+	      'puppetserver'
             ]
       state: latest	    
     when: ansible_distribution == "CentOS"
@@ -38,6 +39,11 @@
       regexp: 'JAVA_ARGS="-Xms2g -Xmx2g -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"'
       line: JAVA_ARGS="-Xms1g -Xmx1g -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"
 
+  - name: Settings for puppetserver configuration file
+    template:
+      source: puppet-server.conf.j2
+      dest: /etc/puppetlabs/puppet/puppet.conf
+
   - name: Enable ntpdate service but dont start
     service: 
       name: ntpdate
@@ -52,30 +58,3 @@
       - ntpd
       - puppetserver
 
-
-# puppet agent configuraiton on freebsd
-# here we will install puppet agent 5 as our
-# server running on centos7.0 is version of 5
-- hosts: agent
-  become: yes
-  gather_facts: yes
-
-  tasks:
-  - name: Install puppet agent
-    pkgng: 
-      name: puppet5
-      state: present
-    when: ansible_distribution == "FreeBSD"
-    tags: freebsd
-    
-  - name: Enabling entry in /etc/rc.conf
-    lineinfile:
-      path: /etc/rc.conf
-      line: puppet_enable="YES"
-    tags: freebsd
-
-  - name: Enable puppet agent service
-    service:
-      name: puppet
-      state: started
-    tags: freebsd

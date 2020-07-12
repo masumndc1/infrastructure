@@ -19,7 +19,7 @@
     
   - name: Creating puppet.conf file for agent
     template:
-      src: puppet.conf.j2
+      src: puppet-agent.conf.j2
       dest: /usr/local/etc/puppet/puppet.conf
       mode: u=rw,g=r,o=r
 

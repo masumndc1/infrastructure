@@ -41,7 +41,7 @@
 
   - name: Settings for puppetserver configuration file
     template:
-      source: puppet-server.conf.j2
+      src: puppet-server.conf.j2
       dest: /etc/puppetlabs/puppet/puppet.conf
 
   - name: Enable ntpdate service but dont start

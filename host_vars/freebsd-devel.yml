@@ -1,4 +1,7 @@
 ---
-hostname: devel.masum.local
-certname: devel.masum.local
-environment: devel
+hostname: 
+  - devel.masum.local
+certname:
+  - devel.masum.local
+environment: 
+  - devel

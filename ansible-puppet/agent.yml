@@ -11,16 +11,19 @@
       name: puppet5
       state: present
     when: ansible_distribution == "FreeBSD"
-    tags: freebsd
     
   - name: Enabling entry in /etc/rc.conf
     lineinfile:
       path: /etc/rc.conf
       line: puppet_enable="YES"
-    tags: freebsd
+    
+  - name: Creating puppet.conf file for agent
+    template:
+      src: puppet.conf.j2
+      dest: /usr/local/etc/puppet/puppet.conf
+      mode: u=rw,g=r,o=r
 
   - name: Enable puppet agent service
     service:
       name: puppet
       state: started
-    tags: freebsd

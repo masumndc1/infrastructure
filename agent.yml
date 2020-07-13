@@ -19,9 +19,10 @@
     
   - name: Creating puppet.conf file for agent
     template:
-      src: puppet-agent.conf.j2
+      src: template/puppet-agent.conf.j2
       dest: /usr/local/etc/puppet/puppet.conf
       mode: u=rw,g=r,o=r
+    tags: temp
 
   - name: Enable puppet agent service
     service:

@@ -1,0 +1,3 @@
+---
+- import_playbook: master.yml
+- import_playbook: agent.yml

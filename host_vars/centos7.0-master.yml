@@ -1,0 +1,20 @@
+---
+rpm_package:
+  - epel-release
+  - git
+  - ansible
+  - vim
+  - wget
+  - iftop
+  - htop
+  - python-pip
+
+salt_package:
+  - salt-master
+  - salt-ssh
+  - salt-syndic
+  - salt-cloud
+  - salt-api
+
+salt_minion_package:
+  - salt-minion

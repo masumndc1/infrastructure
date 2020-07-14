@@ -18,3 +18,11 @@ salt_package:
 
 salt_minion_package:
   - salt-minion
+
+salt_port:
+  - 4505/tcp
+  - 4506/tcp
+
+salt_repo_url: https://repo.saltstack.com/yum/redhat/salt-repo-latest.el7.noarch.rpm 
+
+

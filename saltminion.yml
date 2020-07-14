@@ -1,0 +1,66 @@
+---
+- hosts: saltminion
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: install salt repo for CentOS
+    yum:
+      name: "{{ salt_repo_url }}"
+      state: latest
+    when: ansible_distribution == "CentOS"
+
+  - name: Add salt key for Ubuntu
+    apt_key:
+      url: "{{ salt_key_url }}"
+      state: present
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Add salt repo for Ubuntu
+    apt_repository:
+      repo: "{{ apt_repo_name }}"
+      state: present
+      filename: saltstack 
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install salt-minion for centos
+    yum:
+      name: salt-minion
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: Install salt-minion in Ubuntu
+    apt:
+      name: salt-minion
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+    
+  - name: Install salt-minion in Centos
+    yum:
+      name: salt-minion
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: Setting salt-master in /etc/salt/minion file
+    lineinfile:
+      path: /etc/salt/minion
+      regexp: '^#master:'
+      line: 'master: {{ salt_master }}'
+
+  - name: Setting minion_id in /etc/salt/minion_id file
+    template: 
+      src: template/minion_id.j2
+      dest: /etc/salt/minion_id
+      mode: 0644
+
+  - name: Run the salt-minion service
+    service:
+      name: salt-minion
+      enabled: true
+      state: started
+
+  tags:
+    - salt

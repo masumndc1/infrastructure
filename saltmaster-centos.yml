@@ -1,0 +1,34 @@
+---
+- hosts: saltmaster
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: install salt repo for CentOS
+    yum:
+      name: "{{ salt_repo_url }}"
+      state: latest
+    when: ansible_distribution == "CentOS"
+
+  - name: install salt-master 
+    yum:
+      name: "{{ salt_package }}"
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: Opening firewall ports for saltminion
+    firewalld:
+      port: "{{ item }}"
+      state: enabled
+      permanent: yes
+    with_items: "{{ salt_port }}"
+
+  - name: Run the salt-master service
+    service:
+      name: salt-master
+      enabled: true
+      state: started
+
+  tags:
+    - salt

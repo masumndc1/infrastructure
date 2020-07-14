@@ -1,6 +1,8 @@
 [all:children]
 puppetmaster
 agent
+saltmaster
+saltminion
 compute
 
 [all:vars]
@@ -12,6 +14,14 @@ centos7.0-master
 [agent]
 freebsd-prod
 freebsd-devel
+
+[saltmaster]
+centos7.0-master
+
+[saltminion]
+centos7.0-master
+ubuntu16.04-cmp1-prod 
+ubuntu16.04-cmp2-devel
 
 [compute]
 ubuntu16.04-cmp1-prod 

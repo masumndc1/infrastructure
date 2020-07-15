@@ -1,0 +1,65 @@
+---
+# scp this sudo.yml file to target node
+# run this file as root user 
+# ansible-playbook sudo.yml
+- hosts: localhost 
+  user: root
+  gather_facts: yes
+  vars: 
+    - username: masum
+
+  tasks:
+  - name: Install packages sudo in CentOS
+    yum:
+      name: sudo
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: Install packages sudo in Ubuntu
+    apt:
+      name: sudo
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Install packages sudo in freebsd
+    pkgng:
+      name: sudo
+      state: latest
+    when: ansible_distribution == "FreeBSD"
+
+  - name: Adding public key for that user
+    authorized_key: 
+      user: "{{ username }}"
+      state: present
+      key: "{{ item }}"
+    with_items:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCzZSXW9xCjAr6Z5RknsvVAsKWOMKwjajmJD1vkcHtROG6OmXbgw6oY1C7sJik/hr8yMsk3D0Z8mlduEdZ6gSCM48ahlMhrJky/HEShD0dQQaAHvK7bXaKr3M6W0v/MrP90PWuqKFYDWsJdmK5Kiqv1t9tyKv4ywKK0TYs4xD+JhWth8Aw2g477V4omknMqy/Fo2Xs4bwLkbcmg4ptjD7aaGH9fDcFsvDynxKmaq4/LrtSbjE1oazGNIvuiQuysrcLRIiZidnCvMcOlD2o4Xsi5JyOIKf5AELY7eorQaQRPomqY+b2/vlvvkKKy6dHkJ12yxeV6t68Dq9iMhFWqsEyl khabir@macs-MacBook-Pro-2.local
+      - ssh-rsa ==========NzaC1yc2EAAAADAQABAAABAQCzZSXW9xCjAr6Z5RknsvVAsKWOMKwjajmJD1vkcHtROG6OmXbgw6oY1C7sJik/hr8yMsk3D0Z8mlduEdZ6gSCM48ahlMhrJky/HEShD0dQQaAHvK7bXaKr3M6W0v/MrP90PWuqKFYDWsJdmK5Kiqv1t9tyKv4ywKK0TYs4xD+JhWth8Aw2g477V4omknMqy/Fo2Xs4bwLkbcmg4ptjD7aaGH9fDcFsvDynxKmaq4/LrtSbjE1oazGNIvuiQuysrcLRIiZidnCvMcOlD2o4Xsi5JyOIKf5AELY7eorQaQRPomqY+b2/vlvvkKKy6dHkJ12yxeV6t68Dq9iMhFWqsEyl khabir@macs-MacBook-Pro-2.local
+       
+  - name: Touching user file in /etc/sudoers.d in CentOS or Ubuntu
+    file:
+      path: /etc/sudoers.d/10_{{ username }}
+      state: touch
+    when: ansible_distribution == "CentOS" or
+          ansible_distribution == "Ubuntu"
+
+  - name: Touching user file in /etc/sudoers.d in FreeBSD
+    file:
+      path: /usr/local/etc/sudoers.d/10_{{ username }}
+      state: touch
+    when: ansible_distribution == "FreeBSD"
+
+  - name: Giving sudo right with no passwd to user in CentOS or Ubuntu
+    lineinfile:
+      path: /etc/sudoers.d/10_{{ username }}
+      line: "{{ username }} ALL=(ALL) NOPASSWD: ALL" 
+    when: ansible_distribution == "CentOS" or
+          ansible_distribution == "Ubuntu"
+
+  - name: Giving sudo right with no passwd to user in FreeBSD
+    lineinfile:
+      path: /usr/local/etc/sudoers.d/10_{{ username }}
+      line: "{{ username }} ALL=(ALL) NOPASSWD: ALL" 
+    when: ansible_distribution == "FreeBSD"

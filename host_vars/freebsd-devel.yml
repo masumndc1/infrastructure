@@ -1,5 +1,5 @@
 ---
-hostname: devel.masum.local
+hostname: devel
 certname: devel
 puppet_server: centos7.0-master
 environment: devel

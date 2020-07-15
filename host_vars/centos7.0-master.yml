@@ -1,4 +1,5 @@
 ---
+hostname: centos7.0-master
 rpm_package:
   - epel-release
   - git

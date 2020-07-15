@@ -8,8 +8,8 @@
   tasks:
   - name: Set up hostname
     hostname:
-      - name: "{{ hostname }}"
+      name: "{{ hostname }}"
     tags: hostname
 
-  - name: Configure networking in Ubu
+#  - name: Configure networking in Ubu
     

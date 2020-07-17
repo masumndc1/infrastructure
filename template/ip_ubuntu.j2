@@ -12,7 +12,7 @@ auto {{ interface1 }}
 iface {{ interface1 }} inet static
   address {{ ip }}
   netmask 255.255.255.0
-  gateway 192.168.25.2
+  gateway {{ gw }}
   dns-nameserver {{ dns1 }}
   dns-nameserver {{ dns2 }}
   dns-search masum.io

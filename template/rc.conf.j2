@@ -1,0 +1,13 @@
+clear_tmp_enable="YES"
+hostname="{{ hostname }}"
+ifconfig_{{ interface1 }}="inet {{ ip }} netmask 255.255.255.0"
+defaultrouter={{ gw }}
+sshd_enable="YES"
+moused_enable="YES"
+ntpdate_enable="YES"
+ntpd_enable="YES"
+powerd_enable="YES"
+puppet_enable="YES"
+# Set dumpdev to "AUTO" to enable crash dumps, 
+# "NO" to disable
+dumpdev="AUTO"

@@ -1,2 +1,4 @@
 ---
 hostname: cmp2-devel 
+interface1: ens33
+ip: 192.168.25.215

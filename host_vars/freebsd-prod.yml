@@ -3,3 +3,5 @@ hostname: prod
 certname: prod.masum.local
 puppet_server: centos7.0-master
 environment: production
+interface1: em0
+ip: 192.168.25.212

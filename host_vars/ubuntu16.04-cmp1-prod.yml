@@ -1,2 +1,4 @@
 ---
 hostname: cmp1-prod
+interface1: ens33
+ip: 192.168.25.211

@@ -22,7 +22,6 @@
 	      'net-tools',
 	      'ntp',
 	      'ntpdate',
-	      'rubygems',
 	      'puppetserver'
             ]
       state: latest	    

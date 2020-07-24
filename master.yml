@@ -22,7 +22,8 @@
 	      'net-tools',
 	      'ntp',
 	      'ntpdate',
-	      'puppetserver'
+	      'puppetserver',
+	      'git'
             ]
       state: latest	    
     when: ansible_distribution == "CentOS"

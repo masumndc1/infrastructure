@@ -1,10 +1,18 @@
 ---
 # this is an yml to install r10k and reploy environment by r10k
 - hosts: puppetmaster
+  become: yes
+  become_user: root
   gather_facts: yes
 
   tasks:
   - name: install r10k by rubygem
     command: /opt/puppetlabs/puppet/bin/gem install r10k
-    become: yes
-    become_user: root
+    tags: r10k_install
+
+  - name: Place r10k configuration file 
+    template:
+      src: template/r10k_conf.j2
+      dest: /etc/puppetlabs/r10k/r10k.yml
+      mode: '0644'
+    tags: r10k_template

@@ -1,0 +1,18 @@
+---
+# The location to use for storing cached Git repos
+:cachedir: '/var/puppet/r10k/cache'
+#
+# # A list of git repositories to create
+git:
+  username: 'git'
+  # default private key
+  private_key: '/home/root/.ssh/id_rsa.pub'
+  # private key for this repo only
+  # private_key: '/root/.ssh/private_repo_id'
+
+# This will clone the git repository and instantiate an environment per
+# branch in /usr/local/etc/puppet/environments
+:sources:
+  :code:
+    remote: 'git@github.com:{{ git_username }}/{{ git_repo }}.git'
+    basedir: '/etc/puppetlabs/code/environments'

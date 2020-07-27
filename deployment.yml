@@ -1,5 +1,6 @@
 ---
 # this is an yml to deployment environment by r10k in puppet master.
+# ansible-playbook -i inventories/hosts deployment.yml -e "env=devel"
 - hosts: puppetmaster
   become: yes
   become_user: root

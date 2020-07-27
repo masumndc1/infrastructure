@@ -30,4 +30,4 @@ interface1: ens33
 ip: 192.168.25.197
 
 git_username: masumndc1
-git_repo: puppet-freebsd
+git_repo: puppet-control

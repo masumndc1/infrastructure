@@ -12,4 +12,4 @@
 
   tasks:
   - name: Deploying environment
-    command: /opt/puppetlabs/puppet/bin/r10k --config=/etc/puppetlabs/r10k/r10k.yml deploy environment "{{ env }}"
+    command: /opt/puppetlabs/puppet/bin/r10k --config=/etc/puppetlabs/r10k/r10k.yml deploy environment "{{ env }}" --puppetfile

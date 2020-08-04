@@ -20,4 +20,5 @@
 
 8. Run saltcluster.yml to install salt-master and salt-minion nodes.
 
-
+## Infra pics 
+![infra pic] (https://raw.githubusercontent.com/masumndc1/infrastructure/master/pics/infra.jpg)

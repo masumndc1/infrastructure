@@ -5,14 +5,14 @@
 - hosts: compute
   become: yes
   gather_facts: yes
+  ignore_errors: yes
 
   tasks:
-  - name: Remove build-in lxd from Ubuntu
+  - name: Remove some pre install packages
     apt:
-      name: ['lxd', 'lxd-client']
-      purge: true
+      name: lxd
+      purge: yes
       state: absent
-    when: ansible_distribution == "Ubuntu"
 
   - name: Install snapd in Ubuntu
     apt:
@@ -26,3 +26,8 @@
       name: lxd
       state: present
 
+#  - name: Copy preseed file
+#    template:
+#      src: template/preseed.j2
+#      dest: /tmp/preseed
+#      mode: 0640

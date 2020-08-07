@@ -1,0 +1,21 @@
+---
+# this playbook will install lxd in all compute nodes
+# by using snap. 
+# ansible-playbook -i inventory/hosts lxd.yml
+- hosts: compute
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: Install snapd in Ubuntu
+    apt:
+      name: snapd
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Insall lxd by snapd in Ubuntu
+    snap:
+      name: lxd
+      state: present
+

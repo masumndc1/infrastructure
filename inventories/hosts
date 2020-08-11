@@ -22,8 +22,10 @@ centos7.0-master
 centos7.0-master
 ubuntu16.04-cmp1-prod 
 ubuntu16.04-cmp2-devel
+ubuntu16-cmp3
 
 [compute]
 ubuntu16.04-cmp1-prod 
 ubuntu16.04-cmp2-devel
+ubuntu16-cmp3
 

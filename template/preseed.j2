@@ -1,0 +1,35 @@
+config:
+  core.trust_password: {{ core_password }}
+  cluster.https_address: {{ cluster_address }}:8443
+  core.https_address: {{ core_address }}:8443
+networks:
+- config:
+    bridge.mode: fan
+    fan.underlay_subnet: {{ ansible_ens33.ipv4.network }}/24
+  description: ""
+  name: lxdfan0
+  type: bridge
+storage_pools:
+- config:
+    size: 10GB
+    source: /var/snap/lxd/common/lxd/disks/local.img
+    zfs.pool_name: local
+  description: ""
+  name: local
+  driver: zfs
+profiles:
+- config: {}
+  description: Default LXD profile
+  devices:
+    eth0:
+      name: eth0
+      network: lxdfan0
+      type: nic
+    root:
+      path: /
+      pool: local
+      type: disk
+  name: default
+cluster:
+  server_name: {{ ansible_hostname }}
+  enabled: true

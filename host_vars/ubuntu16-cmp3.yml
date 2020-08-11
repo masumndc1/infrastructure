@@ -1,0 +1,4 @@
+---
+hostname: ubuntu16-cmp3
+interface1: ens33
+ip: 192.168.25.217

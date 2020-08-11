@@ -26,7 +26,9 @@
 
 12. Run lxd.yml to install lxd package through snap.
 
-10. Run `sudo lxd init` manually in all nodes. Currently we have only 3 compute nodes in this cluster. Therefore It will be easier for us to initial lxd this way.When we have many compute nodes we can think of preseed and and using certificate inpreseed.
+13. Run `sudo lxd init` manually in all nodes. Currently we have only 3 compute nodes in this cluster. Therefore It will be easier for us to initial lxd this way.When we have many compute nodes we can think of preseed and and using certificate inpreseed.
+
+14. Run quagga.yml against compute nodes.
 
 ## Infra pics 
 ![infra pic] (https://raw.githubusercontent.com/masumndc1/infrastructure/master/pics/infra.jpg)

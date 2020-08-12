@@ -10,7 +10,7 @@
   tasks:
   - name: Remove some pre install packages
     apt:
-      name: lxd
+      name: [ 'lxd', 'lxd-client' ]
       purge: yes
       state: absent
 

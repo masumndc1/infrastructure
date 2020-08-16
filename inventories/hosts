@@ -31,5 +31,12 @@ ubuntu16.04-cmp2-devel
 ubuntu16-cmp3
 
 [lxds]
+devel-centos7
+devel-centos8
 devel-ubuntu16
-
+devel-ubuntu18
+devel-ubuntu20
+prod1-centos7
+prod1-ubuntu16
+prod2-centos7
+prod2-ubuntu16

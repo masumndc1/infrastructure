@@ -4,6 +4,7 @@ agent
 saltmaster
 saltminion
 compute
+lxds
 
 [all:vars]
 ansible_user=masum
@@ -28,4 +29,7 @@ ubuntu16-cmp3
 ubuntu16.04-cmp1-prod 
 ubuntu16.04-cmp2-devel
 ubuntu16-cmp3
+
+[lxds]
+devel-ubuntu16
 

@@ -62,5 +62,10 @@
       enabled: true
       state: started
 
+  - name: Restart salt-minion service one more time
+    service:
+      name: salt-minion
+      state: restarted
+
   tags:
     - salt

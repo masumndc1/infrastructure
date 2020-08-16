@@ -4,11 +4,19 @@
   gather_facts: yes
 
   tasks:
-  - name: install salt repo for CentOS
+  - name: install salt repo for CentOS7
     yum:
-      name: "{{ salt_repo_url }}"
+      name: "{{ salt_repo_url7 }}"
       state: latest
-    when: ansible_distribution == "CentOS"
+    when: ansible_distribution == "CentOS" and
+          ansible_distribution_major_version == "7"
+
+  - name: install salt repo for CentOS8
+    yum:
+      name: "{{ salt_repo_url8 }}"
+      state: latest
+    when: ansible_distribution == "CentOS" and
+          ansible_distribution_major_version == "8"
 
   - name: Add salt key for Ubuntu
     apt_key:

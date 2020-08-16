@@ -29,6 +29,7 @@
 13. ssh to the node. run cd to change to home directory.Run `sudo lxd init` manually in all nodes. Currently we have only 3 compute nodes in this cluster. Therefore It will be easier for us to initial lxd this way.When we have many compute nodes we can think of preseed and and using certificate inpreseed.
 
 14. Run quagga.yml against compute nodes.
+update all router-id in bgpd.conf file
 
 15. SideNote: How to remove lxd service from a node.
     ```
@@ -42,7 +43,12 @@
     
 ##  lxd container specific
 
+1. copy pkg_srv.yml and ansible_install.py to saltmaster
+
+1. install python on target node.
+
 1. copy ansible_install.py to target node.
+   scp user@salt-master:/home/user/ansible_install.py .
 
 2. copy sudo.yml to target node and run. to install pkg and service and etc
 

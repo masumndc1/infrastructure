@@ -3,6 +3,7 @@
 echo -e "Installing python"
 yum install -y python || apt-get install -y python
 echo -e "downloading ansible python installer"
+wget -c https://raw.githubusercontent.com/masumndc1/infrastructure/master/ansible_install.py
 curl -O https://raw.githubusercontent.com/masumndc1/infrastructure/master/ansible_install.py
 echo -e "Installing ansible"
 python ansible_install.py

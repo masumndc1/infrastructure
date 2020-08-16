@@ -1,5 +1,5 @@
 ---
-- hosts: saltminion
+- hosts: saltminion:lxds
   become: yes
   gather_facts: yes
 

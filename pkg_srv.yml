@@ -24,14 +24,14 @@
       - ssh-rsa ==========NzaC1yc2EAAAADAQABAAABAQCzZSXW9xCjAr6Z5RknsvVAsKWOMKwjajmJD1vkcHtROG6OmXbgw6oY1C7sJik/hr8yMsk3D0Z8mlduEdZ6gSCM48ahlMhrJky/HEShD0dQQaAHvK7bXaKr3M6W0v/MrP90PWuqKFYDWsJdmK5Kiqv1t9tyKv4ywKK0TYs4xD+JhWth8Aw2g477V4omknMqy/Fo2Xs4bwLkbcmg4ptjD7aaGH9fDcFsvDynxKmaq4/LrtSbjE1oazGNIvuiQuysrcLRIiZidnCvMcOlD2o4Xsi5JyOIKf5AELY7eorQaQRPomqY+b2/vlvvkKKy6dHkJ12yxeV6t68Dq9iMhFWqsEyl khabir@macs-MacBook-Pro-2.local
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCh9oe+X5Pp59e6MGAWSmhGapI/6+uPWJ7PW6ZRYK0JxerYksF6dXoPhlw9jATNvdXPGh8b52TZqx/zyzCEo+8GR9ZTB8NlZ0INc4362SXBWf5j6fu5dKGh/A1OiejBroUEu7U7gTxTwSxXqDs88c8OEQSmq5rllfnMP3PSJMoV1NplkjMUPoX/bW61J/QSsewI76l51B9GnOtorrefszV1d65PmqpIsjBkvct3bMV7x8OJKmUB2+vtjALB3ztXdmJqY8ZZS/cebSwBs2O8IqkuoqRmfSVWuY8IRdQCG3+Q+4LlKROU4x/NpqxFsy5DO7AhQz2A+ycNf1kI9jNbioV masum@centos7.0-master
        
-  - name: Install packages sudo in CentOS
+  - name: Install packages sudo and ssh in CentOS
     yum:
       name: [ 'sudo', 'openssh-server' ]
       state: latest
       update_cache: yes
     when: ansible_distribution == "CentOS"
 
-  - name: Install packages in Ubuntu
+  - name: Install sudo and ssh in Ubuntu
     apt:
       name: [ 'sudo', 'openssh-server' ]
       state: latest

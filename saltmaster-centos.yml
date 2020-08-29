@@ -24,6 +24,12 @@
       permanent: yes
     with_items: "{{ salt_port }}"
 
+  - name: Placing configuration files
+    template:
+      src: template/master_conf.j2
+      dest: /etc/salt/master.d
+      mode: 0644  
+
   - name: Run the salt-master service
     service:
       name: salt-master

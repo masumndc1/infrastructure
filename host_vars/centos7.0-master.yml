@@ -8,8 +8,9 @@ rpm_package:
   - wget
   - iftop
   - htop
-  - python-pip
-  - pygit2 
+  - python2-pip
+  - gcc
+  - python-pygit2
 
 salt_package:
   - salt-master

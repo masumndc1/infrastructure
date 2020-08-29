@@ -1,0 +1,14 @@
+fileserver_backend:
+  - roots
+  - git
+
+file_roots:
+  base:
+    - /srv/salt/
+  production:
+    - /srv/salt/production
+  devel:
+    - /srv/salt/devel
+
+gitfs_remotes:
+  - git://github.com/masumndc1/salt-states.git

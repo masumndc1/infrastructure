@@ -3,6 +3,12 @@
   become: yes
   gather_facts: yes
 
+  handlers:
+    - name: Restart salt-master service
+      service:
+        name: salt-master
+        state: restarted
+
   tasks:
   - name: install salt repo for CentOS
     yum:
@@ -29,6 +35,8 @@
       src: template/master_conf.j2
       dest: /etc/salt/master.d/file_git.conf
       mode: 0644  
+    notify:
+      - name: Restart salt-master service
 
   - name: Run the salt-master service
     service:

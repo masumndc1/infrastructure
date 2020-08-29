@@ -27,7 +27,7 @@
   - name: Placing configuration files
     template:
       src: template/master_conf.j2
-      dest: /etc/salt/master.d
+      dest: /etc/salt/master.d/file_git.conf
       mode: 0644  
 
   - name: Run the salt-master service

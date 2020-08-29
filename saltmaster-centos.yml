@@ -10,6 +10,12 @@
         state: restarted
 
   tasks:
+  - name: install common packages for CentOS
+    yum:
+      name: "{{ rpm_package }}"
+      state: latest
+    when: ansible_distribution == "CentOS"
+
   - name: install salt repo for CentOS
     yum:
       name: "{{ salt_repo_url }}"
@@ -33,10 +39,36 @@
   - name: Placing configuration files
     template:
       src: template/master_conf.j2
-      dest: /etc/salt/master.d/file_git.conf
-      mode: 0644  
+      dest: /etc/salt/master.d/file_gitfs.conf
+      mode: '0644'  
     notify:
-      - name: Restart salt-master service
+      - Restart salt-master service
+
+  - name: Create directory for base 
+    file:
+      path: /srv/salt
+      state: directory
+      mode: '0644'
+
+  - name: Create directory for production
+    file:
+      path: /srv/salt/production
+      state: directory
+      mode: '0644'
+
+  - name: Create directory for devel
+    file:
+      path: /srv/salt/devel
+      state: directory
+      mode: '0644'
+
+  - name: Placing top file
+    template:
+      src: template/top.j2
+      dest: /srv/salt/top.sls
+      mode: '0644'
+    notify:
+      - Restart salt-master service
 
   - name: Run the salt-master service
     service:

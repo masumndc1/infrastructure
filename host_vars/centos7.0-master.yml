@@ -9,6 +9,7 @@ rpm_package:
   - iftop
   - htop
   - python-pip
+  - pygit2 
 
 salt_package:
   - salt-master

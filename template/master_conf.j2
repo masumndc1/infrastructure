@@ -5,11 +5,10 @@ fileserver_backend:
 file_roots:
   base:
     - /srv/salt
-  production:
-    - /srv/salt/production
   devel:
-    - /srv/salt/devel
+    - /srv/salt
 
 gitfs_remotes:
   - git://github.com/masumndc1/salt-states.git
+
 gitfs_provider: pygit2  

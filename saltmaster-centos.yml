@@ -50,25 +50,10 @@
       state: directory
       mode: '0644'
 
-  - name: Create directory for production
-    file:
-      path: /srv/salt/production
-      state: directory
-      mode: '0644'
-
-  - name: Create directory for devel
-    file:
-      path: /srv/salt/devel
-      state: directory
-      mode: '0644'
-
-  - name: Placing top file
-    template:
-      src: template/top.j2
-      dest: /srv/salt/top.sls
-      mode: '0644'
-    notify:
-      - Restart salt-master service
+  - name: Cloning git repository for state files.
+    git: 
+      repo: git@github.com:masumndc1/salt-states.git
+      dest: /srv/salt
 
   - name: Run the salt-master service
     service:

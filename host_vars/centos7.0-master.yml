@@ -29,7 +29,7 @@ salt_port:
 salt_repo_url: https://repo.saltstack.com/yum/redhat/salt-repo-latest.el7.noarch.rpm 
 
 interface1: ens33
-ip: 192.168.25.197
+ip: 192.168.2.197
 
 git_username: masumndc1
 git_repo: puppet-control

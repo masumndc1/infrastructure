@@ -12,24 +12,24 @@ enable password zebra
 router bgp 7675
  bgp router-id {{ ansible_ens33.ipv4.address }}
 {% if ansible_hostname == "centos7" %}
- neighbor 192.168.25.211 remote-as 7675
- neighbor 192.168.25.215 remote-as 7675
- neighbor 192.168.25.217 remote-as 7675
+ neighbor 192.168.2.211 remote-as 7675
+ neighbor 192.168.2.215 remote-as 7675
+ neighbor 192.168.2.217 remote-as 7675
 {% endif %}
 {% if ansible_hostname == "cmp2-devel" %}
- neighbor 192.168.25.197 remote-as 7675
- neighbor 192.168.25.211 remote-as 7675
- neighbor 192.168.25.217 remote-as 7675
+ neighbor 192.168.2.197 remote-as 7675
+ neighbor 192.168.2.211 remote-as 7675
+ neighbor 192.168.2.217 remote-as 7675
 {% endif %}
 {% if ansible_hostname == "cmp1-prod" %}
- neighbor 192.168.25.197 remote-as 7675
- neighbor 192.168.25.215 remote-as 7675
- neighbor 192.168.25.217 remote-as 7675
+ neighbor 192.168.2.197 remote-as 7675
+ neighbor 192.168.2.215 remote-as 7675
+ neighbor 192.168.2.217 remote-as 7675
 {% endif %}
 {% if ansible_hostname == "ubuntu16-cmp3" %}
- neighbor 192.168.25.197 remote-as 7675
- neighbor 192.168.25.211 remote-as 7675
- neighbor 192.168.25.215 remote-as 7675
+ neighbor 192.168.2.197 remote-as 7675
+ neighbor 192.168.2.211 remote-as 7675
+ neighbor 192.168.2.215 remote-as 7675
 {% endif %}
 {% if not ansible_hostname == "centos7" %}
  network {{ lxdfan0_network }}/16

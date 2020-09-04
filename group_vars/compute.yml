@@ -1,4 +1,4 @@
 ---
 core_password: secret
-cluster_address: 192.168.25.215
-core_address: 192.168.25.215
+cluster_address: 192.168.2.215
+core_address: 192.168.2.215

@@ -1,5 +1,5 @@
 ---
 hostname: cmp1-prod
 interface1: ens33
-ip: 192.168.25.211
+ip: 192.168.2.211
 lxdfan0_network: 240.211.0.0

@@ -43,15 +43,21 @@ update all router-id in bgpd.conf file
     
 ##  lxd container specific
 
-1. copy pkg_srv.yml and ansible_install.py to saltmaster
-
 1. install python on target node.
 
 1. copy ansible_install.py to target node.
-   scp user@salt-master:/home/user/ansible_install.py .
 
-2. copy sudo.yml to target node and run. to install pkg and service and etc
+   curl -O https://raw.githubusercontent.com/masumndc1/infrastructure/master/ansible_install.py 
 
+2. copy pkg_srv.yml to target node and run. to install pkg and service and etc
+
+   curl -O https://raw.githubusercontent.com/masumndc1/infrastructure/master/pkg_srv.yml
+    
+   curl -O https://raw.githubusercontent.com/masumndc1/infrastructure/master/lxd_bootstrap.sh 
+  
+4. run hosts.yml against the node to let target machine knows about all the nodes in infra 
+   
+   
 3. run saltcluster.yml against lxds nodes
 
 ## Infra pics 

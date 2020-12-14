@@ -1,0 +1,26 @@
+---
+# this will install a jumphost in localhost
+- hosts: localhost
+  gather_facts: yes
+  become: yes
+
+  tasks:
+  - name: Install openssh-server
+    apt:
+      name: "openssh-server"
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Add public key in authorized_key file
+    authorized_key:
+      user: "{{ ssh_user }}"
+      key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDL5/vc9gmwDY+NZwY458mKWQMkvaluuLGOAs/fBBCmY6VWAlxpOoM3Fw0syO7WmLQ/3rCYsxYmq4IhWRwhoSonKPET8v/HOYcV0/uqoe1D5sxWnPXxeZ1oDELE5HiyCIgRyfAMNtmpdAvQTwBmCxS4Vxx4H1cYyv8vQa2TejgQNmj+JdFLqIoKkdStDQYgHl/Fys+X8NRWpJ1rPNmJfE9DOlrWC923pos5/QHwKzBl9UamdDV0UjoB0w1dzWkcDAq9KAUXDqsVrjHRTJ2x8Xz2i4mo05nreENtyrTJgXXA6BxjT1BCiw5xkjExKAC4F4y+bwX63Z2oLpCzOYUtqyLl khuddin@Apro13-HKHV2F"
+
+  - name: Enable and run openssh-service
+    service:
+      name: ssh
+      enabled: yes
+      state: started
+
+

@@ -1,0 +1,24 @@
+---
+# quagga will be used to install and configure bgp in compute nodes
+# and master. BGP will advertize internal lxdfan0 network of 
+# compute nodes so that master, nodes and lxd can ping each other.
+- hosts: compute:centos7.0-master
+  become: yes
+  gather_facts: true
+
+  tasks:
+  - name: Restart quagga service in Ubuntu
+    service:
+      name: quagga
+      state: restarted
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Restarting zebra service in CentOS
+    service:
+      name: "{{ item }}"
+      state: restarted 
+    with_items:
+      - zebra
+      - bgpd
+    when: ansible_distribution == "CentOS"
+    tags: service

@@ -62,4 +62,4 @@ update all router-id in bgpd.conf file
 
 ## Infra pics 
 ![infra pic] 
-(https://github.com/masumndc1/infrastructure/blob/master/pics/infra.jpg)
+(/pics/infra.jpg)

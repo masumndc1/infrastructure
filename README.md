@@ -61,5 +61,4 @@ update all router-id in bgpd.conf file
 3. run saltcluster.yml against lxds nodes
 
 ## Infra pics 
-![infra pic] 
-(https://github.com/masumndc1/infrastructure/blob/master/pics/infra.jpg)
+<img src = "pics/infra.jpg">

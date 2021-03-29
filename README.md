@@ -62,3 +62,4 @@ update all router-id in bgpd.conf file
 
 ## Infra pics 
 ![infra pic] (infra.jpg)
+<img src = "pics/infra.jpg">

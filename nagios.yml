@@ -1,0 +1,38 @@
+---
+- hosts: jumphost
+  become: yes
+  gather_facts: yes
+  ignore_errors: yes
+  
+  tasks:
+    - name: Install nagios and related packages in Centos or Rocky
+      yum:
+        name: ['httpd', 'nagios', 'nagios-common', 'nrpe']
+        #name: ['nagios', 'nagios-common', 'nagios-plugins-all', 'nrpe']
+        state: latest
+        update_cache: yes
+      when: ansible_distribution == "CentOS" or
+            ansible_distribution == "Rocky"
+
+    - name: Install nagios and related packages in Ubuntu
+      apt:
+        name: ['nagios', 'nagios-common', 'nagios-plugins-all', 'nrpe']
+        state: latest
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+   
+    - name: Run nagios and httpd service 
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      with_items:
+        - nagios
+        - httpd
+
+    - name: Open port 80 for httpd service
+      firewalld:
+        permanent: yes
+        immediate: yes
+        service: http
+        state: enabled

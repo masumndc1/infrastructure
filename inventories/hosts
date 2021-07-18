@@ -6,6 +6,7 @@ saltminion
 compute
 lxds
 jumphosts
+nagios
 
 [all:vars]
 ansible_user=masum
@@ -44,3 +45,6 @@ prod2-ubuntu16
 
 [jumphosts]
 jumphost
+
+[nagios]
+monitor

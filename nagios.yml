@@ -7,8 +7,7 @@
   tasks:
     - name: Install nagios and related packages in Centos or Rocky
       yum:
-        name: ['httpd', 'nagios', 'nagios-common', 'nrpe']
-        #name: ['nagios', 'nagios-common', 'nagios-plugins-all', 'nrpe']
+        name: ['httpd', 'nagios', 'nagios-common', 'nrpe', 'python3-passlib']
         state: latest
         update_cache: yes
       when: ansible_distribution == "CentOS" or
@@ -16,11 +15,20 @@
 
     - name: Install nagios and related packages in Ubuntu
       apt:
-        name: ['nagios', 'nagios-common', 'nagios-plugins-all', 'nrpe']
+        name: ['apache2', 'nagios', 'nagios-common', 'nrpe', 'pytho3-passlib']
         state: latest
         update_cache: yes
       when: ansible_distribution == "Ubuntu"
-   
+
+    - name: Add nagiosadmin passwod
+      htpasswd:
+        path: /etc/nagios/passwd
+        name: nagiosadmin
+        password: 'nagiosadmin'
+        owner: root
+        group: apache
+        mode: 0640 
+  
     - name: Run nagios and httpd service 
       service:
         name: "{{ item }}"

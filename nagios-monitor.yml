@@ -1,0 +1,37 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: yes
+  ignore_errors: yes
+  
+  tasks:
+    - name: Install nrpe in Centos or Rocky
+      yum:
+        name: ['nrpe']
+        state: latest
+        update_cache: yes
+      when: ansible_distribution == "CentOS" or
+            ansible_distribution == "Rocky"
+
+    - name: Install nrpe packages in Ubuntu
+      apt:
+        name: ['nrpe']
+        state: latest
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Run nrpe service 
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      with_items:
+        - nrpe
+
+    - name: Open port 5666 for nrpe service
+      firewalld:
+        permanent: yes
+        immediate: yes
+        port: 5666/tcp
+        state: enabled
+  

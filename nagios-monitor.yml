@@ -20,6 +20,15 @@
         update_cache: yes
       when: ansible_distribution == "Ubuntu"
 
+    - name: Place cfg file for in nagios server
+      template:
+        src: template/monitor.cfg.j2
+        dest: /etc/nagios/servers/{{ ansible_hostname }}.cfg
+        owner: root
+        group: root
+        mode: '0644'
+      delegate_to: jumphost
+
     - name: Run nrpe service 
       service:
         name: "{{ item }}"
@@ -34,4 +43,5 @@
         immediate: yes
         port: 5666/tcp
         state: enabled
+
   

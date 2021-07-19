@@ -8,9 +8,6 @@ lxds
 jumphosts
 nagios
 
-[all:vars]
-ansible_user=masum
-
 [puppetmaster]
 centos7.0-master
 
@@ -47,4 +44,9 @@ prod2-ubuntu16
 jumphost
 
 [nagios]
+jumphost
 monitor
+what2
+
+[all:vars]
+ansible_user=masum

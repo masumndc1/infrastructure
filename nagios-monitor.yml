@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: nagios
   become: yes
   gather_facts: yes
   ignore_errors: yes
@@ -28,6 +28,8 @@
         group: root
         mode: '0644'
       delegate_to: jumphost
+      notify:
+        - Restart nagios
 
     - name: Run nrpe service 
       service:
@@ -44,4 +46,9 @@
         port: 5666/tcp
         state: enabled
 
-  
+  handlers:
+    - name: Restart nagios
+      service:
+        name: nagios
+        state: restarted
+      delegate_to: jumphost

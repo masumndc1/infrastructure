@@ -28,6 +28,14 @@
         owner: root
         group: apache
         mode: 0640 
+    
+    - name: A folder to hold all nodes cfg file
+      file:
+        path: /etc/nagios/servers
+        state: directory
+        owner: root
+        group: nagios
+        mode: '0755'
   
     - name: Run nagios and httpd service 
       service:

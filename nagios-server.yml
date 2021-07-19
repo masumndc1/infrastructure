@@ -7,7 +7,7 @@
   tasks:
     - name: Install nagios and related packages in Centos or Rocky
       yum:
-        name: ['httpd', 'nagios', 'nagios-common', 'nrpe', 'python3-passlib']
+        name: ['httpd', 'nagios', 'nagios-common', 'python3-passlib']
         state: latest
         update_cache: yes
       when: ansible_distribution == "CentOS" or
@@ -15,7 +15,7 @@
 
     - name: Install nagios and related packages in Ubuntu
       apt:
-        name: ['apache2', 'nagios', 'nagios-common', 'nrpe', 'pytho3-passlib']
+        name: ['apache2', 'nagios', 'nagios-common', 'pytho3-passlib']
         state: latest
         update_cache: yes
       when: ansible_distribution == "Ubuntu"

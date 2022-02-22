@@ -1,0 +1,89 @@
+---
+# run this playbook with -l salt on
+- hosts: saltmaster
+  become: yes
+  gather_facts: yes
+
+  handlers:
+    - name: Restart salt-master service
+      service:
+        name: salt-master
+        state: restarted
+
+  tasks:
+  - name: install common packages for CentOS
+    yum:
+      name: "{{ rpm_package }}"
+      state: latest
+    when: ansible_distribution == "CentOS"
+
+  - name: install salt repo for CentOS
+    yum:
+      name: "{{ salt_repo_url }}"
+      state: latest
+    when: ansible_distribution == "CentOS"
+
+  - name: install common packages for Ubuntu 
+    apt:
+      name: "{{ deb_package }}"
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Add salt key for Ubuntu
+    apt_key:
+      url: "{{ salt_key_url }}"
+      state: present
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Add salt repo for Ubuntu
+    apt_repository:
+      repo: "{{ salt_repo_url }}"
+      state: present
+      update_cache: yes
+      filename: saltstack
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install salt-master in Ubuntu 
+    apt:
+      name: "{{ salt_package }}"
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Opening firewall ports for saltminion
+    firewalld:
+      port: "{{ item }}"
+      state: enabled
+      permanent: yes
+    with_items: "{{ salt_port }}"
+    ignore_errors: true
+
+  - name: Create directory for base 
+    file:
+      path: /srv/salt
+      state: directory
+      mode: '0644'
+
+  - name: Cloning git repository for state files.
+    git: 
+      repo: git@github.com:masumndc1/salt-states.git
+      dest: /srv/salt
+    ignore_errors: true
+
+  - name: Run the salt-master service
+    service:
+      name: salt-master
+      enabled: true
+      state: started
+      
+  - name: Placing configuration files
+    template:
+      src: template/master_conf.j2
+      dest: /etc/salt/master.d/file_gitfs.conf
+      mode: '0644'  
+    notify:
+      - Restart salt-master service
+
+  tags:
+    - salt

@@ -1,9 +1,16 @@
 ---
-- hosts: saltminion:lxds
+# run this playbook with -l minions or saltminion or lxds
+- hosts: saltminion:minions:lxds
   become: yes
   gather_facts: yes
 
   tasks:
+  - name: install common packages for CentOS
+    yum:
+      name: "{{ rpm_package }}"
+      state: latest
+    when: ansible_distribution == "CentOS"
+
   - name: install salt repo for CentOS7
     yum:
       name: "{{ salt_repo_url7 }}"
@@ -17,6 +24,12 @@
       state: latest
     when: ansible_distribution == "CentOS" and
           ansible_distribution_major_version == "8"
+
+  - name: install common packages for Ubuntu 
+    yum:
+      name: "{{ deb_package }}"
+      state: latest
+    when: ansible_distribution == "Ubuntu"
 
   - name: Add salt key for Ubuntu
     apt_key:

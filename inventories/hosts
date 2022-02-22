@@ -9,6 +9,14 @@ jumphosts
 nagios
 jenkin
 minions
+controllers
+computes
+
+[controllers]
+controller1
+
+[computes]
+worker1
 
 [jenkin]
 jenkins

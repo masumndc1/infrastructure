@@ -1,28 +1,49 @@
 [all:children]
 puppetmaster
-agent
+puppetnodes
 saltmaster
 saltminion
 compute
 lxds
 jumphosts
 nagios
+jenkin
+minions
+
+[jenkin]
+jenkins
 
 [puppetmaster]
 centos7.0-master
+puppet
 
-[agent]
+[puppetnodes]
 freebsd-prod
 freebsd-devel
+pu-dv1
+pu-dv2
+pu-pr1
+pu-pr2
+pu-pr3
 
 [saltmaster]
 centos7.0-master
+salt
 
 [saltminion]
 centos7.0-master
 ubuntu16.04-cmp1-prod 
 ubuntu16.04-cmp2-devel
 ubuntu16-cmp3
+
+[minions]
+sa-dv1
+sa-dv2
+sa-pr1
+sa-pr2
+sa-pr3
+sa-pr4
+sa-pr5
 
 [compute]
 ubuntu16.04-cmp1-prod 
@@ -49,4 +70,4 @@ monitor
 what2
 
 [all:vars]
-ansible_user=masum
+ansible_user = masum

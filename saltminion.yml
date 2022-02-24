@@ -4,6 +4,12 @@
   become: yes
   gather_facts: yes
 
+  handlers:
+    - name: Restart salt-minion service
+      service:
+        name: salt-minion
+        state: restarted
+
   tasks:
   - name: install common packages for CentOS
     yum:
@@ -82,28 +88,27 @@
       update_cache: yes
     when: ansible_distribution == "CentOS"
 
-  - name: Setting salt-master IP in /etc/salt/minion file
-    lineinfile:
-      path: /etc/salt/minion
-      regexp: '^#master:'
-      line: 'master: {{ salt_master }}'
-
-  - name: Setting minion_id in /etc/salt/minion_id file
-    template: 
-      src: template/minion_id.j2
-      dest: /etc/salt/minion_id
-      mode: 0644
-
   - name: Run the salt-minion service
     service:
       name: salt-minion
       enabled: true
       state: started
 
-  - name: Restart salt-minion service one more time
-    service:
-      name: salt-minion
-      state: restarted
+  - name: Setting salt-master IP in /etc/salt/minion file
+    lineinfile:
+      path: /etc/salt/minion
+      regexp: '^#master:|^master:'
+      line: 'master: {{ salt_master }}'
+    notify:
+      - Restart salt-minion service
+
+  - name: Setting minion_id in /etc/salt/minion_id file
+    template: 
+      src: template/minion_id.j2
+      dest: /etc/salt/minion_id
+      mode: 0644
+    notify:
+      - Restart salt-minion service
 
   tags:
     - saltminions

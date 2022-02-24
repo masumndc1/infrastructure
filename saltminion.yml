@@ -82,7 +82,7 @@
       update_cache: yes
     when: ansible_distribution == "CentOS"
 
-  - name: Setting salt-master in /etc/salt/minion file
+  - name: Setting salt-master IP in /etc/salt/minion file
     lineinfile:
       path: /etc/salt/minion
       regexp: '^#master:'
@@ -106,4 +106,4 @@
       state: restarted
 
   tags:
-    - salt
+    - saltminions

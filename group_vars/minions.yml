@@ -15,3 +15,5 @@ deb_package:
   - python3-pip
   - gpg
   - gcc
+
+salt_master_ip: 10.244.1.251

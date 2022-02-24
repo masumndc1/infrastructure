@@ -7,13 +7,13 @@ salt_key_url20: https://repo.saltstack.com/py3/ubuntu/20.04/amd64/latest/SALTSTA
 apt_repo_name20: deb http://repo.saltstack.com/py3/ubuntu/20.04/amd64/latest focal main 
 salt_master: salt
 deb_package:
+  - python3-pip
   - iputils-ping
   - git
   - net-tools
   - vim
   - wget
-  - python3-pip
   - gpg
   - gcc
 
-salt_master_ip: 10.244.1.251
+salt_master: 10.244.1.251

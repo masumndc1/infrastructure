@@ -11,6 +11,7 @@ jenkin
 minions
 controllers
 computes
+pods
 
 [controllers]
 controller1
@@ -76,6 +77,22 @@ jumphost
 jumphost
 monitor
 what2
+
+[pods]
+pu-dv1
+pu-dv2     
+pu-pr1
+pu-pr2
+pu-pr3
+puppet
+sa-dv1
+sa-dv2
+sa-pr1
+sa-pr2
+sa-pr3
+sa-pr4
+sa-pr5
+salt
 
 [all:vars]
 ansible_user = masum

@@ -87,5 +87,13 @@
     notify:
       - Restart salt-master service
 
+  - name: Set auto-accept for minions in salt-master
+    lineinfile:
+      path: /etc/salt/master
+      regexp: '^#auto_accept:'
+      line: 'auto_accept: True'
+    notify:
+      - Restart salt-master service
+
   tags:
     - salt

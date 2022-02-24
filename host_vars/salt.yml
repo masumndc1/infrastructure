@@ -1,12 +1,12 @@
 ---
 hostname: salt
 deb_package:
+  - python3-pip
   - net-tools
   - iputils-ping
   - git
   - vim
   - wget
-  - python3-pip
   - gcc
   - gpg
 

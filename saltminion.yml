@@ -98,7 +98,7 @@
     lineinfile:
       path: /etc/salt/minion
       regexp: '^#master:|^master:'
-      line: 'master: {{ salt_master }}'
+      line: 'master: salt'
     notify:
       - Restart salt-minion service
 

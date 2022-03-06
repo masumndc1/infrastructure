@@ -14,10 +14,10 @@ computes
 pods
 
 [controllers]
-controller1
+controller
 
 [computes]
-worker1
+worker
 
 [jenkin]
 jenkins

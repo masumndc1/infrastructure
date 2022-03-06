@@ -14,5 +14,3 @@ deb_package:
   - wget
   - gpg
   - gcc
-
-salt_master: 10.244.1.35

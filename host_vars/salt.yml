@@ -1,6 +1,7 @@
 ---
 hostname: salt
 deb_package:
+  - openjdk-11-jdk
   - python3-pip
   - net-tools
   - iputils-ping

@@ -38,6 +38,7 @@ pu-pr3
 [saltmaster]
 centos7.0-master
 salt
+controller
 
 [saltminion]
 centos7.0-master

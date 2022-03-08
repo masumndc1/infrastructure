@@ -11,6 +11,7 @@ jenkin
 minions
 controllers
 computes
+puppetpodnodes
 pods
 
 [controllers]
@@ -25,10 +26,13 @@ jenkins
 [puppetmaster]
 centos7.0-master
 puppet
+worker
 
 [puppetnodes]
 freebsd-prod
 freebsd-devel
+
+[puppetpodnodes]
 pu-dv1
 pu-dv2
 pu-pr1

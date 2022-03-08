@@ -1,0 +1,99 @@
+# puppet master configuration on centos7.0
+---
+- hosts: centos7.0-master:worker
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: Disable SElinux
+    selinux:
+      state: disabled
+    when: ansible_distribution == "CentOS"
+
+  - name: Set puppet server in /etc/hosts file
+    lineinfile:
+      path: /etc/hosts
+      line: "{{ hosts_line }}"
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Install puppet repository rpm
+    yum: 
+      name: https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm
+      state: present
+    when: ansible_distribution == "CentOS"
+
+  - name: Install puppet repository gpg key file
+    apt:
+      deb: https://apt.puppetlabs.com/puppet7-release-focal.deb
+      state: present
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Install puppet server in Ubuntu
+    apt:
+      name: puppetserver
+      state: present
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Set 512MB of ram to puppet
+    lineinfile:
+      path: /etc/default/puppetserver
+      regexp: 'JAVA_ARGS="-Xms2g -Xmx2g -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"'
+      line: "{{ java_args }}"
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Install required packages in CentOS
+    yum:
+      name: [ 'vim', 'tree', 'net-tools','ntp','ntpdate','puppetserver','git' ]
+      state: latest 
+    when: ansible_distribution == "CentOS"
+
+  - name: Install required packages in Ubuntu
+    yum:
+      name: "{{ deb_package }}"
+      state: latest 
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Enabling firewall ports for puppetmaster
+    firewalld:
+      port: 8140/tcp
+      permanent: yes
+      state: enabled
+    when: ansible_distribution == "CentOS"
+
+  - name: Allocating 1gb ram for puppet server
+    lineinfile:
+      path: /etc/sysconfig/puppetserver
+      regexp: 'JAVA_ARGS="-Xms2g -Xmx2g -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"'
+      line: JAVA_ARGS="-Xms1g -Xmx1g -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"
+    when: ansible_distribution == "CentOS"
+
+  - name: Settings for puppetserver configuration file
+    template:
+      src: template/puppet-server.conf.j2
+      dest: /etc/puppetlabs/puppet/puppet.conf
+    when: ansible_distribution == "CentOS"
+
+  - name: Enable ntpdate service but dont start
+    service: 
+      name: ntpdate
+      enabled: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: Enable ntp and puppetserver service
+    service: 
+      name: "{{ item }}"
+      enabled: yes
+      state: started
+    with_items:
+      - ntpd
+      - puppetserver
+    when: ansible_distribution == "CentOS"
+
+  - name: Enable puppetserver service
+    service: 
+      name: puppetserver
+      enabled: yes
+      state: started
+    when: ansible_distribution == "Ubuntu"

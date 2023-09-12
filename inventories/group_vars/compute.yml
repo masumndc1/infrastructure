@@ -1,0 +1,6 @@
+---
+core_password: secret
+cluster_address: 192.168.2.215
+core_address: 192.168.2.215
+zypper_repo:
+  - 'https://download.opensuse.org/repositories/filesystems/openSUSE_Tumbleweed/filesystems.repo'

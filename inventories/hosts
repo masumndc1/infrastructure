@@ -13,6 +13,7 @@ controllers
 compute
 puppetpodnodes
 pods
+devstacks
 
 [controllers]
 controller
@@ -95,6 +96,9 @@ sa-pr3
 sa-pr4
 sa-pr5
 salt
+
+[devstacks]
+devstack
 
 [all:vars]
 ansible_user = masum

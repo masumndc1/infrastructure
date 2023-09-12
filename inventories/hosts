@@ -63,15 +63,15 @@ sa-pr4
 sa-pr5
 
 [lxds]
-devel-centos7
-devel-centos8
-devel-ubuntu16
-devel-ubuntu18
-devel-ubuntu20
-prod1-centos7
-prod1-ubuntu16
-prod2-centos7
-prod2-ubuntu16
+net-dev1
+net-dev2
+net-prod1
+net-prod2
+sys-dev1
+sys-dev2
+sys-prod1
+sys-prod2
+
 
 [jumphosts]
 jumphost
@@ -99,6 +99,8 @@ salt
 
 [devstacks]
 devstack
+
+[lxds:vars]
 
 [all:vars]
 ansible_user = masum

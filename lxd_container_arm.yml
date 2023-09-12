@@ -1,0 +1,119 @@
+---
+# this script will install lxd container
+- hosts: compute
+  become: yes
+  gather_facts: yes
+  ignore_errors: true
+
+  tasks:
+  - name: Create a started sys-prod1 container
+    lxd_container:
+      name: sys-prod1
+      state: started
+      source:
+        type: image
+        mode: pull
+        server: https://images.linuxcontainers.org
+        protocol: simplestreams
+        alias: opensuse/tumbleweed/arm64
+      profiles: ["default"]
+      wait_for_ipv4_addresses: true
+      timeout: 600
+
+  - name: Create a started sys-prod2 container
+    lxd_container:
+      name: sys-prod2
+      state: started
+      source:
+        type: image
+        mode: pull
+        server: https://images.linuxcontainers.org
+        protocol: simplestreams
+        alias: opensuse/tumbleweed/arm64
+      profiles: ["default"]
+      wait_for_ipv4_addresses: true
+      timeout: 600
+
+  - name: Create a started sys-dev1 container
+    lxd_container:
+      name: sys-dev1
+      state: started
+      source:
+        type: image
+        mode: pull
+        server: https://images.linuxcontainers.org
+        protocol: simplestreams
+        alias: opensuse/tumbleweed/arm64
+      profiles: ["default"]
+      wait_for_ipv4_addresses: true
+      timeout: 600
+
+  - name: Create a started sys-dev2 container
+    lxd_container:
+      name: sys-dev2
+      state: started
+      source:
+        type: image
+        mode: pull
+        server: https://images.linuxcontainers.org
+        protocol: simplestreams
+        alias: opensuse/tumbleweed/arm64
+      profiles: ["default"]
+      wait_for_ipv4_addresses: true
+      timeout: 600
+
+  - name: Create a started net-prod1 container
+    lxd_container:
+      name: net-prod1
+      state: started
+      source:
+        type: image
+        mode: pull
+        server: https://images.linuxcontainers.org
+        protocol: simplestreams
+        alias: opensuse/tumbleweed/arm64
+      profiles: ["default"]
+      wait_for_ipv4_addresses: true
+      timeout: 600
+
+  - name: Create a started net-prod2 container
+    lxd_container:
+      name: net-prod2
+      state: started
+      source:
+        type: image
+        mode: pull
+        server: https://images.linuxcontainers.org
+        protocol: simplestreams
+        alias: opensuse/tumbleweed/arm64
+      profiles: ["default"]
+      wait_for_ipv4_addresses: true
+      timeout: 600
+
+  - name: Create a started net-dev1 container
+    lxd_container:
+      name: net-dev1
+      state: started
+      source:
+        type: image
+        mode: pull
+        server: https://images.linuxcontainers.org
+        protocol: simplestreams
+        alias: opensuse/tumbleweed/arm64
+      profiles: ["default"]
+      wait_for_ipv4_addresses: true
+      timeout: 600
+
+  - name: Create a started net-dev2 container
+    lxd_container:
+      name: net-dev2
+      state: started
+      source:
+        type: image
+        mode: pull
+        server: https://images.linuxcontainers.org
+        protocol: simplestreams
+        alias: opensuse/tumbleweed/arm64
+      profiles: ["default"]
+      wait_for_ipv4_addresses: true
+      timeout: 600

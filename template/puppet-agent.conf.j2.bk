@@ -1,0 +1,9 @@
+[main]
+certname = {{ ansible_hostname }}
+server = {{ puppet_server }}
+{% if ansible_hostname == 'prod' %}
+environment = production
+{% elif ansible_hostname == 'devel' %}
+environment = devel
+{% endif %}
+runinterval = 1h

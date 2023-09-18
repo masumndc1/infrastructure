@@ -1,0 +1,98 @@
+# puppet master configuration
+---
+- hosts: puppetmaster
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: Install required packages in Redhat family
+    yum:
+      name: "{{ rpm_package }}"
+      state: latest
+    when: ansible_os_family == "RedHat"
+
+  - name: Disable SElinux
+    selinux:
+      state: disabled
+    when: ansible_os_family == "RedHat"
+
+  - name: Install puppet repository gpg key file
+    apt:
+      deb: "{{ puppet_gpg_key_debian }}"
+      state: present
+      update_cache: yes
+    when: ansible_distribution == "Debian"
+
+  - name: Install required packages in debian
+    apt:
+      name: "{{ deb_package }}"
+      state: latest
+      update_cache: yes
+    when: ansible_os_family == "Debian"
+
+  - name: Allocating 1gb ram for server in Redhat family
+    lineinfile:
+      path: /etc/sysconfig/puppetserver
+      regexp: "{{ java_orig_args }}"
+      line: "{{ java_replace_args }}"
+    when: ansible_os_family == "Suse"
+    # ansible_os_family == "RedHat"
+ 
+  - name: Set 512mb of ram to puppet in Debian
+    lineinfile:
+      path: /etc/default/puppet-master
+      line: "{{ java_replace_args }}"
+    when: ansible_os_family == "Debian"
+
+  - name: Enabling firewall ports for puppetmaster
+    firewalld:
+      port: "{{ item }}"
+      permanent: yes
+      state: enabled
+    with_items: "{{ port }}"
+    when: ansible_os_family == "RedHat" or
+      ansible_os_family == "Suse" or
+      ansible_os_family == "Debian"
+
+  - name: Install puppet repo in Opensuse
+    zypper_repository:
+      repo: "{{ zypper_puppet_repo }}"
+      state: present
+      runrefresh: true
+    when: ansible_os_family == "Suse"
+
+  - name: Install required packages Opensuse
+    zypper:
+      name: puppet
+      state: present
+      update_cache: true
+    when: ansible_os_family == "Suse"
+
+  - name: Settings for puppetserver configuration file
+    template:
+      src: template/puppetserver.conf.j2
+      dest: /etc/puppet/puppet.conf
+    when: ansible_os_family == "RedHat" or
+      ansible_os_family == "Suse" or
+      ansible_os_family == "Debian"
+
+  - name: Enable ntp and puppetserver service
+    service:
+      name: "{{ item }}"
+      enabled: yes
+      state: started
+    with_items:
+      - ntp
+      - puppet-master
+      - firewalld
+    when: ansible_os_family == "Debian"
+
+  - name: Enable ntp and puppetserver service
+    service:
+      name: "{{ item }}"
+      enabled: yes
+      state: started
+    with_items:
+      - chronyd
+      - puppet
+    when: ansible_os_family == "RedHat"

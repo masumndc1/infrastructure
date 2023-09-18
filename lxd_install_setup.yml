@@ -1,0 +1,62 @@
+---
+# this playbook will install lxd in all compute nodes
+# ansible-playbook -i inventory/hosts lxd.yml
+- hosts: compute
+  become: yes
+  gather_facts: yes
+  ignore_errors: yes
+
+  tasks:
+  - name: Remove some pre install packages
+    apt:
+      name: [ 'lxd', 'lxd-client' ]
+      purge: yes
+      state: absent
+    when: ansible_os_family == "Debian"
+
+  - name: Enable IP forwarding
+    sysctl:
+      name: net.ipv4.ip_forward
+      value: 1
+      sysctl_set: true
+
+  - name: Install snapd in debian-based systems
+    apt:
+      name: [ 'snapd', 'zfsutils-linux' ]
+      state: latest
+      update_cache: yes
+    when: ansible_os_family == "Debian"
+
+  - name: Insall lxd by snapd in debian-based systems
+    snap:
+      name: lxd
+      state: present
+    when: ansible_os_family == "Debian"
+
+  - name: Insall lxd in OpenSuse
+    zypper:
+      name: lxd
+      state: present
+      update_cache: true
+    when: ansible_os_family == "Suse"
+
+  - name: Run lxd service
+    service:
+      name: 'lxd'
+      state: started
+      enabled: true
+    when: ansible_os_family == "Suse"
+
+  - name: Add lxdbr0 in trusted zone in Firewalld
+    firewalld:
+      zone: trusted
+      interface: lxdbr0
+      permanent: true
+      state: enabled
+    when: ansible_os_family == "Suse"
+
+#  - name: Copy preseed file
+#    template:
+#      src: template/preseed.j2
+#      dest: /tmp/preseed
+#      mode: 0640

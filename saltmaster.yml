@@ -23,7 +23,7 @@
       state: latest
     when: ansible_distribution == "CentOS"
 
-  - name: install common packages for Ubuntu 
+  - name: install common packages for Ubuntu
     apt:
       name: "{{ deb_package }}"
       state: latest
@@ -44,12 +44,19 @@
       filename: saltstack
     when: ansible_distribution == "Ubuntu"
 
-  - name: install salt-master in Ubuntu 
+  - name: install salt-master in Ubuntu
     apt:
       name: "{{ salt_package }}"
       state: latest
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
+
+  - name: install salt-master in Opensuse
+    zypper:
+      name: "{{ salt_package }}"
+      state: latest
+      update_cache: yes
+    when: ansible_os_family == "Suse"
 
   - name: Opening firewall ports for saltminion
     firewalld:
@@ -58,16 +65,17 @@
       permanent: yes
     with_items: "{{ salt_port }}"
     ignore_errors: true
-    when: ansible_distribution == "CentOS"
+    when: ansible_distribution == "CentOS" or
+          ansible_os_family == "Suse"
 
-  - name: Create directory for base 
+  - name: Create directory for base
     file:
       path: /srv/salt
       state: directory
       mode: '0644'
 
   - name: Cloning git repository for state files.
-    git: 
+    git:
       #repo: git@github.com:masumndc1/salt-states.git
       repo: 'https://github.com/masumndc1/salt-states.git'
       dest: /srv/salt
@@ -78,12 +86,12 @@
       name: salt-master
       enabled: true
       state: started
-      
+
   - name: Placing configuration files
     template:
       src: template/master_conf.j2
       dest: /etc/salt/master.d/file_gitfs.conf
-      mode: '0644'  
+      mode: '0644'
     notify:
       - Restart salt-master service
 

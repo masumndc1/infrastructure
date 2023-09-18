@@ -1,0 +1,31 @@
+---
+hostname: puppetmaster
+deb_package:
+  - openjdk-11-jdk
+  - python3-pip
+  - net-tools
+  - iputils-ping
+  - git
+  - vim
+  - wget
+  - gcc
+  - gpg
+  - ntp
+  - ntpdate
+  - puppet-master
+  - firewalld
+  - python3-firewall
+rpm_package:
+  - tree
+  - net-tools
+  - chrony
+  - puppet
+  - python3-libselinux
+  - python3-firewall
+  - firewalld
+  - selinux-policy
+port:
+  - "8140/tcp"
+puppet_gpg_key_debian: "https://apt.puppet.com/puppet7-release-bullseye.deb"
+java_orig_args: "JAVA_ARGS=\"-Xms2g -Xmx2g -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger\""
+java_replace_args: "JAVA_ARGS=\"-Xms512m -Xmx512m -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger\""

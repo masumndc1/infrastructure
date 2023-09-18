@@ -1,6 +1,6 @@
 ---
-# run this playbook with -l minions or saltminion or lxds
-- hosts: saltminion:minions:lxds
+# run this playbook with -l saltminion
+- hosts: saltminions
   become: yes
   gather_facts: yes
 
@@ -31,7 +31,7 @@
     when: ansible_distribution == "CentOS" and
           ansible_distribution_major_version == "8"
 
-  - name: install common packages for Ubuntu 
+  - name: install common packages for Ubuntu
     yum:
       name: "{{ deb_package }}"
       state: latest
@@ -41,22 +41,22 @@
     apt_key:
       url: "{{ salt_key_url16 }}"
       state: present
-    when: ansible_distribution == "Ubuntu" and 
+    when: ansible_distribution == "Ubuntu" and
           ansible_distribution_major_version == "16"
 
   - name: Add salt repo for Ubuntu
     apt_repository:
       repo: "{{ apt_repo_name16 }}"
       state: present
-      filename: saltstack 
-    when: ansible_distribution == "Ubuntu" and 
+      filename: saltstack
+    when: ansible_distribution == "Ubuntu" and
           ansible_distribution_major_version == "16"
 
   - name: Add salt key for Ubuntu
     apt_key:
       url: "{{ salt_key_url20 }}"
       state: present
-    when: ansible_distribution == "Ubuntu" and 
+    when: ansible_distribution == "Ubuntu" and
           ansible_distribution_major_version == "20"
 
   - name: Add salt repo for Ubuntu
@@ -64,7 +64,7 @@
       repo: "{{ apt_repo_name20 }}"
       state: present
       filename: saltstack 
-    when: ansible_distribution == "Ubuntu" and 
+    when: ansible_distribution == "Ubuntu" and
           ansible_distribution_major_version == "20"
 
   - name: install salt-minion for centos
@@ -88,6 +88,13 @@
       update_cache: yes
     when: ansible_distribution == "CentOS"
 
+  - name: Install salt-minion in Opensuse
+    zypper:
+      name: salt-minion
+      state: latest
+      update_cache: yes
+    when: ansible_os_family == "Suse"
+
   - name: Run the salt-minion service
     service:
       name: salt-minion
@@ -98,12 +105,12 @@
     lineinfile:
       path: /etc/salt/minion
       regexp: '^#master:|^master:'
-      line: 'master: salt'
+      line: 'master: saltmaster'
     notify:
       - Restart salt-minion service
 
   - name: Setting minion_id in /etc/salt/minion_id file
-    template: 
+    template:
       src: template/minion_id.j2
       dest: /etc/salt/minion_id
       mode: 0644

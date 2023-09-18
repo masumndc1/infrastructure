@@ -1,9 +1,9 @@
 [main]
-certname = {{ ansible_hostname }}
+ssldir = /var/lib/puppet/ssl
 server = {{ puppet_server }}
-{% if ansible_hostname == 'prod' %}
-environment = production
-{% elif ansible_hostname == 'devel' %}
-environment = devel
-{% endif %}
 runinterval = 1h
+
+[master]
+vardir = /var/lib/puppet
+cadir = /var/lib/puppet/ssl/ca
+dns_alt_names = {{ puppet_server }}

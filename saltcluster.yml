@@ -1,4 +1,0 @@
----
-- import_playbook: saltmaster-centos.yml
-- import_playbook: saltminion.yml
-

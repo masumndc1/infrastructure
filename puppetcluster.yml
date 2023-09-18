@@ -1,3 +1,0 @@
----
-- import_playbook: puppet-master.yml
-- import_playbook: puppet-agent.yml

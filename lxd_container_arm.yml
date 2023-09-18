@@ -6,6 +6,20 @@
   ignore_errors: true
 
   tasks:
+  - name: Create a started saltmaster container
+    lxd_container:
+      name: saltmaster
+      state: started
+      source:
+        type: image
+        mode: pull
+        server: https://images.linuxcontainers.org
+        protocol: simplestreams
+        alias: opensuse/tumbleweed/arm64
+      profiles: ["default"]
+      wait_for_ipv4_addresses: true
+      timeout: 600
+
   - name: Create a started sys-prod1 container
     lxd_container:
       name: sys-prod1
@@ -62,6 +76,20 @@
       wait_for_ipv4_addresses: true
       timeout: 600
 
+  - name: Create a started puppetmaster container
+    lxd_container:
+      name: puppetmaster
+      state: started
+      source:
+        type: image
+        mode: pull
+        server: https://images.linuxcontainers.org
+        protocol: simplestreams
+        alias: debian/bullseye/arm64
+      profiles: ["default"]
+      wait_for_ipv4_addresses: true
+      timeout: 600
+
   - name: Create a started net-prod1 container
     lxd_container:
       name: net-prod1
@@ -71,7 +99,7 @@
         mode: pull
         server: https://images.linuxcontainers.org
         protocol: simplestreams
-        alias: opensuse/tumbleweed/arm64
+        alias: debian/bullseye/arm64
       profiles: ["default"]
       wait_for_ipv4_addresses: true
       timeout: 600
@@ -85,7 +113,7 @@
         mode: pull
         server: https://images.linuxcontainers.org
         protocol: simplestreams
-        alias: opensuse/tumbleweed/arm64
+        alias: debian/bullseye/arm64
       profiles: ["default"]
       wait_for_ipv4_addresses: true
       timeout: 600
@@ -99,7 +127,7 @@
         mode: pull
         server: https://images.linuxcontainers.org
         protocol: simplestreams
-        alias: opensuse/tumbleweed/arm64
+        alias: debian/bullseye/arm64
       profiles: ["default"]
       wait_for_ipv4_addresses: true
       timeout: 600
@@ -113,7 +141,7 @@
         mode: pull
         server: https://images.linuxcontainers.org
         protocol: simplestreams
-        alias: opensuse/tumbleweed/arm64
+        alias: debian/bullseye/arm64
       profiles: ["default"]
       wait_for_ipv4_addresses: true
       timeout: 600

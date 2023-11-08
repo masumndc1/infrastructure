@@ -33,6 +33,7 @@ sys-dev1
 sys-dev2
 sys-prod1
 sys-prod2
+monitoring
 
 [lxds]
 puppetmaster
@@ -45,6 +46,7 @@ sys-dev1
 sys-dev2
 sys-prod1
 sys-prod2
+monitoring
 
 [jumphosts]
 jumphost

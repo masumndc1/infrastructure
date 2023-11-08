@@ -76,6 +76,20 @@
       wait_for_ipv4_addresses: true
       timeout: 600
 
+  - name: Create a started monitoring container
+    lxd_container:
+      name: monitoring
+      state: started
+      source:
+        type: image
+        mode: pull
+        server: https://images.linuxcontainers.org
+        protocol: simplestreams
+        alias: opensuse/tumbleweed/arm64
+      profiles: ["default"]
+      wait_for_ipv4_addresses: true
+      timeout: 600
+
   - name: Create a started puppetmaster container
     lxd_container:
       name: puppetmaster

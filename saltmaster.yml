@@ -58,6 +58,13 @@
       update_cache: yes
     when: ansible_os_family == "Suse"
 
+  - name: install salt-master in Opensuse
+    zypper:
+      name: "{{ salt_package }}"
+      state: latest
+      update_cache: yes
+    when: ansible_os_family == "Suse"
+
   - name: Opening firewall ports for saltminion
     firewalld:
       port: "{{ item }}"
@@ -74,18 +81,20 @@
       state: directory
       mode: '0644'
 
-  - name: Cloning git repository for state files.
-    git:
-      #repo: git@github.com:masumndc1/salt-states.git
-      repo: 'https://github.com/masumndc1/salt-states.git'
-      dest: /srv/salt
-    ignore_errors: true
-
   - name: Run the salt-master service
     service:
       name: salt-master
       enabled: true
       state: started
+
+  - name: Place the top file
+    template:
+      src: template/top.j2
+      dest: /srv/salt/top.sls
+      mode: '0644'
+    notify:
+      - Restart salt-master service
+    tags: top
 
   - name: Placing configuration files
     template:

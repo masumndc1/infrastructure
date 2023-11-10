@@ -19,6 +19,7 @@ salt_package:
   - salt-api
   - git
   - firewalld
+  - python-pygit2
 
 salt_minion_package:
   - salt-minion
@@ -29,6 +30,9 @@ salt_port:
 
 salt_key_url: https://repo.saltproject.io/py3/ubuntu/20.04/amd64/latest/salt-archive-keyring.gpg
 salt_repo_url: deb https://repo.saltproject.io/py3/ubuntu/20.04/amd64/latest focal main
+
+centos_salt_key: https://repo.saltproject.io/salt/py3/redhat/9/arm64/SALT-PROJECT-GPG-PUBKEY-2023.pub
+centos_repo_url: https://repo.saltproject.io/salt/py3/redhat/9/arm64/latest.repo
 
 interface1: ens160
 

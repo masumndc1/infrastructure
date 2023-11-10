@@ -1,14 +1,14 @@
 fileserver_backend:
-  - roots
   - gitfs
+  - roots
+
+gitfs_remotes:
+  - https://github.com/masumndc1/monitoring-formula.git
 
 file_roots:
   base:
     - /srv/salt
   devel:
     - /srv/salt
-
-gitfs_remotes:
-  - git://github.com/masumndc1/salt-states.git
 
 gitfs_provider: pygit2

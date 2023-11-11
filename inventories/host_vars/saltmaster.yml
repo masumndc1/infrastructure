@@ -12,27 +12,31 @@ deb_package:
   - gpg
 
 salt_package:
+  - git
+  - firewalld
+  - python-pygit2
   - salt-master
   - salt-ssh
   - salt-syndic
   - salt-cloud
   - salt-api
-  - git
-  - firewalld
-  - python-pygit2
+  - python-PyGithub
 
-salt_minion_package:
-  - salt-minion
+centos_pkg:
+  - epel-release
+
+suse_pkg:
+  - python39-PyGithub
 
 salt_port:
   - "4505/tcp"
   - "4506/tcp"
 
-salt_key_url: https://repo.saltproject.io/py3/ubuntu/20.04/amd64/latest/salt-archive-keyring.gpg
-salt_repo_url: deb https://repo.saltproject.io/py3/ubuntu/20.04/amd64/latest focal main
+deb_key_url: https://repo.saltproject.io/py3/ubuntu/20.04/amd64/latest/salt-archive-keyring.gpg
+deb_repo_url: deb https://repo.saltproject.io/py3/ubuntu/20.04/amd64/latest focal main
 
-centos_salt_key: https://repo.saltproject.io/salt/py3/redhat/9/arm64/SALT-PROJECT-GPG-PUBKEY-2023.pub
-centos_repo_url: https://repo.saltproject.io/salt/py3/redhat/9/arm64/latest.repo
+centos_repo_url: https://repo.saltproject.io/salt/py3/redhat/9/arm64/latest
+centos_salt_key: https://repo.saltproject.io/salt/py3/redhat/9/arm64/latest/SALT-PROJECT-GPG-PUBKEY-2023.pub
 
 interface1: ens160
 

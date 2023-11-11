@@ -11,16 +11,29 @@
         state: restarted
 
   tasks:
-  - name: install common packages for CentOS
-    yum:
-      name: "{{ rpm_package }}"
-      state: latest
+  - name: install salt repo for CentOS
+    yum_repository:
+      name: salt
+      description: "Salt repo for RHEL/CentOS 9 PY3"
+      baseurl: "{{ centos_repo_url }}"
+      enabled: true
+      gpgcheck: true
+      gpgkey: "{{ centos_salt_key }}"
+      state: present
     when: ansible_distribution == "CentOS"
 
-  - name: install salt repo for CentOS
+  - name: install epel-release for CentOS
     yum:
-      name: "{{ salt_repo_url }}"
+      name: "{{ centos_pkg }}"
       state: latest
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: install salt-master for CentOS
+    yum:
+      name: "{{ salt_package }}"
+      state: latest
+      update_cache: yes
     when: ansible_distribution == "CentOS"
 
   - name: install common packages for Ubuntu
@@ -32,13 +45,13 @@
 
   - name: Add salt key for Ubuntu
     apt_key:
-      url: "{{ salt_key_url }}"
+      url: "{{ deb_key_url }}"
       state: present
     when: ansible_distribution == "Ubuntu"
 
   - name: Add salt repo for Ubuntu
     apt_repository:
-      repo: "{{ salt_repo_url }}"
+      repo: "{{ deb_repo_url }}"
       state: present
       update_cache: yes
       filename: saltstack
@@ -51,9 +64,9 @@
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
 
-  - name: install salt-master in Opensuse
+  - name: install PyGithub in Opensuse
     zypper:
-      name: "{{ salt_package }}"
+      name: "{{ suse_pkg }}"
       state: latest
       update_cache: yes
     when: ansible_os_family == "Suse"
@@ -79,7 +92,7 @@
     file:
       path: /srv/salt
       state: directory
-      mode: '0644'
+      mode: '0755'
 
   - name: Run the salt-master service
     service:

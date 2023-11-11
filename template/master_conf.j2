@@ -9,6 +9,7 @@ file_roots:
     - /srv/salt
 
 gitfs_remotes:
-  - https://github.com/masumndc1/monitoring-formula.git
+  - https://github.com/masumndc1/monitoring-formula.git:
+    - mountpoint: salt://monitoring
 
 gitfs_provider: gitpython

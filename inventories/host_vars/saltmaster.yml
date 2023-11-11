@@ -20,10 +20,10 @@ salt_package:
   - salt-syndic
   - salt-cloud
   - salt-api
-  - python-PyGithub
 
 centos_pkg:
   - epel-release
+  - python3-PyGithub
 
 suse_pkg:
   - python39-PyGithub

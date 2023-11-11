@@ -1,11 +1,13 @@
+# example top file
+# this should be in /srv/salt folder
+# /srv/salt should have 0755
 base:
   '*':
-    - default
-
-prod:
-  'sys-prod*':
-    - monitoring
+    - init
 
 devel:
+  'monitoring*':
+    - monitoring.default
+
   'sys-dev*':
-    - monitoring
+    - monitoring.nagios

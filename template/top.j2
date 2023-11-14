@@ -7,7 +7,7 @@ base:
 
 devel:
   'monitoring*':
-    - monitoring.default
+    - monitoring
 
-  'sys-dev*':
-    - monitoring.nagios
+  'sys-*':
+    - monitoring.nrpe_agent

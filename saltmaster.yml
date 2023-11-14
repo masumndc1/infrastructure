@@ -94,6 +94,12 @@
       state: directory
       mode: '0755'
 
+  - name: Create directory for pillar
+    file:
+      path: /srv/salt/pillar
+      state: directory
+      mode: '0755'
+
   - name: Run the salt-master service
     service:
       name: salt-master
@@ -113,6 +119,14 @@
     template:
       src: template/master_conf.j2
       dest: /etc/salt/master.d/file_gitfs.conf
+      mode: '0644'
+    notify:
+      - Restart salt-master service
+
+  - name: Placing pillar configuration files
+    template:
+      src: template/pillar_conf.j2
+      dest: /etc/salt/master.d/pillar.conf
       mode: '0644'
     notify:
       - Restart salt-master service

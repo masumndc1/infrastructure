@@ -1,8 +1,9 @@
 ---
 # this will install a jumphost in localhost
-- hosts: localhost
+- hosts: localhost:jumphost
   gather_facts: yes
   become: yes
+  ignore_errors: true
 
   tasks:
   - name: Install openssh-server
@@ -22,3 +23,35 @@
       name: ssh
       enabled: yes
       state: started
+
+  - name: Install firewalld pkg in ubuntu
+    apt:
+      name: "firewalld"
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Install firewalld pkg in opensuse
+    zypper:
+      name: "firewalld"
+      state: latest
+      update_cache: yes
+    when: ansible_os_family == "Suse"
+
+  - name: Enable firewalld service
+    service:
+      name: firewalld
+      enabled: true
+      state: started
+
+  - name: Enable 8080 port forwarding
+    firewalld:
+      port_forward:
+        - port: 8080
+          proto: tcp
+          toaddr: "{{ monitoring_ip }}"
+          toport: 80
+      zone: public
+      permanent: true
+      immediate: true
+      state: enabled

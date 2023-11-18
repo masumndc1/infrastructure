@@ -31,7 +31,7 @@
       notify:
         - Restart nagios
 
-    - name: Run nrpe service 
+    - name: Run nrpe service
       service:
         name: "{{ item }}"
         state: started

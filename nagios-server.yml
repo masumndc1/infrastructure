@@ -15,7 +15,7 @@
 
     - name: Install nagios and related packages in Ubuntu
       apt:
-        name: ['apache2', 'nagios', 'nagios-common', 'pytho3-passlib']
+        name: ['apache2', 'nagios', 'nagios-common', 'python3-passlib']
         state: latest
         update_cache: yes
       when: ansible_distribution == "Ubuntu"
@@ -28,7 +28,7 @@
         group: nagios
         mode: '0755'
   
-    - name: Run nagios and httpd service 
+    - name: Run nagios and httpd service
       service:
         name: "{{ item }}"
         state: started
@@ -51,7 +51,7 @@
         password: 'nagiosadmin'
         owner: root
         group: apache
-        mode: 0640 
+        mode: 0640
       notify:
         - Restart httpd on CentOS/Rocky
 

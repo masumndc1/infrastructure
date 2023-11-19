@@ -30,7 +30,7 @@
         mode: pull
         server: https://images.linuxcontainers.org
         protocol: simplestreams
-        alias: opensuse/tumbleweed/arm64
+        alias: centos/9-Stream/arm64
       profiles: ["default"]
       wait_for_ipv4_addresses: true
       timeout: 600
@@ -58,7 +58,7 @@
         mode: pull
         server: https://images.linuxcontainers.org
         protocol: simplestreams
-        alias: opensuse/tumbleweed/arm64
+        alias: centos/9-Stream/arm64
       profiles: ["default"]
       wait_for_ipv4_addresses: true
       timeout: 600

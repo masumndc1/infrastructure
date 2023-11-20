@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # useradd masum
-# echo "masum ALL=\(ALL\) NOPASSWD: ALL" > /etc/sudoers.d/10_masum
+# echo "masum ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/10_masum
 
 import functools
 import logging
@@ -44,7 +44,12 @@ def pkgs():
     for vm_name in hosts():
         if 'net' in vm_name or 'puppetmaster' in vm_name:
             dict[vm_name] = 'apt-get'
-        elif 'sys' in vm_name or 'saltmaster' in vm_name:
+        elif 'sys-dev1' in vm_name or \
+            'saltmaster' in vm_name or \
+            'sys-prod1' in vm_name or \
+                'monitoring' in vm_name:
+            dict[vm_name] = 'yum'
+        elif 'sys-dev2' in vm_name or 'sys-prod2' in vm_name:
             dict[vm_name] = 'zypper'
         else:
             continue

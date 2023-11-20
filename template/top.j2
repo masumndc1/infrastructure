@@ -3,9 +3,8 @@
 # /srv/salt should have 0755
 base:
   '*':
-    - init
+    - monitoring.greet
 
-devel:
   'monitoring*':
     - monitoring
 

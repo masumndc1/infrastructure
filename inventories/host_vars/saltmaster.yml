@@ -23,7 +23,10 @@ salt_package:
 
 centos_pkg:
   - epel-release
+  - python3-pygit2
+  - python3-pygithub
   - python3-PyGithub
+  - python3-GitPython
 
 suse_pkg:
   - python39-PyGithub

@@ -22,11 +22,13 @@
       state: present
     when: ansible_distribution == "CentOS"
 
-  - name: install epel-release for CentOS
+  - name: install common pkgs for CentOS
     yum:
-      name: "{{ centos_pkg }}"
+      name: "{{ item }}"
       state: latest
       update_cache: yes
+    with_items:
+      - "{{ centos_pkg }}"
     when: ansible_distribution == "CentOS"
 
   - name: install salt-master for CentOS
@@ -122,6 +124,10 @@
       mode: '0644'
     notify:
       - Restart salt-master service
+
+  - name: Install gitpython through salt-pip
+    shell:
+      cmd: salt-pip install gitpython
 
   - name: Placing pillar configuration files
     template:

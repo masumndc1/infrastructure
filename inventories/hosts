@@ -9,6 +9,7 @@ jumphosts
 nagios
 jenkins
 devstacks
+nids
 
 [compute]
 suse
@@ -47,6 +48,8 @@ sys-dev2
 sys-prod1
 sys-prod2
 monitoring
+elasticsiem
+kibana
 
 [jumphosts]
 jumphost
@@ -56,6 +59,12 @@ jumphost
 
 [devstacks]
 devstack
+
+[nids]
+sys-dev1
+sys-dev2
+sys-prod1
+sys-prod2
 
 [all:vars]
 ansible_user = masum

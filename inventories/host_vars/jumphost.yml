@@ -1,2 +1,4 @@
 ---
 monitoring_ip: "10.91.203.114"
+elastic_node_ip: '10.91.203.62'
+kibana_node_ip: '10.91.203.16'

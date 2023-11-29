@@ -59,3 +59,19 @@
       permanent: true
       immediate: true
       state: enabled
+
+  - name: Enable 9200 port forwarding for elasticsearch
+    firewalld:
+      rich_rule: rule family=ipv4 forward-port port=9200 protocol=tcp to-port=9200 to-addr={{ elastic_node_ip }}
+      zone: public
+      permanent: true
+      immediate: true
+      state: enabled
+
+  - name: Enable 5601 port forwarding for kibana
+    firewalld:
+      rich_rule: rule family=ipv4 forward-port port=5601 protocol=tcp to-port=5601 to-addr={{ kibana_node_ip }}
+      zone: public
+      permanent: true
+      immediate: true
+      state: enabled

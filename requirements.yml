@@ -1,0 +1,4 @@
+- src: https://github.com/masumndc1/ansible-elasticsiem.git
+  scm: git
+  path: roles
+  version: master

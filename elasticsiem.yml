@@ -1,0 +1,23 @@
+---
+- hosts: elasticsiem
+  become: yes
+  gather_facts: true
+
+  roles:
+    - ansible-elasticsiem
+
+
+- hosts: kibana
+  become: yes
+  gather_facts: true
+
+  roles:
+    - ansible-elasticsiem
+
+
+- hosts: nids
+  become: yes
+  gather_facts: true
+
+  roles:
+    - ansible-elasticsiem

@@ -1,0 +1,15 @@
+---
+- hosts: ubu-lxd
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: get list of all containers
+      command:
+        cmd: 'incus list -f csv'
+      register: container_list
+
+    - name: start sys-alma8-dev1 container
+      command:
+        cmd: 'incus launch local:alma8-packer sys-alma8-dev1'
+      when: 'sys-alma8-dev1 not in container_list.stdout'

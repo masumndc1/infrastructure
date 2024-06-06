@@ -10,6 +10,7 @@ nagios
 jenkins
 devstacks
 nids
+images
 
 [compute]
 suse
@@ -65,6 +66,9 @@ sys-dev1
 sys-dev2
 sys-prod1
 sys-prod2
+
+[images]
+image-server
 
 [all:vars]
 ansible_user = masum

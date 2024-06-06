@@ -1,0 +1,10 @@
+---
+- hosts: compute
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: populate computes host file by getting containers ip
+      script: scripts/py-lxc.py
+      args:
+        executable: python3

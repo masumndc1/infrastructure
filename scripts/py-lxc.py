@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 
+import os
 import subprocess
 
-out = subprocess.getoutput("sudo lxc list -f csv")
 host = {}
+
+if os.path.exists('/usr/bin/incus'):
+    out = subprocess.getoutput("sudo incus list -f csv")
+else:
+    out = subprocess.getoutput("sudo lxc list -f csv")
 
 for vm in out.splitlines():
     name = vm.split(',')[0]
@@ -19,4 +24,5 @@ with open("/etc/hosts", "r+") as file:
                 match = match + 1
 
         if not match:
-            file.write(f"{v} {k}\n")
+            if k and v:
+                file.write(f"{v} {k}\n")

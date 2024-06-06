@@ -47,8 +47,16 @@ net-prod2
 saltmaster
 sys-alma8-dev1
 sys-alma8-dev2
+sys-alma8-prod
 sys-alma9-dev1
 sys-alma9-dev2
+sys-alma9-prod
+sys-suse-dev1
+sys-suse-dev2
+sys-suse-prod
+sys-ubu20-dev1
+sys-ubu20-dev2
+sys-ubu20-prod
 sys-dev2
 sys-prod1
 sys-prod2

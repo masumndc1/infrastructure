@@ -2,3 +2,8 @@
   scm: git
   path: roles
   version: master
+
+- src: https://github.com/masumndc1/ansible-role-packer-incus.git
+  scm: git
+  path: roles
+  version: main

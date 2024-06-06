@@ -14,6 +14,7 @@ images
 
 [compute]
 suse
+ubu-lxd
 
 [jenkins]
 jenkin
@@ -44,7 +45,10 @@ net-dev2
 net-prod1
 net-prod2
 saltmaster
-sys-dev1
+sys-alma8-dev1
+sys-alma8-dev2
+sys-alma9-dev1
+sys-alma9-dev2
 sys-dev2
 sys-prod1
 sys-prod2

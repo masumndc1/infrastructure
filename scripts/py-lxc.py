@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
 
-import os
 import subprocess
 
 host = {}
-
-if os.path.exists('/usr/bin/incus'):
-    out = subprocess.getoutput("sudo incus list -f csv")
-else:
-    out = subprocess.getoutput("sudo lxc list -f csv")
+out = subprocess.getoutput("sudo incus list -f csv")
 
 for vm in out.splitlines():
     name = vm.split(',')[0]
@@ -16,9 +11,9 @@ for vm in out.splitlines():
     host[name] = ip
 
 with open("/etc/hosts", "r+") as file:
-    match = 0
     lines = file.readlines()
     for k, v in host.items():
+        match = 0
         for line in lines:
             if k in line:
                 match = match + 1

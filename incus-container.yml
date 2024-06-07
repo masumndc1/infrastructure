@@ -45,6 +45,60 @@
       when:
         - '"sys-alma9-prod" not in container_list.stdout'
 
+    - name: start sys-centos9-dev1 container
+      command:
+        cmd: 'incus launch local:centos9-packer sys-centos9-dev1'
+      when:
+        - '"sys-centos9-dev1" not in container_list.stdout'
+
+    - name: start sys-centos9-dev2 container
+      command:
+        cmd: 'incus launch local:centos9-packer sys-centos9-dev2'
+      when:
+        - '"sys-centos9-dev2" not in container_list.stdout'
+
+    - name: start sys-centos9-prod container
+      command:
+        cmd: 'incus launch local:centos9-packer sys-centos9-prod'
+      when:
+        - '"sys-centos9-prod" not in container_list.stdout'
+
+    - name: start sys-rocky8-dev1 container
+      command:
+        cmd: 'incus launch local:rocky8-packer sys-rocky8-dev1'
+      when:
+        - '"sys-rocky8-dev1" not in container_list.stdout'
+
+    - name: start sys-rocky8-dev2 container
+      command:
+        cmd: 'incus launch local:rocky8-packer sys-rocky8-dev2'
+      when:
+        - '"sys-rocky8-dev2" not in container_list.stdout'
+
+    - name: start sys-rocky8-prod container
+      command:
+        cmd: 'incus launch local:rocky8-packer sys-rocky8-prod'
+      when:
+        - '"sys-rocky8-prod" not in container_list.stdout'
+
+    - name: start sys-rocky9-dev1 container
+      command:
+        cmd: 'incus launch local:rocky9-packer sys-rocky9-dev1'
+      when:
+        - '"sys-rocky9-dev1" not in container_list.stdout'
+
+    - name: start sys-rocky9-dev2 container
+      command:
+        cmd: 'incus launch local:rocky9-packer sys-rocky9-dev2'
+      when:
+        - '"sys-rocky9-dev2" not in container_list.stdout'
+
+    - name: start sys-rocky9-prod container
+      command:
+        cmd: 'incus launch local:rocky9-packer sys-rocky9-prod'
+      when:
+        - '"sys-rocky9-prod" not in container_list.stdout'
+
     - name: start sys-suse-dev1 container
       command:
         cmd: 'incus launch local:opensuse-packer sys-suse-dev1'

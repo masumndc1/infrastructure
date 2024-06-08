@@ -1,0 +1,10 @@
+---
+- hosts: lxds
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: install ansible in all lxds
+      script: scripts/ansible_install.sh
+      args:
+        executable: bash

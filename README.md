@@ -33,10 +33,13 @@ update all router-id in bgpd.conf file
 
 15. SideNote: How to remove lxd service from a node.
     ```
-    sudo lxc list; sudo lxc stop <lxd_container_name>
+    sudo lxc list
+    sudo lxc stop <lxd_container_name>
     sudo lxc delete <lxd_container_names>
-    sudo zfs list; sudo zfs destroy -r <pool_name>
-    sudo zpool list; sudo zpool destroy -f <pool_name>
+    sudo zfs list
+    sudo zfs destroy -r <pool_name>
+    sudo zpool list
+    sudo zpool destroy -f <pool_name>
     sudo lxd cluster remove -f <node_name>
     sudo snap remove lxd
     ```

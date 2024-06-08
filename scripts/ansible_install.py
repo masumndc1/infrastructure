@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 Python must be installed before hand.
@@ -34,6 +34,15 @@ def ansible_install():
             ]
 
             for command in centos_commands:
+                os.system(command)
+
+        elif os.path.exists('/usr/bin/zypper'):
+            opensuse_commands = [
+                "zypper update -y",
+                "zypper install -y ansible"
+            ]
+
+            for command in opensuse_commands:
                 os.system(command)
 
     elif 'FreeBSD' in platform.system():

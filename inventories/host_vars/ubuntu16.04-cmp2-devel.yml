@@ -1,5 +1,0 @@
----
-hostname: cmp2-devel 
-interface1: ens33
-ip: 192.168.2.215
-lxdfan0_network: 240.215.0.0

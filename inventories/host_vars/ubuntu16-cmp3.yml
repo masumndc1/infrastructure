@@ -1,6 +1,0 @@
----
-hostname: ubuntu16-cmp3
-interface1: ens33
-ip: 192.168.2.217
-lxdfan0_network: 240.217.0.0
-

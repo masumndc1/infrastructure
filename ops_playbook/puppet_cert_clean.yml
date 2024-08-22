@@ -1,0 +1,17 @@
+---
+- hosts: puppetnodes
+  gather_facts: true
+  become: true
+  ignore_errors: true
+
+  tasks:
+    - name: Remove related pem files
+      shell:
+        cmd: "find /var/lib/puppet/ssl/ -name '*.pem' -delete"
+      when: ansible_os_family == "Debian"
+
+    - name: Remove cert from puppet master
+      shell:
+        cmd: puppet cert clean "{{ ansible_fqdn }}"
+      delegate_to: puppetserver
+      when: ansible_os_family == "Debian"

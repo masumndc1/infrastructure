@@ -1,0 +1,10 @@
+---
+- name: restart puppet
+  service:
+    name: puppet
+    state: restarted
+
+- name: restart puppet server
+  service:
+    name: puppet-master
+    state: restarted

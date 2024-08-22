@@ -20,15 +20,9 @@ ubu-lxd
 jenkin
 
 [puppetmasters]
-puppetmaster
+puppetserver
 
 [puppetnodes]
-sys-alma8-dev1
-sys-alma8-dev2
-sys-alma8-prod
-sys-alma9-dev1
-sys-alma9-dev2
-sys-alma9-prod
 sys-ubu20-dev1
 sys-ubu20-dev2
 sys-ubu20-prod
@@ -47,7 +41,7 @@ sys-prod2
 monitoring
 
 [lxds]
-puppetmaster
+puppetserver
 saltmaster
 sys-alma8-dev1
 sys-alma8-dev2

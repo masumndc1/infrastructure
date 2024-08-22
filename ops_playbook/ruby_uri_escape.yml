@@ -1,0 +1,16 @@
+---
+- hosts: puppetserver:puppetnodes
+  become: true
+  gather_facts: true
+
+  tasks:
+  - name: export ruby opts
+    lineinfile:
+      path: /root/.bashrc
+      line: "export RUBYOPT='-W0'"
+    when: ansible_os_family == "Debian"
+
+  - name: source .bashrc
+    debug:
+      msg: "run bash /root/.bashrc"
+    when: ansible_os_family == "Debian"

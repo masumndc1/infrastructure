@@ -6,6 +6,20 @@
   gather_facts: true
 
   tasks:
+  - name: Install some common packages in debian family
+    apt:
+      name: "{{ deb_package }}"
+      state: present
+      update_cache: true
+    when: ansible_os_family == "Debian"
+
+  - name: Install some common packages in Redhat family
+    yum:
+      name: "{{ rpm_package }}"
+      state: present
+      update_cache: true
+    when: ansible_os_family == "Redhat"
+
   - name: Install puppet agent in Debian
     apt:
       name: puppet

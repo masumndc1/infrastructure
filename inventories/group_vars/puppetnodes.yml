@@ -1,2 +1,16 @@
 ---
 puppet_server: "puppetserver.incus"
+deb_package:
+  - tree
+  - net-tools
+  - iputils-ping
+  - git
+  - vim
+  - wget
+rpm_package:
+  - tree
+  - net-tools
+  - iputils-ping
+  - git
+  - vim
+  - wget

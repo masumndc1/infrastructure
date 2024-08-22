@@ -1,2 +1,2 @@
 ---
-puppet_server: puppetmaster
+puppet_server: "puppetserver.incus"

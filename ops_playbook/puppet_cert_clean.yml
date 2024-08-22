@@ -7,7 +7,7 @@
   tasks:
     - name: Remove related pem files
       shell:
-        cmd: "find /var/lib/puppet/ssl/ -name '*.pem' -delete"
+        cmd: "find /var/lib/puppet/ssl/certs/ -name '*.pem' -delete"
       when: ansible_os_family == "Debian"
 
     - name: Remove cert from puppet master

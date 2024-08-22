@@ -1,0 +1,22 @@
+[main]
+ssldir = /var/lib/puppet/ssl
+server = {{ puppet_server }}
+runinterval = 1h
+
+{% if "puppetserver" in ansible_fqdn %}
+[master]
+vardir = /var/lib/puppet
+cadir = /var/lib/puppet/ssl/ca
+dns_alt_names = puppet,{{ puppet_server }}
+
+{% else %}
+[agent]
+server = {{ puppet_server }}
+certname = {{ ansible_fqdn }}
+{% if "dev" in ansible_fqdn %}
+environment = devel
+{% else %}
+environment = production
+{% endif %}
+environmentpath = $codedir/environments
+{% endif %}

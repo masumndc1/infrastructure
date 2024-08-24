@@ -1,18 +1,36 @@
 ---
 # this is an yml to install r10k and reploy environment by r10k
-- hosts: puppetmaster
+- hosts: puppetserver
   become: yes
   become_user: root
   gather_facts: yes
 
   tasks:
-  - name: install r10k by rubygem
+  - name: install r10k by rubygem in Redhat
     command: /opt/puppetlabs/puppet/bin/gem install r10k
     tags: r10k_install
+    when: ansible_os_family == "Redhat"
 
-  - name: Place r10k configuration file 
+  - name: Place r10k configuration file in Redhat
     template:
       src: template/r10k_conf.j2
       dest: /etc/puppetlabs/r10k/r10k.yml
       mode: '0644'
     tags: r10k_template
+    when: ansible_os_family == "Redhat"
+
+  - name: install r10k in Debian
+    apt:
+      name: r10k
+      state: present
+      update_cache: true
+    tags: r10k_install
+    when: ansible_os_family == "Debian"
+
+  - name: Place r10k configuration file in debian
+    template:
+      src: template/r10k_conf.j2
+      dest: /etc/r10k.yml
+      mode: '0644'
+    tags: r10k_template
+    when: ansible_os_family == "Debian"

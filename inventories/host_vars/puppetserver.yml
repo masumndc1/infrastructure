@@ -1,4 +1,7 @@
 ---
+user: "masum"
+git_username: "masumndc1"
+git_repo: "puppet-control"
 hostname: puppetserver
 puppet_server: "puppetserver.incus"
 deb_package:

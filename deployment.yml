@@ -1,15 +1,26 @@
 ---
 # this is an yml to deployment environment by r10k in puppet master.
 # ansible-playbook -i inventories/hosts deployment.yml -e "env=devel"
-- hosts: puppetmaster
+- hosts: puppetserver
   become: yes
-  become_user: root
   gather_facts: yes
   vars:
     env: "{{ env }}"
-    cmd: '/opt/puppetlabs/puppet/bin/r10k' 
+    cmd: '/opt/puppetlabs/puppet/bin/r10k'
     config_file: '/etc/puppetlabs/r10k/r10k.yml'
+    puppet_file: "/etc/puppet/code/environments/{{ env }}/Puppetfile"
 
   tasks:
-  - name: Deploying environment
-    command: /opt/puppetlabs/puppet/bin/r10k --config=/etc/puppetlabs/r10k/r10k.yml deploy environment "{{ env }}" --puppetfile
+  - name: Deploying environment in Redhat
+    shell: >
+        /opt/puppetlabs/puppet/bin/r10k
+        --config=/etc/puppetlabs/r10k/r10k.yml
+        deploy environment "{{ env }}"
+        --puppetfile
+    when: ansible_os_family == "Redhat"
+
+  - name: Deploying environment in Debian
+    shell: >
+        r10k --config=/etc/r10k.yml deploy environment "{{ env }}"
+        --puppetfile="{{ puppet_file }}"
+    when: ansible_os_family == "Debian"

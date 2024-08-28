@@ -1,0 +1,18 @@
+---
+version: 5
+defaults:
+  datadir: "/etc/puppet/code/environments/%{::environment}/hieradata"
+  data_hash: yaml_data
+
+hierarchy:
+  - name: "per-node data"
+    path: "hosts/%{trusted.certname}.yaml"
+
+  - name: "per-os defaults"
+    path: "os/%{facts.os.family}.yaml"
+
+  - name: "per-env defaults"
+    path: "%{::environment}.yaml"
+
+  - name: "common data"
+    path: "common.yaml"

@@ -121,6 +121,15 @@
     notify:
       - restart puppet server
 
+  - name: Settings for hieradata yaml conf in Suse or Debian
+    template:
+      src: template/hiera.yaml.j2
+      dest: /etc/puppet/hiera.yaml
+    when: ansible_os_family == "Suse" or
+      ansible_os_family == "Debian"
+    notify:
+      - restart puppet server
+
   - name: Settings for puppetserver configuration file
     template:
       src: template/puppet.conf.j2

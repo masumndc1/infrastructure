@@ -4,7 +4,7 @@
   become: yes
   gather_facts: yes
   ignore_errors: true
-  
+
   tasks:
   - name: Create a started prod1-centos7 container
     lxd_container:

@@ -5,7 +5,7 @@
   gather_facts: true
 
   tasks:
-  - name: Setting up DNS in FreeBSD 
+  - name: Setting up DNS in FreeBSD
     template:
       src: template/dns.j2
       dest: /etc/resolv.conf

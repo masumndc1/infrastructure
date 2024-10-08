@@ -60,7 +60,7 @@
       regexp: "{{ java_orig_args }}"
       line: "{{ java_replace_args }}"
     when: ansible_os_family == "Suse" or ansible_os_family == "RedHat"
- 
+
   - name: Set 512mb of ram to puppet in Debian
     lineinfile:
       path: /etc/default/puppet-master

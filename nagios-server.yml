@@ -3,7 +3,7 @@
   become: yes
   gather_facts: yes
   ignore_errors: yes
-  
+
   tasks:
     - name: Install nagios and related packages in Centos or Rocky
       yum:
@@ -27,7 +27,7 @@
         owner: root
         group: nagios
         mode: '0755'
-  
+
     - name: Run nagios and httpd service
       service:
         name: "{{ item }}"

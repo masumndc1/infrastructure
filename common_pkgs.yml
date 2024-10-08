@@ -1,6 +1,6 @@
 ---
 # scp this sudo.yml file to target node
-# run this file as root user 
+# run this file as root user
 # ansible-playbook sudo.yml
 - hosts: all
   become: true
@@ -11,10 +11,10 @@
 
   tasks:
   - name: Adding user
-    user: 
+    user:
       name: "{{ username }}"
       state: present
-  
+
   - name: Adding Public key for user
     authorized_key:
       user: "{{ username }}"

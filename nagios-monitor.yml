@@ -3,7 +3,7 @@
   become: yes
   gather_facts: yes
   ignore_errors: yes
-  
+
   tasks:
     - name: Install nrpe in Centos or Rocky
       yum:

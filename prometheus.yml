@@ -3,7 +3,7 @@
   become: yes
   gather_facts: yes
   ignore_errors: yes
-  
+
   tasks:
     - name: Place Prometheus repo
       template:
@@ -19,7 +19,7 @@
         update_cache: yes
       when: ansible_distribution == "CentOS" or
             ansible_distribution == "Rocky"
-    
+
     - name: Place Prometheus config yml file
       template:
         src: template/prometheus.yml.j2

@@ -1,5 +1,5 @@
 ---
-# this yml will set hostname 
+# this yml will set hostname
 - hosts: all
   become: yes
   gather_facts: yes
@@ -9,4 +9,3 @@
     hostname:
       name: "{{ hostname }}"
     tags: hostname
-

@@ -1,6 +1,6 @@
 ---
 # quagga will be used to install and configure bgp in compute nodes
-# and master. BGP will advertize internal lxdfan0 network of 
+# and master. BGP will advertize internal lxdfan0 network of
 # compute nodes so that master, nodes and lxd can ping each other.
 - hosts: compute:centos7.0-master
   become: yes
@@ -42,7 +42,7 @@
       mode: 0640
       owner: quagga
       group: quagga
-    
+
   - name: Placing bgp configuration files
     template:
       src: template/bgpd.conf.j2

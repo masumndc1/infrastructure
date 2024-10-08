@@ -38,7 +38,7 @@
       path: /etc/rc.conf
       line: puppet_enable="YES"
     when: ansible_distribution == "FreeBSD"
- 
+
   - name: Creating puppet.conf file for agent
     template:
       src: template/puppet.conf.j2

@@ -54,7 +54,7 @@
     apt_repository:
       repo: "{{ apt_repo_name20 }}"
       state: present
-      filename: saltstack 
+      filename: saltstack
     when: ansible_distribution == "Ubuntu" and
           ansible_distribution_major_version == "20"
 

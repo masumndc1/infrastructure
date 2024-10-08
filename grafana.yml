@@ -3,7 +3,7 @@
   become: yes
   gather_facts: yes
   ignore_errors: yes
-  
+
   tasks:
     - name: Install grafana Centos or Rocky
       yum:

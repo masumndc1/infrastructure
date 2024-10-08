@@ -3,7 +3,7 @@
 1. First setup ssh with your all hosts without asking password.
 `ssh-copy-id` can be an easy fix.
 
-2. If you have automated image creation script like packer or so you can 
+2. If you have automated image creation script like packer or so you can
    add user public key in user's home directory.
 
 3. Copy ansible_install.py script at target node and install ansible it.
@@ -19,7 +19,7 @@
 8. Run saltcluster.yml to install salt-master and salt-minion nodes. if the node is Ubunut/Centos.
 
 9. Run r10k.yml to install r10k in puppetmaster.
- 
+
 10. Run deployment.yml to deploy environment in agent nodes.
 
 11. Run saltcluster.yml to install salt-master and salt-minion nodes.
@@ -43,25 +43,25 @@ update all router-id in bgpd.conf file
     sudo lxd cluster remove -f <node_name>
     sudo snap remove lxd
     ```
-    
+
 ##  lxd container specific
 
 1. install python on target node.
 
 1. copy ansible_install.py to target node.
 
-   curl -O https://raw.githubusercontent.com/masumndc1/infrastructure/master/ansible_install.py 
+   curl -O https://raw.githubusercontent.com/masumndc1/infrastructure/master/ansible_install.py
 
 2. copy pkg_srv.yml to target node and run. to install pkg and service and etc
 
    curl -O https://raw.githubusercontent.com/masumndc1/infrastructure/master/pkg_srv.yml
-    
-   curl -O https://raw.githubusercontent.com/masumndc1/infrastructure/master/lxd_bootstrap.sh 
-  
-4. run hosts.yml against the node to let target machine knows about all the nodes in infra 
-   
-   
+
+   curl -O https://raw.githubusercontent.com/masumndc1/infrastructure/master/lxd_bootstrap.sh
+
+4. run hosts.yml against the node to let target machine knows about all the nodes in infra
+
+
 3. run saltcluster.yml against lxds nodes
 
-## Infra pics 
+## Infra pics
 <img src = "pics/infra.jpg">

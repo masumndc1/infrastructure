@@ -12,7 +12,7 @@
     user:
       name: "{{ username }}"
       state: present
-  
+
   - name: Adding Public key for user
     authorized_key:
       user: "{{ username }}"

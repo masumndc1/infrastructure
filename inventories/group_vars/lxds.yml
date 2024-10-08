@@ -2,7 +2,7 @@
 salt_repo_url7: https://repo.saltstack.com/yum/redhat/salt-repo-latest.el7.noarch.rpm
 salt_repo_url8: https://repo.saltstack.com/py3/redhat/salt-py3-repo-latest.el8.noarch.rpm
 salt_key_url16: https://repo.saltstack.com/apt/ubuntu/16.04/amd64/latest/SALTSTACK-GPG-KEY.pub
-apt_repo_name16: deb http://repo.saltstack.com/apt/ubuntu/16.04/amd64/latest xenial main 
+apt_repo_name16: deb http://repo.saltstack.com/apt/ubuntu/16.04/amd64/latest xenial main
 salt_key_url20: https://repo.saltstack.com/py3/ubuntu/20.04/amd64/latest/SALTSTACK-GPG-KEY.pub
-apt_repo_name20: deb http://repo.saltstack.com/py3/ubuntu/20.04/amd64/latest focal main 
+apt_repo_name20: deb http://repo.saltstack.com/py3/ubuntu/20.04/amd64/latest focal main
 salt_master: centos7.0-master

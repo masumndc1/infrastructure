@@ -6,4 +6,4 @@
 - src: https://github.com/masumndc1/ansible-role-packer-incus.git
   scm: git
   path: roles
-  version: main
+  version: v1.0.1

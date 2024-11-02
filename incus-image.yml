@@ -4,4 +4,4 @@
   gather_facts: true
 
   roles:
-    - ansible-role-packer-incus
+    - role: ansible-role-packer-incus

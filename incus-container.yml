@@ -15,6 +15,24 @@
       when:
         - '"puppetserver" not in container_list.stdout'
 
+    - name: start sys-deb12-dev1 container
+      command:
+        cmd: 'incus launch local:debian12-packer sys-deb12-dev1'
+      when:
+        - '"sys-deb12-dev1" not in container_list.stdout'
+
+    - name: start sys-deb12-dev2 container
+      command:
+        cmd: 'incus launch local:debian12-packer sys-deb12-dev2'
+      when:
+        - '"sys-deb12-dev2" not in container_list.stdout'
+
+    - name: start sys-deb12-prod container
+      command:
+        cmd: 'incus launch local:debian12-packer sys-deb12-prod'
+      when:
+        - '"sys-deb12-prod" not in container_list.stdout'
+
     - name: start sys-alma8-dev1 container
       command:
         cmd: 'incus launch local:alma8-packer sys-alma8-dev1'

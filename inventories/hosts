@@ -43,6 +43,9 @@ monitoring
 [lxds]
 puppetserver
 saltmaster
+sys-deb12-dev1
+sys-deb12-dev2
+sys-deb12-prod
 sys-alma8-dev1
 sys-alma8-dev2
 sys-alma8-prod

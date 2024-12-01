@@ -13,7 +13,6 @@ nids
 images
 
 [compute]
-suse
 ubu-lxd
 
 [jenkins]

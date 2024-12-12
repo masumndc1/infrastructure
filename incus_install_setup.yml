@@ -47,6 +47,11 @@
       immediate: yes
       state: enabled
 
+  - name: reload firewalld
+    ansible.builtin.service:
+      name: firewalld
+      state: reloaded
+
   - name: Copy preseed file
     template:
       src: template/preseed.j2

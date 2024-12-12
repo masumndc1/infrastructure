@@ -1,6 +1,8 @@
 ---
 core_password: secret
-cluster_address: 192.168.2.215
-core_address: 192.168.2.215
 zypper_repo:
   - 'https://download.opensuse.org/repositories/filesystems/openSUSE_Tumbleweed/filesystems.repo'
+incus_br: incusbr0
+incus_port: "8443/tcp"
+ipv4_address: "192.168.2.1/24"
+ipv4_ranges: "192.168.2.10-192.168.2.250"

@@ -1,35 +1,42 @@
 config:
-  core.trust_password: {{ core_password }}
-  cluster.https_address: {{ cluster_address }}:8443
-  core.https_address: {{ core_address }}:8443
+  core.https_address: '[::]:8443'
 networks:
 - config:
-    bridge.mode: fan
-    fan.underlay_subnet: {{ ansible_ens33.ipv4.network }}/24
+    ipv4.address: "{{ ipv4_address }}"
+    ipv4.dhcp.ranges: "{{ ipv4_ranges }}"
+    ipv4.nat: "true"
+    ipv6.address: none
   description: ""
-  name: lxdfan0
+  name: incusbr0
   type: bridge
+  project: default
 storage_pools:
 - config:
-    size: 10GB
-    source: /var/snap/lxd/common/lxd/disks/local.img
-    zfs.pool_name: local
+    source: /var/lib/incus/storage-pools/default
+    volatile.initial_source: /var/lib/incus/storage-pools/default
   description: ""
-  name: local
-  driver: zfs
+  name: default
+  driver: btrfs
 profiles:
 - config: {}
-  description: Default LXD profile
+  description: Default Incus profile
   devices:
     eth0:
       name: eth0
-      network: lxdfan0
+      network: incusbr0
       type: nic
     root:
       path: /
-      pool: local
+      pool: default
       type: disk
   name: default
-cluster:
-  server_name: {{ ansible_hostname }}
-  enabled: true
+projects:
+- config:
+    features.images: "true"
+    features.networks: "true"
+    features.networks.zones: "true"
+    features.profiles: "true"
+    features.storage.buckets: "true"
+    features.storage.volumes: "true"
+  description: Default Incus project
+  name: default

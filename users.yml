@@ -6,6 +6,7 @@
 - hosts: all
   become: yes
   gather_facts: yes
+  ignore_errors: true
 
   tasks:
   - name: Adding user
@@ -21,52 +22,23 @@
     with_items:
       - "{{ public_key }}"
 
-  - name: Install packages sudo and ssh in CentOS
-    yum:
-      name: [ 'sudo', 'openssh-server' ]
+  - name: Install packages sudo and ssh
+    package:
+      name: [ 'sudo', 'openssh-server', 'ansible' ]
       state: latest
       update_cache: yes
-    when: ansible_distribution == "CentOS"
-
-  - name: Install sudo and ssh in Ubuntu
-    apt:
-      name: [ 'sudo', 'openssh-server' ]
-      state: latest
-      update_cache: yes
-    when: ansible_distribution == "Ubuntu"
-
-  - name: Install packages sudo and ssh in OpenSuse
-    zypper:
-      name: [ 'sudo',
-        'openssh-server' ]
-      state: latest
-    when: ansible_os_family == "Suse"
-
-  - name: Install packages sudo and ssh in freebsd
-    pkgng:
-      name: [ 'sudo',
-        'openssh-server' ]
-      state: latest
-    when: ansible_distribution == "FreeBSD"
-
-  - name: Touching user file in /etc/sudoers.d in CentOS or Ubuntu or Opensuse
-    file:
-      path: /etc/sudoers.d/10_{{ username }}
-      state: touch
     when: ansible_distribution == "CentOS" or
-          ansible_distribution == "Ubuntu" or
-          ansible_os_family == "Suse"
+      ansible_distribution == "Ubuntu" or
+      ansible_os_family == "Suse" or
+      ansible_distribution == "FreeBSD"
+    tags: pkg
 
-  - name: Touching user file in /etc/sudoers.d in FreeBSD
-    file:
-      path: /usr/local/etc/sudoers.d/10_{{ username }}
-      state: touch
-    when: ansible_distribution == "FreeBSD"
-
-  - name: Giving sudo right with no passwd to user in CentOS or Ubuntu or Opensuse
+  - name: Giving sudo right with no passwd to user in CentOS Ubuntu Opensuse
     lineinfile:
       path: /etc/sudoers.d/10_{{ username }}
       line: "{{ username }} ALL=(ALL) NOPASSWD: ALL"
+      create: yes
+      state: present
     when: ansible_distribution == "CentOS" or
           ansible_distribution == "Ubuntu" or
           ansible_os_family == "Suse"

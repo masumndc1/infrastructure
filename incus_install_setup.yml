@@ -12,41 +12,48 @@
       name: net.ipv4.ip_forward
       value: 1
       sysctl_set: true
-    when: ansible_os_family == "Debian"
-      or ansible_os_family == "Suse"
 
-  - name: Install incus in debian based OS
-    apt:
-      name: [ 'incus', 'qemu-system', 'incus-tools' ]
+  - name: Install incus package
+    package:
+      name: [ 'incus', 'incus-tools' ]
       state: present
-      update_cache: yes
-    when: ansible_os_family == "Debian"
-          and ( ansible_distribution_major_version|int == 13
-          or ansible_distribution_major_version|int == 24 )
-
-  - name: Install incus in openSuse
-    zypper:
-      name: [ 'incus', 'qemu-system', 'incus-tools' ]
-      state: present
-      update_cache: yes
-    when: ansible_os_family == "Suse"
-
-  - name: Add lxdbr0 in trusted zone in Firewalld
-    firewalld:
-      zone: trusted
-      interface: lxdbr0
-      permanent: true
-      state: enabled
-    when: ansible_os_family == "Suse"
+      update_cache: true
+    when: ansible_os_family == "Debian" or
+      ansible_os_family == "RedHat" or
+      ansible_os_family == "Suse"
 
   - name: Run incus service
     service:
       name: 'incus'
       state: started
-      enabled: true
+      enabled: yes
+    when: ansible_os_family == "Debian" or
+      ansible_os_family == "RedHat" or
+      ansible_os_family == "Suse"
 
-#  - name: Copy preseed file
-#    template:
-#      src: template/preseed.j2
-#      dest: /tmp/preseed
-#      mode: 0640
+  - name: Add 8443/tcp port in firewalld
+    ansible.posix.firewalld:
+      zone: trusted
+      port: "{{ incus_port }}"
+      permanent: true
+      immediate: yes
+      state: enabled
+
+  - name: Add incusbr0 interface firewalld
+    ansible.posix.firewalld:
+      zone: trusted
+      interface: "{{ incus_br }}"
+      permanent: true
+      immediate: yes
+      state: enabled
+
+  - name: Copy preseed file
+    template:
+      src: template/preseed.j2
+      dest: /tmp/preseed
+      mode: 0640
+
+  - name: initialize lxd from a preseed file
+    shell:
+      chdir: /tmp
+      cmd: 'cat preseed | incus admin init --preseed'

@@ -46,17 +46,15 @@
     when: ansible_distribution == "Ubuntu"
 
   - name: Add salt key for Ubuntu
-    apt_key:
+    get_url:
       url: "{{ deb_key_url }}"
-      state: present
+      dest: /etc/apt/keyrings/salt-archive-keyring.pgp
     when: ansible_distribution == "Ubuntu"
 
   - name: Add salt repo for Ubuntu
-    apt_repository:
-      repo: "{{ deb_repo_url }}"
-      state: present
-      update_cache: yes
-      filename: saltstack
+    get_url:
+      url: "{{ deb_repo_url }}"
+      dest: /etc/apt/sources.list.d/salt.sources
     when: ansible_distribution == "Ubuntu"
 
   - name: install salt-master in Ubuntu
@@ -80,15 +78,23 @@
       update_cache: yes
     when: ansible_os_family == "Suse"
 
-  - name: Opening firewall ports for saltminion
-    firewalld:
+  - name: Opening firewall ports in saltmaster
+    ansible.posix.firewalld:
+      zone: trusted
       port: "{{ item }}"
-      state: enabled
       permanent: yes
+      immediate: true
+      state: enabled
     with_items: "{{ salt_port }}"
     ignore_errors: true
     when: ansible_distribution == "CentOS" or
-          ansible_os_family == "Suse"
+          ansible_os_family == "Suse" or
+          ansible_distribution == "Ubuntu"
+
+  - name: reload firewalld
+    ansible.builtin.service:
+      name: firewalld
+      state: reloaded
 
   - name: Create directory for base
     file:

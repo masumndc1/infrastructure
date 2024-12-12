@@ -23,32 +23,18 @@
     when: ansible_distribution == "CentOS"
 
   - name: install common packages for Ubuntu
-    yum:
+    apt:
       name: "{{ deb_package }}"
       state: latest
+      update_cache: yes
     when: ansible_distribution == "Ubuntu"
-
-  - name: Add salt key for Ubuntu
-    apt_key:
-      url: "{{ salt_key_url16 }}"
-      state: present
-    when: ansible_distribution == "Ubuntu" and
-          ansible_distribution_major_version == "16"
-
-  - name: Add salt repo for Ubuntu
-    apt_repository:
-      repo: "{{ apt_repo_name16 }}"
-      state: present
-      filename: saltstack
-    when: ansible_distribution == "Ubuntu" and
-          ansible_distribution_major_version == "16"
 
   - name: Add salt key for Ubuntu
     apt_key:
       url: "{{ salt_key_url20 }}"
       state: present
     when: ansible_distribution == "Ubuntu" and
-          ansible_distribution_major_version == "20"
+          ansible_distribution_major_version|int == "20"
 
   - name: Add salt repo for Ubuntu
     apt_repository:
@@ -56,7 +42,39 @@
       state: present
       filename: saltstack
     when: ansible_distribution == "Ubuntu" and
-          ansible_distribution_major_version == "20"
+          ansible_distribution_major_version|int == "20"
+
+  - name: Add salt key for Ubuntu
+    get_url:
+      url: "{{ deb_key_url }}"
+      dest: /etc/apt/keyrings/salt-archive-keyring.pgp
+    when: ansible_distribution == "Ubuntu" and
+      ansible_distribution_major_version|int == 24
+
+  - name: Add salt repo for Ubuntu
+    get_url:
+      url: "{{ deb_repo_url }}"
+      dest: /etc/apt/sources.list.d/salt.sources
+    when: ansible_distribution == "Ubuntu" and
+          ansible_distribution_major_version|int == 24
+
+  - name: Opening firewall ports in saltminions
+    ansible.posix.firewalld:
+      zone: trusted
+      port: "{{ item }}"
+      permanent: yes
+      immediate: yes
+      state: enabled
+    with_items: "{{ salt_port }}"
+    ignore_errors: true
+    when: ansible_distribution == "CentOS" or
+          ansible_os_family == "Suse" or
+          ansible_distribution == "Ubuntu"
+
+  - name: reload firewalld
+    ansible.builtin.service:
+      name: firewalld
+      state: reloaded
 
   - name: install salt-minion for centos
     yum:

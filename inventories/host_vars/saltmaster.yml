@@ -1,7 +1,7 @@
 ---
 hostname: saltmaster
 deb_package:
-  - openjdk-11-jdk
+  - firewalld
   - python3-pip
   - net-tools
   - iputils-ping
@@ -14,7 +14,7 @@ deb_package:
 salt_package:
   - git
   - firewalld
-  - python-pygit2
+  - python3-pygit2
   - salt-master
   - salt-ssh
   - salt-syndic
@@ -35,8 +35,8 @@ salt_port:
   - "4505/tcp"
   - "4506/tcp"
 
-deb_key_url: https://repo.saltproject.io/py3/ubuntu/20.04/amd64/latest/salt-archive-keyring.gpg
-deb_repo_url: deb https://repo.saltproject.io/py3/ubuntu/20.04/amd64/latest focal main
+deb_key_url: https://packages.broadcom.com/artifactory/api/security/keypair/SaltProjectKey/public
+deb_repo_url: https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.sources
 
 centos_repo_url: https://repo.saltproject.io/salt/py3/redhat/9/arm64/latest
 centos_salt_key: https://repo.saltproject.io/salt/py3/redhat/9/arm64/latest/SALT-PROJECT-GPG-PUBKEY-2023.pub

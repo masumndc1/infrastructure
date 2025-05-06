@@ -11,6 +11,7 @@ jenkins
 devstacks
 nids
 images
+hypervisors
 
 [compute]
 ubu-lxd
@@ -44,6 +45,8 @@ monitoring
 puppetserver
 saltmaster
 sys-deb12-dev1
+sys-deb12-dev2
+sys-deb12-prod
 sys-alma8-dev1
 sys-alma9-dev1
 sys-ubu20-dev1
@@ -52,6 +55,9 @@ sys-ubu20-prod
 sys-ubu22-dev1
 sys-ubu22-dev2
 sys-ubu22-prod
+sys-ubu24-dev1
+sys-ubu24-dev2
+sys-ubu24-prod
 salt-ubu24-dev1
 salt-ubu24-dev2
 salt-ubu24-prod1
@@ -79,6 +85,10 @@ sys-prod2
 [images]
 image-server1
 image-server2
+
+[hypervisors]
+lap-asus
+lap-lenovo
 
 [all:vars]
 ansible_user = masum

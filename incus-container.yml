@@ -69,3 +69,21 @@
         cmd: 'incus launch local:ubu22-packer sys-ubu22-prod'
       when:
         - '"sys-ubu22-prod" not in container_list.stdout'
+
+    - name: start sys-ubu24-dev1 container
+      command:
+        cmd: 'incus launch local:ubu24-packer sys-ubu24-dev1'
+      when:
+        - '"sys-ubu24-dev1" not in container_list.stdout'
+
+    - name: start sys-ubu24-dev2 container
+      command:
+        cmd: 'incus launch local:ubu24-packer sys-ubu24-dev2'
+      when:
+        - '"sys-ubu24-dev2" not in container_list.stdout'
+
+    - name: start sys-ubu24-prod container
+      command:
+        cmd: 'incus launch local:ubu24-packer sys-ubu24-prod'
+      when:
+        - '"sys-ubu24-prod" not in container_list.stdout'

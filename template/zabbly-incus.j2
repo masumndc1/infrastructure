@@ -1,0 +1,11 @@
+Enabled: yes
+Types: deb
+URIs: https://pkgs.zabbly.com/incus/stable
+Suites: {{ ansible_distribution_release }}
+Components: main
+{% if ansible_facts['architecture'] == 'aarch64' %}
+Architectures: arm64
+{% elif ansible_facts['architecture'] == 'amd64' %}
+architectures: amd64
+{% endif %}
+Signed-By: /etc/apt/keyrings/zabbly.asc

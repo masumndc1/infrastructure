@@ -1,0 +1,49 @@
+---
+# this playbook will install incus in all compute nodes
+# ansible-playbook -i inventory/hosts incus_install_hyper.yml
+# we want this playbook should work only in debian12 or ubuntu24
+- hosts: sys-ubu24-dev1:sys-deb12-dev1:!hypervisors
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: Enable IP forwarding
+    sysctl:
+      name: net.ipv4.ip_forward
+      value: 1
+      sysctl_set: true
+
+  - name: Install apt key
+    ansible.builtin.get_url:
+      url: https://pkgs.zabbly.com/key.asc
+      dest: /etc/apt/keyrings/zabbly.asc
+    when: ansible_os_family == "Debian"
+
+  - name: Install incus repository
+    ansible.builtin.template:
+      src: template/zabbly-incus.j2
+      dest: /etc/apt/sources.list.d/zabbly-incus-stable.sources
+      owner: root
+      group: root
+      mode: '0644'
+    when: ansible_os_family == "Debian" and
+      ( ansible_distribution_release == "noble" or
+      ansible_distribution_release == "bookworm" )
+    tags: zabbly
+
+  - name: Install incus packages
+    package:
+      name: [ 'incus',
+        'incus-client',
+        'incus-extra',
+        'incus-ui-canonical' ]
+      state: present
+      update_cache: true
+    when: ansible_os_family == "Debian"
+
+  - name: Run incus service
+    service:
+      name: 'incus'
+      state: started
+      enabled: yes
+    when: ansible_os_family == "Debian"

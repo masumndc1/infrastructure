@@ -1,8 +1,9 @@
 ---
 # set user and public key
 # you might to install sshpass pkg
+# example:
 # ansible-playbook -i inventories/hosts users.yml -l suse \
-#         -u masum --ask-pass --ask-become-pass
+#        -u masum --ask-pass --ask-become-pass
 - hosts: all
   become: yes
   gather_facts: yes
@@ -27,8 +28,8 @@
       name: [ 'sudo', 'openssh-server', 'ansible' ]
       state: latest
       update_cache: yes
-    when: ansible_distribution == "CentOS" or
-      ansible_distribution == "Ubuntu" or
+    when: ansible_os_family == "Redhat" or
+      ansible_os_family == "Debian" or
       ansible_os_family == "Suse" or
       ansible_distribution == "FreeBSD"
     tags: pkg
@@ -39,9 +40,10 @@
       line: "{{ username }} ALL=(ALL) NOPASSWD: ALL"
       create: yes
       state: present
-    when: ansible_distribution == "CentOS" or
-          ansible_distribution == "Ubuntu" or
-          ansible_os_family == "Suse"
+    when: ansible_os_family == "Redhat" or
+      ansible_os_family == "Debian" or
+      ansible_os_family == "Suse" or
+      ansible_distribution == "FreeBSD"
 
   - name: Giving sudo right with no passwd to user in FreeBSD
     lineinfile:

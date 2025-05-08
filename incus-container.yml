@@ -58,11 +58,53 @@
       when:
         - '"sys-alma8-dev1" not in container_list.stdout'
 
+    - name: start sys-alma8-dev2 container
+      command:
+        cmd: 'incus launch local:alma8-packer sys-alma8-dev2'
+      when:
+        - '"sys-alma8-dev2" not in container_list.stdout'
+
+    - name: start sys-alma8-prod container
+      command:
+        cmd: 'incus launch local:alma8-packer sys-alma8-prod'
+      when:
+        - '"sys-alma8-prod" not in container_list.stdout'
+
     - name: start sys-alma9-dev1 container
       command:
         cmd: 'incus launch local:alma9-packer sys-alma9-dev1'
       when:
         - '"sys-alma9-dev1" not in container_list.stdout'
+
+    - name: start sys-alma9-dev2 container
+      command:
+        cmd: 'incus launch local:alma9-packer sys-alma9-dev2'
+      when:
+        - '"sys-alma9-dev2" not in container_list.stdout'
+
+    - name: start sys-alma9-prod container
+      command:
+        cmd: 'incus launch local:alma9-packer sys-alma9-prod'
+      when:
+        - '"sys-alma9-prod" not in container_list.stdout'
+
+    - name: start sys-suse-dev1 container
+      command:
+        cmd: 'incus launch local:opensuse-packer sys-suse-dev1'
+      when:
+        - '"sys-suse-dev1" not in container_list.stdout'
+
+    - name: start sys-suse-dev2 container
+      command:
+        cmd: 'incus launch local:opensuse-packer sys-suse-dev2'
+      when:
+        - '"sys-suse-dev2" not in container_list.stdout'
+
+    - name: start sys-suse-prod container
+      command:
+        cmd: 'incus launch local:opensuse-packer sys-suse-prod'
+      when:
+        - '"sys-suse-prod" not in container_list.stdout'
 
     - name: start sys-ubu20-dev1 container
       command:

@@ -27,4 +27,12 @@
     template:
       src: template/ip_ubuntu.j2
       dest: /etc/network/interfaces
-    when: ansible_distribution == "Ubuntu"
+    when: ansible_distribution == "Ubuntu" and
+      ansible_distribution_major_version|int < 24
+
+  - name: Setting up static IP in Ubuntu 24 or above
+    template:
+      src: template/50-cloud-init.yaml.j2
+      dest: /etc/netplan/50-cloud-init.yaml
+    when: ansible_distribution == "Ubuntu" and
+      ansible_distribution_major_version|int >= 24

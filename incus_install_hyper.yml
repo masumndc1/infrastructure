@@ -2,7 +2,7 @@
 # this playbook will install incus in all compute nodes
 # ansible-playbook -i inventory/hosts incus_install_hyper.yml
 # we want this playbook should work only in debian12 or ubuntu24
-- hosts: sys-ubu24-dev1:sys-deb12-dev1:!hypervisors
+- hosts: compute:!hypervisors
   become: yes
   gather_facts: yes
 
@@ -31,7 +31,7 @@
       ansible_distribution_release == "bookworm" )
     tags: zabbly
 
-  - name: Install incus packages
+  - name: Install incus packages in debian family
     package:
       name: [ 'incus',
         'incus-client',
@@ -41,9 +41,19 @@
       update_cache: true
     when: ansible_os_family == "Debian"
 
+  - name: Install incus packages in opensuse
+    zypper:
+      name: [ 'incus',
+        'incus-tools',
+        'incus-ui-canonical' ]
+      state: present
+      update_cache: true
+    when: ansible_os_family == "Suse"
+
   - name: Run incus service
     service:
       name: 'incus'
       state: started
-      enabled: yes
-    when: ansible_os_family == "Debian"
+      enabled: true
+    when: ansible_os_family == "Debian" or
+      ansible_os_family == "Suse"

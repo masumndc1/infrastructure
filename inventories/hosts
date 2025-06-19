@@ -82,11 +82,12 @@ sys-dev2
 sys-prod1
 sys-prod2
 
-[images]
-image-server1
-image-server2
-
 [hypervisors]
+lap-asus
+lap-lenovo
+
+[images]
+ubu-lxd
 lap-asus
 lap-lenovo
 

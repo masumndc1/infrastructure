@@ -1,0 +1,91 @@
+---
+- hosts: compute:hypervisors
+  become: true
+  gather_facts: true
+  ignore_errors: true
+
+  vars:
+    - clean_incus_node: false
+
+  tasks:
+    - name: stop all instances
+      command:
+        cmd: "incus stop --all --force"
+      changed_when: false
+      when:
+        - clean_incus_node
+
+    - name: get all instances name
+      shell:
+        cmd: incus list -f csv | cut -f1 -d','
+      register: container_list
+      changed_when: false
+      when:
+        - clean_incus_node
+
+    - name: remove all instances
+      command:
+        cmd: "incus rm {{ item }} --force"
+      with_items:
+        - "{{ container_list.stdout_lines }}"
+      changed_when: false
+      when:
+        - clean_incus_node
+
+    - name: get all image id
+      shell:
+        cmd: incus image list -f csv | cut -f2 -d','
+      register: imageid_list
+      changed_when: false
+      when:
+        - clean_incus_node
+
+    - name: remove all images
+      command:
+        cmd: "incus image rm {{ item }}"
+      with_items:
+        - "{{ imageid_list.stdout_lines }}"
+      changed_when: false
+      when:
+        - clean_incus_node
+
+    - name: empty default profile
+      shell:
+        cmd: "printf 'config: {}\ndevices: {}' | incus profile edit default"
+      when:
+        - clean_incus_node
+
+    - name: get all storage name
+      shell:
+        cmd: incus storage list -f csv | cut -f1 -d','
+      register: storage_list
+      changed_when: false
+      when:
+        - clean_incus_node
+
+    - name: remove all storage
+      command:
+        cmd: "incus storage rm {{ item }}"
+      with_items:
+        - "{{ storage_list.stdout_lines }}"
+      changed_when: false
+      when:
+        - clean_incus_node
+
+    - name: remove all incus network
+      command:
+        cmd: "incus network rm {{ incus_bridge }}"
+      when:
+        - clean_incus_node
+
+    - name: stop incus service
+      service:
+        name: 'incus'
+        state: stopped
+      when:
+        - clean_incus_node
+
+    - name: remove incus package
+      package:
+        name: 'incus'
+        state: absent

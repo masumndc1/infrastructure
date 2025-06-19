@@ -2,6 +2,7 @@
 # /etc/hosts setting
 # hostname settings
 # and ip settings
-- import_playbook: hosts.yml
+# - import_playbook: hosts.yml
 - import_playbook: hostname.yml
 - import_playbook: networking.yml
+- import_playbook: users.yml

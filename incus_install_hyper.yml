@@ -45,10 +45,32 @@
     zypper:
       name: [ 'incus',
         'incus-tools',
-        'incus-ui-canonical' ]
-      state: present
+        'incus-ui-canonical',
+        'python3-firewall' ]
+      state: latest
       update_cache: true
     when: ansible_os_family == "Suse"
+
+  - name: Add 8443/tcp port in firewalld
+    ansible.posix.firewalld:
+      zone: trusted
+      port: "{{ incus_port }}"
+      permanent: true
+      immediate: yes
+      state: enabled
+
+  - name: Add incusbr0 interface firewalld
+    ansible.posix.firewalld:
+      zone: trusted
+      interface: "{{ incus_br }}"
+      permanent: true
+      immediate: yes
+      state: enabled
+
+  - name: reload firewalld
+    ansible.builtin.service:
+      name: firewalld
+      state: reloaded
 
   - name: Run incus service
     service:

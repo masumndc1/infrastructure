@@ -15,21 +15,20 @@
 
   - name: Install incus package
     package:
-      name: [ 'incus', 'incus-tools' ]
+      name: [ 'incus',
+        'incus-tools', ]
       state: present
       update_cache: true
     when: ansible_os_family == "Debian" or
       ansible_os_family == "RedHat" or
       ansible_os_family == "Suse"
 
-  - name: Run incus service
-    service:
-      name: 'incus'
-      state: started
-      enabled: yes
-    when: ansible_os_family == "Debian" or
-      ansible_os_family == "RedHat" or
-      ansible_os_family == "Suse"
+  - name: Install python3-firewall in suse
+    zypper:
+      name: python3-firewall
+      state: latest
+      update_cache: true
+    when: ansible_os_family == "Suse"
 
   - name: Add 8443/tcp port in firewalld
     ansible.posix.firewalld:
@@ -58,7 +57,17 @@
       dest: /tmp/preseed
       mode: 0640
 
+  - name: Run incus service
+    service:
+      name: 'incus'
+      state: started
+      enabled: yes
+    when: ansible_os_family == "Debian" or
+      ansible_os_family == "RedHat" or
+      ansible_os_family == "Suse"
+
   - name: initialize lxd from a preseed file
     shell:
       chdir: /tmp
       cmd: 'cat preseed | incus admin init --preseed'
+    changed_when: false

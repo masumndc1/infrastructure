@@ -74,7 +74,7 @@
 
     - name: remove all incus network
       command:
-        cmd: "incus network rm {{ incus_bridge }}"
+        cmd: "incus network rm {{ incus_br }}"
       when:
         - clean_incus_node
 

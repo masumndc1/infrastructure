@@ -1,0 +1,54 @@
+---
+- hosts: nagios
+  become: yes
+  gather_facts: yes
+  ignore_errors: yes
+
+  tasks:
+    - name: Install nrpe in Centos or Rocky
+      yum:
+        name: ['nrpe']
+        state: latest
+        update_cache: yes
+      when: ansible_distribution == "CentOS" or
+            ansible_distribution == "Rocky"
+
+    - name: Install nrpe packages in Ubuntu
+      apt:
+        name: ['nrpe']
+        state: latest
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Place cfg file for in nagios server
+      template:
+        src: template/monitor.cfg.j2
+        dest: /etc/nagios/servers/{{ ansible_hostname }}.cfg
+        owner: root
+        group: root
+        mode: '0644'
+      delegate_to: jumphost
+      notify:
+        - Restart nagios
+
+    - name: Run nrpe service
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      with_items:
+        - nrpe
+
+    - name: Open port 5666 for nrpe service
+      firewalld:
+        permanent: yes
+        immediate: yes
+        port: 5666/tcp
+        state: enabled
+
+  handlers:
+    - name: Restart nagios
+      service:
+        name: nagios
+        state: restarted
+      delegate_to: jumphost

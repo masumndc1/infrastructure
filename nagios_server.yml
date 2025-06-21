@@ -1,0 +1,62 @@
+---
+- hosts: jumphost
+  become: yes
+  gather_facts: yes
+  ignore_errors: yes
+
+  tasks:
+    - name: Install nagios and related packages in Centos or Rocky
+      yum:
+        name: ['httpd', 'nagios', 'nagios-common', 'python3-passlib']
+        state: latest
+        update_cache: yes
+      when: ansible_distribution == "CentOS" or
+            ansible_distribution == "Rocky"
+
+    - name: Install nagios and related packages in Ubuntu
+      apt:
+        name: ['apache2', 'nagios', 'nagios-common', 'python3-passlib']
+        state: latest
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: A folder to hold all nodes cfg file
+      file:
+        path: /etc/nagios/servers
+        state: directory
+        owner: root
+        group: nagios
+        mode: '0755'
+
+    - name: Run nagios and httpd service
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      with_items:
+        - nagios
+        - httpd
+
+    - name: Open port 80 for httpd service
+      firewalld:
+        permanent: yes
+        immediate: yes
+        service: http
+        state: enabled
+
+    - name: Add nagiosadmin passwod
+      htpasswd:
+        path: /etc/nagios/passwd
+        name: nagiosadmin
+        password: 'nagiosadmin'
+        owner: root
+        group: apache
+        mode: 0640
+      notify:
+        - Restart httpd on CentOS/Rocky
+
+  handlers:
+    - name: Restart httpd on CentOS/Rocky
+      service:
+        name: httpd
+        state: restarted

@@ -1,0 +1,67 @@
+# puppet agent configuraiton on freebsd
+# here we will install puppet agent 5 as our
+# server running on centos7.0 is version of 5
+- hosts: puppetnodes
+  become: true
+  gather_facts: true
+
+  tasks:
+  - name: Install some common packages in debian family
+    apt:
+      name: "{{ deb_package }}"
+      state: present
+      update_cache: true
+    when: ansible_os_family == "Debian"
+
+  - name: Install some common packages in Redhat family
+    yum:
+      name: "{{ rpm_package }}"
+      state: present
+      update_cache: true
+    when: ansible_os_family == "Redhat"
+
+  - name: Install puppet agent in Debian
+    apt:
+      name: puppet
+      state: present
+      update_cache: true
+    when: ansible_os_family == "Debian"
+
+  - name: Install puppet agent
+    pkgng:
+      name: puppet5
+      state: present
+    when: ansible_distribution == "FreeBSD"
+
+  - name: Enabling entry in /etc/rc.conf
+    lineinfile:
+      path: /etc/rc.conf
+      line: puppet_enable="YES"
+    when: ansible_distribution == "FreeBSD"
+
+  - name: Creating puppet.conf file for agent
+    template:
+      src: template/puppet.conf.j2
+      dest: /etc/puppet/puppet.conf
+      mode: u=rw,g=r,o=r
+    tags: temp
+    when: ansible_os_family == "Debian"
+    notify:
+      - restart puppet
+
+  - name: Creating puppet.conf file for agent
+    template:
+      src: template/puppet.conf.j2
+      dest: /usr/local/etc/puppet/puppet.conf
+      mode: u=rw,g=r,o=r
+    tags: temp
+    when: ansible_distribution == "FreeBSD"
+
+  - name: Enable puppet agent service
+    service:
+      name: puppet
+      state: started
+      enabled: yes
+
+  handlers:
+    - import_tasks: handlers/main.yml

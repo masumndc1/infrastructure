@@ -1,0 +1,47 @@
+---
+- hosts: suse
+  become: true
+  gather_facts: true
+  ignore_errors: true
+
+  tasks:
+    - name: get list of all containers
+      command:
+        cmd: 'incus list -f csv'
+      register: container_list
+
+    - name: start saltmaster container
+      command:
+        cmd: 'incus launch local:ubu24-packer saltmaster'
+      when:
+        - '"saltmaster" not in container_list.stdout'
+
+    - name: start salt-ubu24-dev1 container
+      command:
+        cmd: 'incus launch local:ubu24-packer salt-ubu24-dev1'
+      when:
+        - '"salt-ubu24-dev1" not in container_list.stdout'
+
+    - name: start salt-ubu24-dev2 container
+      command:
+        cmd: 'incus launch local:ubu24-packer salt-ubu24-dev2'
+      when:
+        - '"salt-ubu24-dev2" not in container_list.stdout'
+
+    - name: start salt-ubu24-prod1 container
+      command:
+        cmd: 'incus launch local:ubu24-packer salt-ubu24-prod1'
+      when:
+        - '"salt-ubu24-prod1" not in container_list.stdout'
+
+    - name: start salt-ubu24-prod2 container
+      command:
+        cmd: 'incus launch local:ubu24-packer salt-ubu24-prod2'
+      when:
+        - '"salt-ubu24-prod2" not in container_list.stdout'
+
+    - name: start monitoring container
+      command:
+        cmd: 'incus launch local:ubu24-packer monitoring'
+      when:
+        - '"monitoring" not in container_list.stdout'

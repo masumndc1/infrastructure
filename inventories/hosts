@@ -15,7 +15,7 @@ hypervisors
 
 [compute]
 ubu-lxd
-suse
+debian13
 
 [jenkins]
 jenkin
@@ -69,6 +69,8 @@ kibana
 [jumphosts]
 jumphost1
 jumphost2
+lap-asus
+lap-lenovo
 
 [nagios]
 jumphost1
@@ -88,6 +90,7 @@ lap-lenovo
 
 [images]
 ubu-lxd
+debian12
 lap-asus
 lap-lenovo
 

@@ -1,22 +1,26 @@
 ---
 # this will install a jumphost in localhost
-- hosts: localhost:jumphost
+- hosts: localhost:jumphosts
   gather_facts: yes
   become: yes
   ignore_errors: true
 
   tasks:
+  - name: Add public key in authorized_key file
+    authorized_key:
+      user: "{{ ssh_user }}"
+      #key: "{{ public_key }}"
+      #key: "{{ lookup('file', {{ item }} ) }}"
+      key: "{{ lookup('file', item) }}"
+    with_items:
+      - "{{ public_keyfile }}"
+
   - name: Install openssh-server
     apt:
       name: "openssh-server"
       state: latest
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
-
-  - name: Add public key in authorized_key file
-    authorized_key:
-      user: "{{ ssh_user }}"
-      key: "{{ public_key }}"
 
   - name: Enable and run openssh-service
     service:
@@ -51,6 +55,7 @@
       permanent: true
       immediate: true
       state: enabled
+    when: ansible_distribution == "Ubuntu"
 
   - name: Enable 3000 port forwarding for grafana
     firewalld:
@@ -59,6 +64,7 @@
       permanent: true
       immediate: true
       state: enabled
+    when: ansible_distribution == "Ubuntu"
 
   - name: Enable 9200 port forwarding for elasticsearch
     firewalld:
@@ -67,6 +73,7 @@
       permanent: true
       immediate: true
       state: enabled
+    when: ansible_distribution == "Ubuntu"
 
   - name: Enable 5601 port forwarding for kibana
     firewalld:
@@ -75,3 +82,4 @@
       permanent: true
       immediate: true
       state: enabled
+    when: ansible_distribution == "Ubuntu"

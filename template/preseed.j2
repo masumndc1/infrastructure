@@ -6,15 +6,13 @@ networks:
     ipv4.dhcp.ranges: "{{ ipv4_ranges }}"
     ipv4.nat: "true"
     ipv6.address: none
-    dns.nameservers: '8.8.8.8'
+    dns.nameservers: "{{ dns1 }}"
   description: ""
   name: incusbr0
   type: bridge
   project: default
 storage_pools:
 - config:
-    source: /var/lib/incus/storage-pools/default
-    volatile.initial_source: /var/lib/incus/storage-pools/default
   description: ""
   name: default
   driver: btrfs

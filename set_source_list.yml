@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: true
+  gather_facts: true
+  ignore_errors: true
+
+  tasks:
+    - name: Set source list for debian
+      template:
+        src: template/debian_sources.j2
+        dest: /etc/apt/sources.list.d/debian.sources
+        owner: root
+        group: root
+        mode: '0644'
+      when: ansible_distribution == 'Debian'

@@ -1,0 +1,33 @@
+---
+# this yml will fix nameserver issue
+- hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: install resolvconf
+    apt:
+      name: 'resolvconf'
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == 'Debian'
+      and ansible_virtualization_role == 'guest'
+
+  - name: add nameserver for resolvconf
+    ansible.builtin.blockinfile:
+      path: /etc/resolvconf/resolv.conf.d/head
+      marker: "# --{mark} ANSIBLE MANAGED BLOCK -- #"
+      insertafter: "<body>"
+      block: |
+        nameserver 8.8.8.8
+        nameserver 8.8.4.4
+    when: ansible_distribution == 'Debian'
+      and ansible_virtualization_role == 'guest'
+
+  - name: update resolvconf
+    ansible.builtin.shell: |
+      resolvconf --enable-updates
+      resolvconf -u
+    changed_when: false
+    when: ansible_distribution == 'Debian'
+      and ansible_virtualization_role == 'guest'

@@ -9,3 +9,12 @@
     hostname:
       name: "{{ hostname }}"
     tags: hostname
+
+  - name: Install locales
+    apt:
+      name: [ 'locales',
+        'locales-all']
+      state: present
+      update_cache: yes
+    when: ansible_distribution == "Debian"
+    tags: locales

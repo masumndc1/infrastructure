@@ -13,10 +13,26 @@
       value: 1
       sysctl_set: true
 
-  - name: Install incus package
+  - name: Install incus package in redhat or suse
     package:
       name: [ 'incus',
         'incus-tools', ]
+      state: present
+      update_cache: true
+    when: ansible_os_family == "RedHat" or
+      ansible_os_family == "Suse"
+
+  - name: Install incus package in debian
+    package:
+      name: [ 'incus',
+        'btrfs-progs', ]
+      state: present
+      update_cache: true
+    when: ansible_distribution == "Debian"
+
+  - name: Install firewalld package
+    package:
+      name: [ 'firewalld' ]
       state: present
       update_cache: true
     when: ansible_os_family == "Debian" or
@@ -24,11 +40,12 @@
       ansible_os_family == "Suse"
 
   - name: Install python3-firewall in suse
-    zypper:
+    package:
       name: python3-firewall
       state: latest
       update_cache: true
-    when: ansible_os_family == "Suse"
+    when: ansible_os_family == "Suse" or
+      ansible_distribution == "Debian"
 
   - name: Add 8443/tcp port in firewalld
     ansible.posix.firewalld:
@@ -50,6 +67,7 @@
     ansible.builtin.service:
       name: firewalld
       state: reloaded
+    changed_when: false
 
   - name: Copy preseed file
     template:

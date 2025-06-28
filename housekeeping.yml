@@ -6,3 +6,6 @@
 - import_playbook: hostname.yml
 - import_playbook: networking.yml
 - import_playbook: users.yml
+- import_playbook: set_source_list.yml
+- import_playbook: fix_dns_issue.yml
+- import_playbook: install_pkg.yml

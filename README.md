@@ -1,18 +1,30 @@
-# infrastructure
+---
+title: usages of various playbook
+---
 
-1. First setup ssh with your all hosts without asking password.
-`ssh-copy-id` can be an easy fix.
+#  infrastructure
 
-2. If you have automated image creation script like packer or so you can
-   add user public key in user's home directory.
+This repository has gone through many changes. Now, it is mainly used
+to setup an infra with incus system containers.
 
-3. Copy ansible_install.py script at target node and install ansible it.
+- Before running any playbook of this repository its better to copy pub key
+  your hosts so that host does not ask for password during login anymore.
+  `ssh-copy-id user@host` can be an easy fix.
 
-4. Copy sudo.yml to target host and run this playbook to give user admin priviledge.
+- If you have automated image creation script like packer or so you can
+  add user public key in user's home directory. Another way to create image
+  by [ansible-role-packer-incus](https://github.com/masumndc1/ansible-role-packer-incus)
 
-5. Edit all related variables in host_vars,group_vars and hosts.yml accordingly.
+- Copy ansible_install.py script at target node to install ansible it (optional).
 
-6. Run housekeeping.yml playbook.
+- Copy sudo.yml to target host and run this playbook to give user admin privilege.
+
+- Edit all related yml file in host_vars,group_vars and inventories/hosts.yml.
+
+- Run housekeeping.yml playbook to setup user, some required packages etc.
+```
+ansible-playbook -i inventories/hosts housekeeping.yml -l ubu-lxd
+```
 
 7. Run puppetcluster.yml to set up puppet master and agent if the node is freebsd.
 

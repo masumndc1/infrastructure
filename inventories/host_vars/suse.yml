@@ -1,7 +1,0 @@
----
-hostname: suse
-ansible_python_interpreter: '/usr/bin/python3.13'
-zypper_repo:
-  - 'https://download.opensuse.org/repositories/filesystems/openSUSE_Tumbleweed/filesystems.repo'
-ipv4_address: "192.168.3.1/24"
-ipv4_ranges: "192.168.3.10-192.168.3.250"

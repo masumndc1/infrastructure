@@ -15,7 +15,6 @@ hypervisors
 
 [compute]
 ubu-lxd
-debian13
 
 [jenkins]
 jenkin
@@ -90,7 +89,6 @@ lap-lenovo
 
 [images]
 ubu-lxd
-debian12
 lap-asus
 lap-lenovo
 

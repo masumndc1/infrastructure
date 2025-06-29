@@ -13,14 +13,37 @@
       value: 1
       sysctl_set: true
 
+  - name: Install apt key
+    ansible.builtin.get_url:
+      url: https://pkgs.zabbly.com/key.asc
+      dest: /etc/apt/keyrings/zabbly.asc
+    when: ansible_distribution == "Debian"
+       or ansible_distribution == 'Ubuntu'
+
+  - name: Install incus repository
+    ansible.builtin.template:
+      src: template/zabbly-incus.j2
+      dest: /etc/apt/sources.list.d/zabbly-incus-stable.sources
+      owner: root
+      group: root
+      mode: '0644'
+    when: ansible_os_family == "Debian" and
+      ( ansible_distribution_release == "noble" or
+        ansible_distribution_release == "bookworm" or
+        ansible_distribution_release == 'trixie' )
+    tags: zabbly
+
   - name: Install incus package in redhat or suse
     package:
       name: [ 'incus',
-        'incus-tools', ]
+        'incus-tools',
+        'incus-client',
+        'incus-extra',
+        'incus-ui-canonical']
       state: present
       update_cache: true
-    when: ansible_os_family == "RedHat" or
-      ansible_os_family == "Suse"
+    when: ansible_os_family == "RedHat"
+       or ansible_os_family == "Suse"
 
   - name: Install incus package in debian
     package:
@@ -29,23 +52,19 @@
       state: present
       update_cache: true
     when: ansible_distribution == "Debian"
+       or ansible_distribution == 'Ubuntu'
 
   - name: Install firewalld package
     package:
-      name: [ 'firewalld' ]
+      name: [
+        'firewalld',
+        'python3-firewall'
+        ]
       state: present
       update_cache: true
-    when: ansible_os_family == "Debian" or
-      ansible_os_family == "RedHat" or
-      ansible_os_family == "Suse"
-
-  - name: Install python3-firewall in suse
-    package:
-      name: python3-firewall
-      state: latest
-      update_cache: true
-    when: ansible_os_family == "Suse" or
-      ansible_distribution == "Debian"
+    when: ansible_os_family == "Debian"
+       or ansible_os_family == "RedHat"
+       or ansible_os_family == "Suse"
 
   - name: Add 8443/tcp port in firewalld
     ansible.posix.firewalld:
@@ -80,9 +99,9 @@
       name: 'incus'
       state: started
       enabled: yes
-    when: ansible_os_family == "Debian" or
-      ansible_os_family == "RedHat" or
-      ansible_os_family == "Suse"
+    when: ansible_os_family == "Debian"
+       or ansible_os_family == "RedHat"
+       or ansible_os_family == "Suse"
 
   - name: initialize lxd from a preseed file
     shell:

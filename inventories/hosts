@@ -1,5 +1,5 @@
 [all:children]
-puppetmasters
+puppetservers
 puppetnodes
 saltmasters
 saltminions
@@ -8,8 +8,6 @@ lxds
 jumphosts
 nagios
 jenkins
-devstacks
-nids
 images
 hypervisors
 
@@ -19,7 +17,7 @@ ubu-lxd
 [jenkins]
 jenkin
 
-[puppetmasters]
+[puppetservers]
 puppetserver
 
 [puppetnodes]
@@ -38,11 +36,12 @@ salt-ubu24-dev1
 salt-ubu24-dev2
 salt-ubu24-prod1
 salt-ubu24-prod2
-monitoring
+monitor
 
 [lxds]
 puppetserver
 saltmaster
+sys-cent8-dev1
 sys-deb12-dev1
 sys-deb12-dev2
 sys-deb12-prod
@@ -57,11 +56,7 @@ sys-ubu22-prod
 sys-ubu24-dev1
 sys-ubu24-dev2
 sys-ubu24-prod
-salt-ubu24-dev1
-salt-ubu24-dev2
-salt-ubu24-prod1
-salt-ubu24-prod2
-monitoring
+monitor
 elasticsiem
 kibana
 
@@ -70,18 +65,6 @@ jumphost1
 jumphost2
 lap-asus
 lap-lenovo
-
-[nagios]
-jumphost1
-
-[devstacks]
-devstack
-
-[nids]
-sys-dev1
-sys-dev2
-sys-prod1
-sys-prod2
 
 [hypervisors]
 lap-asus

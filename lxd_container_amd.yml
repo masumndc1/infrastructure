@@ -1,56 +1,14 @@
 ---
 # this script will install lxd container
-- hosts: ubuntu16.04-cmp1-prod
+- hosts: compute
   become: yes
   gather_facts: yes
   ignore_errors: true
 
   tasks:
-  - name: Create a started prod1-centos7 container
+  - name: Create a started sys-cent8-dev1 container
     lxd_container:
-      name: prod1-centos7
-      state: started
-      source:
-        type: image
-        mode: pull
-        server: https://images.linuxcontainers.org
-        protocol: lxd
-        alias: centos/7/amd64
-      profiles: ["default"]
-      wait_for_ipv4_addresses: true
-      timeout: 600
-
-  - name: Create a started prod2-centos7 container
-    lxd_container:
-      name: prod2-centos7
-      state: started
-      source:
-        type: image
-        mode: pull
-        server: https://images.linuxcontainers.org
-        protocol: lxd
-        alias: centos/7/amd64
-      profiles: ["default"]
-      wait_for_ipv4_addresses: true
-      timeout: 600
-
-  - name: Create a started devel-centos7 container
-    lxd_container:
-      name: devel-centos7
-      state: started
-      source:
-        type: image
-        mode: pull
-        server: https://images.linuxcontainers.org
-        protocol: lxd
-        alias: centos/7/amd64
-      profiles: ["default"]
-      wait_for_ipv4_addresses: true
-      timeout: 600
-
-  - name: Create a started devel-centos8 container
-    lxd_container:
-      name: devel-centos8
+      name: sys-cent8-dev1
       state: started
       source:
         type: image
@@ -62,65 +20,9 @@
       wait_for_ipv4_addresses: true
       timeout: 600
 
-  - name: Create a started prod1-ubuntu16 container
+  - name: Create a started sys-ubu20-dev1 container
     lxd_container:
-      name: prod1-ubuntu16
-      state: started
-      source:
-        type: image
-        mode: pull
-        server: https://images.linuxcontainers.org
-        protocol: lxd
-        alias: ubuntu/xenial/amd64
-      profiles: ["default"]
-      wait_for_ipv4_addresses: true
-      timeout: 600
-
-  - name: Create a started prod2-ubuntu16 container
-    lxd_container:
-      name: prod2-ubuntu16
-      state: started
-      source:
-        type: image
-        mode: pull
-        server: https://images.linuxcontainers.org
-        protocol: lxd
-        alias: ubuntu/xenial/amd64
-      profiles: ["default"]
-      wait_for_ipv4_addresses: true
-      timeout: 600
-
-  - name: Create a started devel-ubuntu16 container
-    lxd_container:
-      name: devel-ubuntu16
-      state: started
-      source:
-        type: image
-        mode: pull
-        server: https://images.linuxcontainers.org
-        protocol: lxd
-        alias: ubuntu/xenial/amd64
-      profiles: ["default"]
-      wait_for_ipv4_addresses: true
-      timeout: 600
-
-  - name: Create a started devel-ubuntu18 container
-    lxd_container:
-      name: devel-ubuntu18
-      state: started
-      source:
-        type: image
-        mode: pull
-        server: https://images.linuxcontainers.org
-        protocol: lxd
-        alias: ubuntu/bionic/amd64
-      profiles: ["default"]
-      wait_for_ipv4_addresses: true
-      timeout: 600
-
-  - name: Create a started devel-ubuntu20 container
-    lxd_container:
-      name: devel-ubuntu20
+      name: sys-ubu20-dev1
       state: started
       source:
         type: image

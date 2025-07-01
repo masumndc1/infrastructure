@@ -77,9 +77,9 @@
       wait_for_ipv4_addresses: true
       timeout: 600
 
-  - name: Create a started monitoring container
+  - name: Create a started monitor container
     lxd_container:
-      name: monitoring
+      name: monitor
       state: started
       source:
         type: image
@@ -119,65 +119,9 @@
       wait_for_ipv4_addresses: true
       timeout: 600
 
-  - name: Create a started puppetmaster container
+  - name: Create a started puppetserver container
     lxd_container:
-      name: puppetmaster
-      state: started
-      source:
-        type: image
-        mode: pull
-        server: https://images.linuxcontainers.org
-        protocol: simplestreams
-        alias: debian/bullseye/arm64
-      profiles: ["default"]
-      wait_for_ipv4_addresses: true
-      timeout: 600
-
-  - name: Create a started net-prod1 container
-    lxd_container:
-      name: net-prod1
-      state: started
-      source:
-        type: image
-        mode: pull
-        server: https://images.linuxcontainers.org
-        protocol: simplestreams
-        alias: debian/bullseye/arm64
-      profiles: ["default"]
-      wait_for_ipv4_addresses: true
-      timeout: 600
-
-  - name: Create a started net-prod2 container
-    lxd_container:
-      name: net-prod2
-      state: started
-      source:
-        type: image
-        mode: pull
-        server: https://images.linuxcontainers.org
-        protocol: simplestreams
-        alias: debian/bullseye/arm64
-      profiles: ["default"]
-      wait_for_ipv4_addresses: true
-      timeout: 600
-
-  - name: Create a started net-dev1 container
-    lxd_container:
-      name: net-dev1
-      state: started
-      source:
-        type: image
-        mode: pull
-        server: https://images.linuxcontainers.org
-        protocol: simplestreams
-        alias: debian/bullseye/arm64
-      profiles: ["default"]
-      wait_for_ipv4_addresses: true
-      timeout: 600
-
-  - name: Create a started net-dev2 container
-    lxd_container:
-      name: net-dev2
+      name: puppetserver
       state: started
       source:
         type: image

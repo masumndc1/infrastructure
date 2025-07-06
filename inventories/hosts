@@ -21,12 +21,15 @@ jenkin
 puppetserver
 
 [puppetnodes]
-sys-ubu20-dev1
-sys-ubu20-dev2
-sys-ubu20-prod
-sys-ubu22-dev1
-sys-ubu22-dev2
-sys-ubu22-prod
+sys-alma9-dev1
+sys-alma9-dev2
+sys-alma9-prod
+sys-deb12-dev1
+sys-deb12-dev2
+sys-deb12-prod
+sys-ubu24-dev1
+sys-ubu24-dev2
+sys-ubu24-prod
 
 [saltmasters]
 saltmaster
@@ -41,15 +44,10 @@ monitor
 [lxds]
 puppetserver
 saltmaster
-sys-cent8-dev1
 sys-deb12-dev1
 sys-deb12-dev2
 sys-deb12-prod
-sys-alma8-dev1
 sys-alma9-dev1
-sys-ubu20-dev1
-sys-ubu20-dev2
-sys-ubu20-prod
 sys-ubu22-dev1
 sys-ubu22-dev2
 sys-ubu22-prod

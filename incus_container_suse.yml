@@ -1,0 +1,40 @@
+---
+- hosts: suse
+  become: true
+  gather_facts: true
+  ignore_errors: true
+
+  tasks:
+    - name: get list of all containers
+      command:
+        cmd: 'incus list -f csv'
+      register: container_list
+      changed_when: false
+      tags: ['suse']
+
+    - name: start sys-suse-dev1 container
+      command:
+        cmd: 'incus launch local:opensuse-packer sys-suse-dev1'
+      when:
+        - '"sys-suse-dev1" not in container_list.stdout'
+      delegate_to: "{{ lookup('csvfile','{1} file=containers_info.csv delimiter=,','sys-suse-dev1') }}"
+      delegate_facts: true
+      tags: suse
+
+    - name: start sys-suse-dev2 container
+      command:
+        cmd: 'incus launch local:opensuse-packer sys-suse-dev2'
+      when:
+        - '"sys-suse-dev2" not in container_list.stdout'
+      delegate_to: "{{ lookup('csvfile','{1} file=containers_info.csv delimiter=,','sys-suse-dev2') }}"
+      delegate_facts: true
+      tags: suse
+
+    - name: start sys-suse-prod container
+      command:
+        cmd: 'incus launch local:opensuse-packer sys-suse-prod'
+      when:
+        - '"sys-suse-prod" not in container_list.stdout'
+      delegate_to: "{{ lookup('csvfile','{1} file=containers_info.csv delimiter=,','sys-suse-prod') }}"
+      delegate_facts: true
+      tags: suse

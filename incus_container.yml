@@ -13,7 +13,7 @@
 
     - name: start puppetserver container
       command:
-        cmd: 'incus launch local:ubu20-packer puppetserver'
+        cmd: 'incus launch local:ubu22-packer puppetserver'
       when:
         - '"puppetserver" not in container_list.stdout'
       delegate_to: "{{ lookup('csvfile','{1} file=containers_info.csv delimiter=,','puppetserver') }}"
@@ -67,30 +67,6 @@
       delegate_to: "{{ lookup('csvfile','{1} file=containers_info.csv delimiter=,','sys-deb13-prod') }}"
       delegate_facts: true
 
-    - name: start sys-alma8-dev1 container
-      command:
-        cmd: 'incus launch local:alma8-packer sys-alma8-dev1'
-      when:
-        - '"sys-alma8-dev1" not in container_list.stdout'
-      delegate_to: "{{ lookup('csvfile','{1} file=containers_info.csv delimiter=,','sys-alma-dev1') }}"
-      delegate_facts: true
-
-    - name: start sys-alma8-dev2 container
-      command:
-        cmd: 'incus launch local:alma8-packer sys-alma8-dev2'
-      when:
-        - '"sys-alma8-dev2" not in container_list.stdout'
-      delegate_to: "{{ lookup('csvfile','{1} file=containers_info.csv delimiter=,','sys-alma8-dev2') }}"
-      delegate_facts: true
-
-    - name: start sys-alma8-prod container
-      command:
-        cmd: 'incus launch local:alma8-packer sys-alma8-prod'
-      when:
-        - '"sys-alma8-prod" not in container_list.stdout'
-      delegate_to: "{{ lookup('csvfile','{1} file=containers_info.csv delimiter=,','sys-alma8-prod') }}"
-      delegate_facts: true
-
     - name: start sys-alma9-dev1 container
       command:
         cmd: 'incus launch local:alma9-packer sys-alma9-dev1'
@@ -113,30 +89,6 @@
       when:
         - '"sys-alma9-prod" not in container_list.stdout'
       delegate_to: "{{ lookup('csvfile','{1} file=containers_info.csv delimiter=,','sys-alma9-prod') }}"
-      delegate_facts: true
-
-    - name: start sys-ubu20-dev1 container
-      command:
-        cmd: 'incus launch local:ubu20-packer sys-ubu20-dev1'
-      when:
-        - '"sys-ubu20-dev1" not in container_list.stdout'
-      delegate_to: "{{ lookup('csvfile','{1} file=containers_info.csv delimiter=,','sys-ubu20-dev1') }}"
-      delegate_facts: true
-
-    - name: start sys-ubu20-dev2 container
-      command:
-        cmd: 'incus launch local:ubu20-packer sys-ubu20-dev2'
-      when:
-        - '"sys-ubu20-dev2" not in container_list.stdout'
-      delegate_to: "{{ lookup('csvfile','{1} file=containers_info.csv delimiter=,','sys-ubu20-dev2') }}"
-      delegate_facts: true
-
-    - name: start sys-ubu20-prod container
-      command:
-        cmd: 'incus launch local:ubu20-packer sys-ubu20-prod'
-      when:
-        - '"sys-ubu20-prod" not in container_list.stdout'
-      delegate_to: "{{ lookup('csvfile','{1} file=containers_info.csv delimiter=,','sys-ubu20-prod') }}"
       delegate_facts: true
 
     - name: start sys-ubu22-dev1 container

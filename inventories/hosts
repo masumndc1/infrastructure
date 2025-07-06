@@ -4,15 +4,15 @@ puppetnodes
 saltmasters
 saltminions
 compute
-lxds
+incus
 jumphosts
-nagios
 jenkins
 images
 hypervisors
 
 [compute]
-ubu-lxd
+ubu-incus
+suse
 
 [jenkins]
 jenkin
@@ -41,7 +41,7 @@ salt-ubu24-prod1
 salt-ubu24-prod2
 monitor
 
-[lxds]
+[incus]
 puppetserver
 saltmaster
 sys-deb12-dev1
@@ -69,7 +69,7 @@ lap-asus
 lap-lenovo
 
 [images]
-ubu-lxd
+ubu-incus
 lap-asus
 lap-lenovo
 

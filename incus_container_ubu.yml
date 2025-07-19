@@ -20,6 +20,14 @@
       delegate_to: "{{ lookup('csvfile','{1} file=containers_info.csv delimiter=,','puppetserver') }}"
       delegate_facts: true
 
+    - name: start saltmaster container
+      command:
+        cmd: 'incus launch local:alma9-packer saltmaster'
+      when:
+        - '"saltmaster" not in container_list.stdout'
+      delegate_to: "{{ lookup('csvfile','{1} file=containers_info.csv delimiter=,','saltmaster') }}"
+      delegate_facts: true
+
     - name: start sys-deb12-dev1 container
       command:
         cmd: 'incus launch local:debian12-packer sys-deb12-dev1'

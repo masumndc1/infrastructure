@@ -1,0 +1,39 @@
+---
+- hosts: laptops
+  become: true
+  gather_facts: false
+
+  tasks:
+  - name: set screen off command
+    template:
+      src: ../template/screen_off.j2
+      dest: /usr/local/bin/screen-off.sh
+      mode: '755'
+      owner: root
+      group: root
+
+  - name: make screen off as service
+    blockinfile:
+      block: |
+        [Unit]
+        Description=Blank screen in 1min and turn off in 2mins. Any keypress turns it on.
+        After=ssh.service
+
+        [Service]
+        Type=oneshot
+        Environment=TERM=linux
+        StandardOutput=tty
+        TTYPath=/dev/console
+        ExecStart=/usr/local/bin/screen-off.sh
+
+        [Install]
+        WantedBy=local.target
+      path: /etc/systemd/system/screen-off.service
+      mode: '0644'
+      create: true
+
+  - name: run screen off service
+    service:
+      name: screen-off
+      state: started
+      enabled: true

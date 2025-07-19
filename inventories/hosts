@@ -9,6 +9,7 @@ jumphosts
 jenkins
 images
 hypervisors
+laptops
 
 [compute]
 ubu-incus
@@ -65,6 +66,10 @@ lap-asus
 lap-lenovo
 
 [hypervisors]
+lap-asus
+lap-lenovo
+
+[laptops]
 lap-asus
 lap-lenovo
 

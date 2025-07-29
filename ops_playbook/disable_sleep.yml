@@ -1,0 +1,37 @@
+---
+- hosts: laptops
+  become: true
+  gather_facts: false
+
+  tasks:
+  - name: place logind config file
+    template:
+      src: ../template/logind_conf.j2
+      dest: /etc/systemd/logind.conf
+      mode: '755'
+      owner: root
+      group: root
+
+  - name: place sleep config file
+    template:
+      src: ../template/sleep_conf.j2
+      dest: /etc/systemd/sleep.conf
+      mode: '755'
+      owner: root
+      group: root
+
+  - name: stop some sleep services
+    service:
+      name: "{{ item }}"
+      state: stopped
+    with_items:
+      - sleep.target
+      - suspend.target
+      - hibernate.target
+      - hybrid-sleep.target
+
+  - name: restart logind services
+    service:
+      name: 'systemd-logind'
+      state: restarted
+      enabled: true

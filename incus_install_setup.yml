@@ -1,7 +1,7 @@
 ---
-# this playbook will install lxd in all compute nodes
-# ansible-playbook -i inventory/hosts lxd.yml
-- hosts: compute
+# this playbook will setup incus in all compute nodes
+# ansible-playbook -i inventory/hosts incus_install_setup.yml
+- hosts: compute:hypervisors
   become: yes
   gather_facts: yes
   ignore_errors: yes

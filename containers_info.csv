@@ -1,7 +1,7 @@
 # name,node,ip,info
 # containers in ubu-incus
-puppetserver,ubu-incus,,
-saltmaster,ubu-incus,,
+puppetserver,lap-asus,,
+saltmaster,lap-lenovo,,
 sys-deb12-dev1,ubu-incus,,
 sys-deb12-dev2,ubu-incus,,
 sys-deb12-prod,ubu-incus,,

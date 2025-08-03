@@ -33,21 +33,24 @@
         ansible_distribution_release == 'trixie' )
     tags: zabbly
 
-  - name: Install incus packages in debian family
+  - name: Install incus related packages in debian family
     package:
       name: [ 'incus',
         'incus-client',
         'incus-extra',
-        'incus-ui-canonical' ]
+        'incus-ui-canonical',
+        'firewalld',
+        'python3-firewall']
       state: present
       update_cache: true
     when: ansible_os_family == "Debian"
 
-  - name: Install incus packages in opensuse
+  - name: Install incus related packages in opensuse
     zypper:
       name: [ 'incus',
         'incus-tools',
         'incus-ui-canonical',
+        'firewalld',
         'python3-firewall' ]
       state: latest
       update_cache: true
@@ -81,3 +84,9 @@
       enabled: true
     when: ansible_os_family == "Debian" or
       ansible_os_family == "Suse"
+
+  - name: initialize lxd from a preseed file
+    shell:
+      chdir: /tmp
+      cmd: 'cat preseed | incus admin init --preseed'
+    changed_when: false

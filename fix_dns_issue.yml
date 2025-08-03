@@ -11,7 +11,6 @@
       state: latest
       update_cache: yes
     when: ansible_distribution == 'Debian'
-      and ansible_virtualization_role == 'guest'
 
   - name: add nameserver for resolvconf
     ansible.builtin.blockinfile:
@@ -22,7 +21,6 @@
         nameserver 8.8.8.8
         nameserver 8.8.4.4
     when: ansible_distribution == 'Debian'
-      and ansible_virtualization_role == 'guest'
 
   - name: update resolvconf
     ansible.builtin.shell: |
@@ -30,4 +28,3 @@
       resolvconf -u
     changed_when: false
     when: ansible_distribution == 'Debian'
-      and ansible_virtualization_role == 'guest'

@@ -2,6 +2,7 @@
 - hosts: images
   become: yes
   gather_facts: true
+  ignore_errors: true
 
   roles:
     - role: ansible-role-packer-incus

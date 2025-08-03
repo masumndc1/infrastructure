@@ -1,5 +1,5 @@
 ---
-- hosts: ubu-incus
+- hosts: ubu-incus:hypervisors
   become: true
   gather_facts: true
   ignore_errors: true

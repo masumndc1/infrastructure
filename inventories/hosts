@@ -68,6 +68,7 @@ lap-lenovo
 [hypervisors]
 lap-asus
 lap-lenovo
+lap-macmini
 
 [laptops]
 lap-acer
@@ -78,6 +79,7 @@ lap-lenovo
 ubu-incus
 lap-asus
 lap-lenovo
+lap-macmini
 
 [all:vars]
 ansible_user = masum

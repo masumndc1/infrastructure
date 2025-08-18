@@ -56,3 +56,14 @@
       name: sshd
       enabled: true
       state: started
+    when: ansible_os_family == "Redhat" or
+      ansible_distribution == "Debian" or
+      ansible_os_family == "Suse" or
+      ansible_distribution == "FreeBSD"
+
+  - name: Run openssh-server
+    service:
+      name: ssh
+      enabled: true
+      state: started
+    when: ansible_distribution == "Ubuntu"

@@ -7,32 +7,32 @@
   tasks:
   - name: Setting up DNS in FreeBSD
     template:
-      src: template/dns.j2
+      src: ../template/dns.j2
       dest: /etc/resolv.conf
     when: ansible_distribution == "FreeBSD"
 
   - name: Populating rc.conf file for IP in FreeBSD
     template:
-      src: template/rc.conf.j2
+      src: ../template/rc.conf.j2
       dest: /etc/rc.conf
     when: ansible_distribution == "FreeBSD"
 
   - name: Setting up static IP in CentOS
     template:
-      src: template/ip_centos.j2
+      src: ../template/ip_centos.j2
       dest: /etc/sysconfig/network-scripts/ifcfg-{{ interface1 }}
     when: ansible_distribution == "CentOS"
 
   - name: Setting up static IP in Ubuntu
     template:
-      src: template/ip_ubuntu.j2
+      src: ../template/ip_ubuntu.j2
       dest: /etc/network/interfaces
     when: ansible_distribution == "Ubuntu" and
       ansible_distribution_major_version|int < 24
 
   - name: Setting up static IP in Ubuntu 24 or above
     template:
-      src: template/50-cloud-init.yaml.j2
+      src: ../template/50-cloud-init.yaml.j2
       dest: /etc/netplan/50-cloud-init.yaml
     when: ansible_distribution == "Ubuntu" and
       ansible_distribution_major_version|int >= 24

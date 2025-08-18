@@ -7,7 +7,7 @@
   tasks:
     - name: Set source list for debian
       template:
-        src: template/debian_sources.j2
+        src: ../template/debian_sources.j2
         dest: /etc/apt/sources.list.d/debian.sources
         owner: root
         group: root

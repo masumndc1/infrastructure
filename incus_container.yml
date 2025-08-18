@@ -1,5 +1,21 @@
 ---
-- import_playbook: incus_container_ubu.yml
-#- import_playbook: incus_container_suse.yml
-#- import_playbook: incus_container_asus.yml
-#- import_playbook: incus_container_lenovo.yml
+- hosts: hypervisors
+  become: true
+  gather_facts: true
+  ignore_errors: true
+
+  tasks:
+    - name: get list of all containers
+      command:
+        cmd: 'incus list -f csv'
+      register: container_list
+      changed_when: false
+      tags: ['ubu-lxd']
+
+    - name: start containers
+      command:
+        cmd: 'incus launch local:{{ item.os }} {{ item.name }}'
+      when:
+        - '"{{ item.name }}" not in container_list.stdout'
+      with_items:
+        - "{{ incus_hosts }}"

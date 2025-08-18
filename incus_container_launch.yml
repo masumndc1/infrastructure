@@ -1,5 +1,5 @@
 ---
-- hosts: hypervisors
+- hosts: compute:hypervisors
   become: true
   gather_facts: true
   ignore_errors: true

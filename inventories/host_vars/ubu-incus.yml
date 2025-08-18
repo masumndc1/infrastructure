@@ -9,3 +9,17 @@ dns1: "8.8.8.8"
 dns2: "8.8.4.4"
 ipv4_address: "192.168.2.1/24"
 ipv4_ranges: "192.168.2.10-192.168.2.250"
+
+incus_hosts:
+  - name: sys-deb12-dev4
+    os: debian12-packer
+  - name: sys-alma9-dev4
+    os: alma9-packer
+  - name: sys-deb13-dev4
+    os: debian13-packer
+  - name: sys-ubu22-dev4
+    os: ubu22-packer
+  - name: sys-ubu24-dev4
+    os: ubu24-packer
+  - name: sys-suse-dev4
+    os: opensuse-packer

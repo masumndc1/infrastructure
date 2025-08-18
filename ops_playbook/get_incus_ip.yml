@@ -5,6 +5,6 @@
 
   tasks:
     - name: populate computes host file by getting containers ip
-      script: scripts/py_incus.py
+      script: ../scripts/py_incus.py
       args:
         executable: python3

@@ -5,6 +5,6 @@
 
   tasks:
     - name: clean title less images
-      script: scripts/inc_img_rm.py
+      script: ../scripts/inc_img_rm.py
       args:
         executable: python3

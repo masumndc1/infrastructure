@@ -48,6 +48,11 @@
   - name: Install incus package in debian
     package:
       name: [ 'incus',
+        'incus-client',
+        'incus-extra',
+        'incus-ui-canonical',
+        'firewalld',
+        'python3-firewall',
         'btrfs-progs', ]
       state: present
       update_cache: true

@@ -2,3 +2,29 @@
 dns1: 8.8.8.8
 ipv4_address: "192.168.5.1/24"
 ipv4_ranges: "192.168.5.10-192.168.5.250"
+
+incus_hosts:
+  - name: puppetmaster
+    os: ubu22-packer
+  - name: puppet-dev1
+    os: debian12-packer
+  - name: puppet-dev2
+    os: ubu22-packer
+  - name: puppet-dev3
+    os: alma9-packer
+  - name: puppet-prod1
+    os: debian12-packer
+  - name: puppet-prod2
+    os: ubu22-packer
+  - name: puppet-prod3
+    os: alma9-packer
+  - name: sys-alma9-dev1
+    os: alma9-packer
+  - name: sys-deb12-dev1
+    os: debian12-packer
+  - name: sys-deb13-dev1
+    os: debian13-packer
+  - name: sys-ubu22-dev1
+    os: ubu22-packer
+  - name: sys-ubu24-dev1
+    os: ubu24-packer

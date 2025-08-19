@@ -1,0 +1,4 @@
+---
+- import_playbook: incus_install_compute.yml
+- import_playbook: incus_image.yml
+- import_playbook: incus_container_launch.yml

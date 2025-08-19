@@ -44,3 +44,8 @@ ansible-playbook -i inventories/hosts housekeeping.yml -l ubu-lxd
 
 ## Infra pics
 <img src = "pics/infra.png">
+
+## usages
+```
+ansible-playbook -i inventories/hosts site.yml -l lap-macmini
+```

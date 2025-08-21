@@ -1,4 +1,5 @@
 ---
+# sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 - hosts: laptops:hypervisors
   become: true
   gather_facts: false
@@ -35,3 +36,8 @@
       name: 'systemd-logind'
       state: restarted
       enabled: true
+
+  - name: You may run following command in cli
+    debug:
+       msg:
+         - "sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target"

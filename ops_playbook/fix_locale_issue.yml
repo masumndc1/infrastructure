@@ -1,0 +1,14 @@
+---
+# this yml will fix locales issue
+- hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: set locales
+    ansible.builtin.blockinfile:
+      path: /etc/default/locale
+      block: |
+        LC_ALL=en_US.UTF-8
+        LANG=en_US.UTF-8
+    when: ansible_os_family == 'Debian'

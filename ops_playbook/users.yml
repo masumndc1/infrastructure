@@ -9,17 +9,6 @@
   gather_facts: yes
   ignore_errors: true
 
-  pre_tasks:
-  - name: Ensure Python 3 is installed for Ansible to use (example for debian)
-    ansible.builtin.raw:
-      if ! command -v python3 &> /dev/null; then
-        apt install -y python3
-      fi
-    changed_when: false
-    args:
-      executable: /bin/bash
-    when: ansible_distribution == "Debian"
-
   tasks:
   - name: Adding user
     user:

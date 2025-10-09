@@ -27,10 +27,11 @@
       owner: root
       group: root
       mode: '0644'
-    when: ansible_os_family == "Debian" and
+    when: ansible_distribution == "Ubuntu" or
+      ( ansible_os_family == "Debian" and
       ( ansible_distribution_release == "noble" or
         ansible_distribution_release == "bookworm" or
-        ansible_distribution_release == 'trixie' )
+        ansible_distribution_release == 'trixie' ))
     tags: zabbly
 
   - name: Install incus package in redhat or suse

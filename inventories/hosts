@@ -14,6 +14,8 @@ laptops
 [compute]
 ubu-incus
 debian13
+cloud-ubu
+cloud-hpc
 
 [jenkins]
 jenkin
@@ -81,6 +83,8 @@ lap-asus
 lap-lenovo
 lap-macmini
 debian13
+cloud-ubu
+cloud-hpc
 
 [all:vars]
 ansible_user = masum

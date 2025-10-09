@@ -16,6 +16,6 @@
       command:
         cmd: 'incus launch local:{{ item.os }} {{ item.name }}'
       when:
-        - '"{{ item.name }}" not in container_list.stdout'
+        - 'item.name not in container_list.stdout'
       with_items:
         - "{{ incus_hosts }}"

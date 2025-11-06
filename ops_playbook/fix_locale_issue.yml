@@ -9,6 +9,7 @@
     ansible.builtin.blockinfile:
       path: /etc/default/locale
       block: |
+        LC_CTYPE=en_US.UTF-8
         LC_ALL=en_US.UTF-8
         LANG=en_US.UTF-8
     when: ansible_os_family == 'Debian'

@@ -71,6 +71,7 @@ lap-lenovo
 lap-asus
 lap-lenovo
 lap-macmini
+lap-macpro
 
 [laptops]
 lap-acer
@@ -82,6 +83,7 @@ ubu-incus
 lap-asus
 lap-lenovo
 lap-macmini
+lap-macpro
 debian13
 cloud-ubu
 cloud-hpc

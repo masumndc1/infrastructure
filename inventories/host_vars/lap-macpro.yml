@@ -1,0 +1,26 @@
+---
+dns1: 8.8.8.8
+ipv4_address: "192.168.8.1/24"
+ipv4_ranges: "192.168.8.10-192.168.8.250"
+
+incus_hosts:
+  - name: puppetserver8
+    os: ubu22-packer
+  - name: puppet-deb12-dev8
+    os: debian12-packer
+  - name: puppet-ubu22-dev8
+    os: ubu22-packer
+  - name: puppet-alma9-dev8
+    os: alma9-packer
+  - name: sys-alma9-dev8
+    os: alma9-packer
+  - name: sys-deb12-dev8
+    os: debian12-packer
+  - name: sys-deb13-dev8
+    os: debian13-packer
+  - name: sys-ubu22-dev8
+    os: ubu22-packer
+  - name: sys-ubu24-dev8
+    os: ubu24-packer
+  - name: sys-suse-dev8
+    os: opensuse-packer

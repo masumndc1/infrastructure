@@ -1,0 +1,54 @@
+---
+- hosts: all
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Install puppet yum repo in RedHat family
+      yum:
+        name: "{{ puppet_rpm_url }}"
+        state: present
+        update_cache: true
+      when: ansible_os_family == "RedHat"
+
+    - name: Install puppet apt repo in Debian family
+      apt:
+        deb: https://apt.puppetlabs.com/puppet-release-{{ ansible_distribution_release }}.deb
+        state: present
+        update_cache: true
+      when: ansible_os_family == "Debian"
+
+    - name: Install puppet ruby and dependencies in RedHat family
+      yum:
+        name: [ 'gcc',
+          'gcc-c++',
+          'make',
+          'redhat-rpm-config',
+          'ruby',
+          'ruby-devel',
+          'rsync',
+          'puppet-agent'
+        ]
+        state: latest
+        update_cache: true
+      when: ansible_os_family == "RedHat"
+
+    - name: Install puppet ruby and dependencies in Debian family
+      apt:
+        name: [ 'gcc',
+          'make',
+          'ruby',
+          'ruby-all-dev',
+          'rsync',
+          'puppet-agent'
+        ]
+        state: latest
+        update_cache: true
+      when: ansible_os_family == "Debian"
+
+    - name: Install r10k by ruby gem
+      community.general.gem:
+        name: r10k
+        version: 4.1.0
+        state: present
+        user_install: false

@@ -10,6 +10,7 @@ jenkins
 images
 hypervisors
 laptops
+kvms
 
 [compute]
 ubu-incus
@@ -77,6 +78,13 @@ lap-macpro
 lap-acer
 lap-asus
 lap-lenovo
+
+[kvms]
+lap-acer
+lap-asus
+lap-lenovo
+lap-macmini
+lap-macpro
 
 [images]
 ubu-incus

@@ -1,0 +1,23 @@
+---
+- hosts: kvms
+  become: yes
+  gather_facts: true
+
+  tasks:
+    - name: Install libvirt package
+      apt:
+        name: ["libvirt-daemon", "virt-manager", "python3-libvirt"]
+        state: present
+        update_cache: true
+      when: ansible_os_family == "Debian"
+
+    - name: Add user to libvirt group
+      user:
+        name: "{{ libvirt_user }}"
+        group: libvirt
+
+    - name: Run service libvirtd
+      service:
+        name: libvirtd
+        state: started
+        enabled: true

@@ -1,4 +1,13 @@
-- src: https://github.com/masumndc1/ansible-role-packer-incus.git
-  scm: git
-  path: roles
-  version: v1.1.5
+roles:
+  - name: ansible-role-packer-incus
+    src: https://github.com/masumndc1/ansible-role-packer-incus.git
+    scm: git
+    path: roles
+    version: v1.1.5
+
+collections:
+  - name: community.libvirt
+    version: ">=1.0.0"
+
+# ansible-galaxy collection install community.libvirt
+# ansible-galaxy install -f -r requirements.yml

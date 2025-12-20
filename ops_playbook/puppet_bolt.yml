@@ -4,7 +4,13 @@
   become: yes
 
   tasks:
-    #- name: Install puppet bolt in macOS
+    - name: Install puppet bolt in macOS
+      become: false
+      community.general.homebrew:
+        name: puppet-bolt
+        state: present
+      when: ansible_distribution == "MacOSX"
+
     - name: Install puppet key for RHEL based OS
       rpm_key:
         state: present

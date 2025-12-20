@@ -4,21 +4,26 @@
   become: yes
 
   tasks:
-    # - name: Install puppet bolt in macOS
+    #- name: Install puppet bolt in macOS
+    - name: Install puppet key for RHEL based OS
+      rpm_key:
+        state: present
+        key: https://yum.puppet.com/RPM-GPG-KEY-puppet
+      when: ansible_os_family == "RedHat"
 
     - name: Install puppet release pkg in RHEL based OS
       yum:
-        rpm: "{{ puppet_bolt_link[ansible_facts['distribution']] }}"
+        name: "{{ puppet_bolt_link[ansible_facts['os_family']] }}"
         state: present
         update_cache: true
-      when: ansible_distribution == "RedHat"
+      when: ansible_os_family == "RedHat"
 
     - name: Install puppet bolt pdk in RHEL based OS
       yum:
         name: ["puppet-bolt", "pdk"]
         state: present
         update_cache: true
-      when: ansible_distribution == "RedHat"
+      when: ansible_os_family == "RedHat"
 
     - name: Install puppet release pkg in Debian OS
       apt:

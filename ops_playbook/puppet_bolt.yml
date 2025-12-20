@@ -1,0 +1,49 @@
+---
+- hosts: localhost:hypervisors
+  gather_facts: true
+  become: yes
+
+  tasks:
+    # - name: Install puppet bolt in macOS
+
+    - name: Install puppet release pkg in RHEL based OS
+      yum:
+        rpm: "{{ puppet_bolt_link[ansible_facts['distribution']] }}"
+        state: present
+        update_cache: true
+      when: ansible_distribution == "RedHat"
+
+    - name: Install puppet bolt pdk in RHEL based OS
+      yum:
+        name: ["puppet-bolt", "pdk"]
+        state: present
+        update_cache: true
+      when: ansible_distribution == "RedHat"
+
+    - name: Install puppet release pkg in Debian OS
+      apt:
+        deb: "{{ puppet_bolt_link[ansible_facts['distribution']] }}"
+        state: present
+        update_cache: true
+      when: ansible_distribution == "Debian"
+
+    - name: Install puppet bolt pdk in Debian OS
+      apt:
+        name: ["puppet-bolt", "pdk"]
+        state: present
+        update_cache: true
+      when: ansible_distribution == "Debian"
+
+    - name: Install puppet release pkg in Ubuntu OS
+      apt:
+        deb: "{{ puppet_bolt_link[ansible_facts['distribution']] }}"
+        state: present
+        update_cache: true
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Install puppet bolt pdk in Ubuntu OS
+      apt:
+        name: ["puppet-bolt", "pdk"]
+        state: present
+        update_cache: true
+      when: ansible_distribution == "Ubuntu"

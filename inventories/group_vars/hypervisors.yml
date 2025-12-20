@@ -1,3 +1,7 @@
 ---
 incus_br: incusbr0
 incus_port: "8443/tcp"
+puppet_bolt_link:
+  Debian: "https://apt.puppet.com/puppet-release-bookworm.deb"
+  RedHat: "https://yum.puppet.com/puppet8/puppet8-release-el-7.noarch.rpm"
+  Ubuntu: "https://apt.puppet.com/puppet-release-jammy.deb"

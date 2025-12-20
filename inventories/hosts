@@ -70,13 +70,14 @@ lap-lenovo
 
 [hypervisors]
 lap-asus
+lap-acer
 lap-lenovo
 lap-macmini
 lap-macpro
 
 [laptops]
-lap-acer
 lap-asus
+lap-acer
 lap-lenovo
 
 [kvms]

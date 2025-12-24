@@ -1,5 +1,5 @@
 ---
-- hosts: localhost:hypervisors
+- hosts: localhost:hypervisors:incus
   gather_facts: true
   become: yes
 

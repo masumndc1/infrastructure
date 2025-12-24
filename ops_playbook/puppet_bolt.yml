@@ -27,7 +27,7 @@
 
     - name: Install puppet bolt pdk in RHEL based OS
       yum:
-        name: ["puppet-bolt", "pdk", "puppet", "facter"]
+        name: ["puppet-bolt", "pdk", "puppet", "facter", "puppet-agent"]
         state: present
         update_cache: true
       when: ansible_os_family == "RedHat"
@@ -41,7 +41,7 @@
 
     - name: Install puppet bolt pdk in Suse based OS
       zypper:
-        name: ["puppet-bolt", "pdk", "puppet", "facter"]
+        name: ["puppet-bolt", "pdk", "puppet", "facter", "puppet-agent"]
         state: present
         update_cache: true
       when: ansible_os_family == "Suse"
@@ -55,7 +55,7 @@
 
     - name: Install puppet bolt pdk in Debian OS
       apt:
-        name: ["puppet-bolt", "pdk", "puppet", "facter"]
+        name: ["puppet-bolt", "pdk", "puppet", "facter", "puppet-agent"]
         state: present
         update_cache: true
       when: ansible_distribution == "Debian"
@@ -69,7 +69,7 @@
 
     - name: Install puppet bolt pdk in Ubuntu OS
       apt:
-        name: ["puppet-bolt", "pdk", "puppet", "facter"]
+        name: ["puppet-bolt", "pdk", "puppet", "facter", "puppet-agent"]
         state: present
         update_cache: true
       when: ansible_distribution == "Ubuntu"

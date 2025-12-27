@@ -6,3 +6,14 @@ puppet_bolt_link:
   RedHat: "https://yum.puppet.com/puppet-release-el-9.noarch.rpm"
   Ubuntu: "https://apt.puppet.com/puppet-release-jammy.deb"
   Suse: "https://yum.puppet.com/puppet-release-sles-15.noarch.rpm"
+
+pup_pkg: >-
+  {{
+    ["puppet-bolt", "pdk", "facter", "puppet-agent"]
+      if ansible_facts.architecture == "x86_64"
+    else
+      ["pdk", "facter", "puppet-agent"]
+      if ansible_facts.distribution == "arm64"
+    else
+      [ "facter", "puppet-agent"]
+  }}

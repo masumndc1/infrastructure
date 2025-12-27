@@ -25,9 +25,9 @@
         update_cache: true
       when: ansible_os_family == "RedHat"
 
-    - name: Install puppet bolt pdk in RHEL based OS
+    - name: Install puppet pdk in RHEL based OS
       yum:
-        name: ["puppet-bolt", "pdk", "facter", "puppet-agent"]
+        name: "{{ pup_pkg }}"
         state: present
         update_cache: true
       when: ansible_os_family == "RedHat"
@@ -39,9 +39,9 @@
         update_cache: true
       when: ansible_os_family == "Suse"
 
-    - name: Install puppet bolt pdk in Suse based OS
+    - name: Install puppet pdk in Suse based OS
       zypper:
-        name: ["puppet-bolt", "pdk", "facter", "puppet-agent"]
+        name: "{{ pup_pkg }}"
         state: present
         update_cache: true
       when: ansible_os_family == "Suse"
@@ -53,9 +53,9 @@
         update_cache: true
       when: ansible_distribution == "Debian"
 
-    - name: Install puppet bolt pdk in Debian OS
+    - name: Install puppet pdk in Debian OS
       apt:
-        name: ["puppet-bolt", "pdk", "facter", "puppet-agent"]
+        name: "{{ pup_pkg }}"
         state: present
         update_cache: true
       when: ansible_distribution == "Debian"
@@ -67,9 +67,9 @@
         update_cache: true
       when: ansible_distribution == "Ubuntu"
 
-    - name: Install puppet bolt pdk in Ubuntu OS
+    - name: Install puppet pdk in Ubuntu OS
       apt:
-        name: ["puppet-bolt", "pdk", "facter", "puppet-agent"]
+        name: "{{ pup_pkg }}"
         state: present
         update_cache: true
       when: ansible_distribution == "Ubuntu"

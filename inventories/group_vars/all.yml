@@ -6,6 +6,7 @@ public_key:
   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO1BdRWmJL0fFpehq0QsQ7+IchlGYRE+UDGGpvnorhuP khuddin@MacBook-Air-3.local
   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFEU4254G0CmR2c6421FlF7TCCK/GU9tv1XSqQ3orYDH masumndc1@gmail.com
   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGBvc0EkJDSGmuzx+2HJWKEDH5kLc238KRAlznn6ULXt masum@masum
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH2foZ257tvWE+izLga2vm1Xhe9g1Nzs5q7u3uTuzYoT masum@debian
 dns1: 8.8.8.8
 dns2: 4.2.2.1
 gw: 192.168.244.2

@@ -7,5 +7,5 @@ puppet_bolt_link:
 
 pup_pkg: >-
   {{ ["puppet-bolt", "pdk", "facter", "puppet-agent"]
-    if ansible_facts['architecture'] == "x86_64"
+    if ansible_facts.architecture == "x86_64"
     else ["pdk", "facter", "puppet-agent"] }}

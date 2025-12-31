@@ -37,14 +37,14 @@
         name: "{{ puppet_bolt_link[ansible_facts['os_family']] }}"
         state: present
         update_cache: true
-      when: ansible_os_family == "Suse"
+      when: ansible_os_family == "Suse" and ansible_architecture == "x86_64"
 
     - name: Install puppet pdk in Suse based OS
       zypper:
         name: "{{ pup_pkg }}"
         state: present
         update_cache: true
-      when: ansible_os_family == "Suse"
+      when: ansible_os_family == "Suse" and ansible_architecture == "x86_64"
 
     - name: Install puppet release pkg in Debian OS
       apt:

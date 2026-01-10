@@ -1,0 +1,37 @@
+---
+# install ansible
+# example:
+# ansible-playbook -i inventories/hosts ansible.yml
+- hosts: all
+  become: yes
+  gather_facts: yes
+  ignore_errors: true
+
+  tasks:
+    - name: Install epel-release in RedHat based OS
+      yum:
+        name: ['epel-release']
+        state: latest
+        update_cache: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: Install ansible-core in RedHat10
+      package:
+        name: [ 'ansible-core' ]
+        state: latest
+        update_cache: yes
+      when: ansible_os_family == "RedHat" and
+        ansible_distribution_version| int == 10
+      tags: redhat10
+
+    - name: Install ansible
+      package:
+        name: [ 'ansible' ]
+        state: latest
+        update_cache: yes
+      when: ( ansible_os_family == "RedHat" and
+        ansible_distribution_version| int <= 9) or
+        ansible_os_family == "Debian" or
+        ansible_os_family == "Suse" or
+        ansible_distribution == "FreeBSD"
+      tags: ansible

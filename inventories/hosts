@@ -1,4 +1,5 @@
 [all:children]
+localhosts
 puppetservers
 puppetnodes
 saltmasters
@@ -11,6 +12,9 @@ images
 hypervisors
 laptops
 kvms
+
+[localhosts]
+localhost
 
 [compute]
 ubu-incus

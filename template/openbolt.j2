@@ -1,0 +1,20 @@
+{% if ansible_os_family == "Debian" %}
+# OpenVox 8 {{ ansible_facts['facter_os']['release']['major'] }} Repository
+deb [signed-by=/usr/share/keyrings/openvox-keyring.gpg] https://apt.voxpupuli.org {{ ansible_facts['facter_os']['name'] | lower }}{{ ansible_facts['facter_os']['release']['major'] }} openvox8
+
+{% elif ansible_os_family == "RedHat" %}
+[openvox8]
+name=OpenVox 8 el{{ ansible_facts['facter_os']['release']['major'] }} Repository
+baseurl=https://yum.voxpupuli.org/openvox8/el/{{ ansible_facts['facter_os']['release']['major'] }}/$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.voxpupuli.org/GPG-KEY-openvox.pub
+
+{% elif ansible_os_family == "Suse" %}
+[openvox8]
+name=OpenVox 8 el8 Repository
+baseurl=https://yum.voxpupuli.org/openvox8/el/8/$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.voxpupuli.org/GPG-KEY-openvox.pub
+{% endif %}

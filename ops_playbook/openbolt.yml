@@ -1,0 +1,34 @@
+---
+- hosts: incus
+  become: yes
+  gather_facts: yes
+
+  vars:
+    repo_loc: >-
+      {% if ansible_os_family == "Debian" %}
+      /etc/apt/sources.list.d/openbolt.list
+      {% elif ansible_os_family == "RedHat" %}
+      /etc/yum.repos.d/openbolt.repo
+      {% elif ansible_os_family == "Suse" %}
+      /etc/zypp/repos.d/openbolt.repo
+      {% endif %}
+
+  tasks:
+    - name: add openbox keyring for debian family
+      get_url:
+        url: "https://apt.voxpupuli.org/openvox-keyring.gpg"
+        dest: /usr/share/keyrings/openvox-keyring.gpg
+        mode: '0644'
+      when: ansible_os_family == "Debian"
+
+    - name: place openbolt repo
+      ansible.builtin.template:
+        src: ../template/openbolt.j2
+        dest: "{{ repo_loc | trim }}"
+        mode: "0644"
+
+    - name: install openvox agent
+      package:
+        name: ['openvox-agent']
+        state: present
+        update_cache: yes

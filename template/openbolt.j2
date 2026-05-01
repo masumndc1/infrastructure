@@ -7,7 +7,7 @@ deb [signed-by=/usr/share/keyrings/openvox-keyring.gpg] https://apt.voxpupuli.or
 
 {% if ansible_os_family in ["RedHat", "Suse"] %}
   {%- if ansible_os_family == "RedHat" -%}
-    {%- set major = ansible_facts['facter_os']['release']['major'] -%}
+    {%- set major = ansible_distribution_major_version | int -%}
   {%- else -%}
     {%- set major = 8 -%}
   {%- endif -%}

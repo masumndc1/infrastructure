@@ -78,6 +78,8 @@ sys-ubu24-dev8
 sys-alma9-dev9
 sys-deb12-dev9
 sys-deb13-dev9
+keystone-alma9-dev9
+db-alma9-dev9
 sys-suse-dev1
 sys-suse-dev9
 sys-ubu22-dev9

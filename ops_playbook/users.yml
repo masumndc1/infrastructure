@@ -46,6 +46,7 @@
       line: "{{ username }} ALL=(ALL) NOPASSWD: ALL"
       create: yes
       state: present
+      mode: '0440'
     when: ansible_os_family == "RedHat" or
       ansible_os_family == "Debian" or
       ansible_os_family == "Suse" or

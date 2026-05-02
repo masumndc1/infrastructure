@@ -12,6 +12,7 @@ images
 hypervisors
 laptops
 kvms
+openstacks
 
 [localhosts]
 localhost
@@ -78,8 +79,13 @@ sys-ubu24-dev8
 sys-alma9-dev9
 sys-deb12-dev9
 sys-deb13-dev9
-keystone-alma9-dev9
+cinder-alma9-dev9
 db-alma9-dev9
+glance-alma9-dev9
+keystone-alma9-dev9
+neutron-alma9-dev9
+nova-alma9-dev9
+openstackmac
 sys-suse-dev1
 sys-suse-dev9
 sys-ubu22-dev9
@@ -124,6 +130,15 @@ lap-macpro
 debian13
 cloud-ubu
 cloud-hpc
+
+[openstacks]
+cinder-alma9-dev9
+db-alma9-dev9
+glance-alma9-dev9
+keystone-alma9-dev9
+neutron-alma9-dev9
+nova-alma9-dev9
+openstackmac
 
 [all:vars]
 ansible_user = masum

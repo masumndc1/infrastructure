@@ -1,8 +1,16 @@
-{% if ansible_os_family == "Debian" %}
+{% if ansible_distribution == "Debian" %}
 {% set major = ansible_facts['facter_os']['release']['major'] %}
 {% set name = ansible_facts['facter_os']['name'] %}
 # OpenVox 8 {{ major }} Repository
 deb [signed-by=/usr/share/keyrings/openvox-keyring.gpg] https://apt.voxpupuli.org {{ name | lower }}{{ major }} openvox8
+{% endif %}
+
+{% if ansible_distribution == "Ubuntu" %}
+{% set major = ansible_distribution_major_version | int %}
+{% set name = ansible_distribution %}
+{% set version = ansible_distribution_version %}
+# OpenVox 8 {{ major }} Repository
+deb [signed-by=/usr/share/keyrings/openvox-keyring.gpg] https://apt.voxpupuli.org {{ name | lower }}{{ version }} openvox8
 {% endif %}
 
 {% if ansible_os_family in ["RedHat", "Suse"] %}

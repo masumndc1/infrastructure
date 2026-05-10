@@ -1,6 +1,6 @@
 {% if ansible_distribution == "Debian" %}
-{% set major = ansible_facts['facter_os']['release']['major'] %}
-{% set name = ansible_facts['facter_os']['name'] %}
+{% set major = ansible_distribution_major_version %}
+{% set name = ansible_distribution %}
 # OpenVox 8 {{ major }} Repository
 deb [signed-by=/usr/share/keyrings/openvox-keyring.gpg] https://apt.voxpupuli.org {{ name | lower }}{{ major }} openvox8
 {% endif %}

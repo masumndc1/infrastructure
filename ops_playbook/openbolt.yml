@@ -1,5 +1,5 @@
 ---
-- hosts: incus
+- hosts: incus:openstacks
   become: yes
   gather_facts: yes
 

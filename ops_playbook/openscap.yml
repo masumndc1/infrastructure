@@ -1,0 +1,12 @@
+---
+- hosts: secs
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Install openscap
+      apt:
+        name: ['openscap-scanner', 'ssg-base', 'ssg-debderived', 'openscap-utils']
+        state: present
+        update_cache: true
+      when: ansible_distribution == 'Ubuntu'

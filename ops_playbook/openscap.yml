@@ -13,7 +13,7 @@
 
     - name: Install some supported packages
       apt:
-        name: ['aide']
+        name: ['aide', 'auditd']
         state: present
         update_cache: yes
       when: ansible_distribution == 'Ubuntu'

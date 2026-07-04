@@ -1,0 +1,26 @@
+---
+- hosts: secs:localhost
+  become: yes
+  gather_facts: yes
+  ignore_errors: yes
+
+  tasks:
+    - name: Install minikube and cilium
+      become: no
+      community.general.homebrew:
+        name: [ 'minikube',
+          'qemu',
+          'socket_vmnet',
+          'cilium-cli',
+          ]
+        state: present
+      when: ansible_distribution == "MacOSX"
+
+    - name: Start brew socket_vmnet service
+      become: no
+      ansible.builtin.command: brew services start socket_vmnet
+      register: socket_vmnet_output
+      changed_when: "'Successfully started' in socket_vmnet_output.stdout"
+      failed_when:
+        - socket_vmnet_output.rc != 0
+        - "'already started' not in socket_vmnet_output.stderr"

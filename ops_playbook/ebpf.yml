@@ -1,0 +1,60 @@
+---
+- hosts: secs
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Install ebpf
+      apt:
+        name: ['linux-tools-common',
+          'linux-tools-generic',
+          'linux-cloud-tools-common',
+          'linux-headers-generic',
+          'clang',
+          'llvm',
+          'libelf-dev',
+          ]
+        state: present
+        update_cache: true
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Install some supported packages
+      apt:
+        name: ['python3-bpfcc', 'bpfcc-tools']
+        state: present
+        update_cache: yes
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Install some supported tools in redhat
+      yum:
+        name: ['clang',
+         'epel-release',
+         'llvm',
+         'elfutils-libelf-devel',
+         'bpftool',
+         'make',
+         'gcc',
+         'neovim',
+         'git' ]
+        state: present
+        update_cache: true
+      when: ansible_distribution == 'AlmaLinux'
+
+    - name: Install kernel-devel and kernel-headers redhat
+      yum:
+        name: ['kernel-devel',
+         'kernel-headers',
+         ]
+        state: present
+        update_cache: true
+      when: ansible_distribution == 'AlmaLinux'
+
+    - name: Install bcc and python3 bcc tools in redhat
+      yum:
+        name: ['python3-bcc',
+         'bcc',
+         'bcc-tools',
+         ]
+        state: present
+        update_cache: true
+      when: ansible_distribution == 'AlmaLinux'

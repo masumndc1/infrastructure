@@ -1,5 +1,5 @@
 # use this like following
-# incus launch images:debian/13/cloud sys-deb13-dev9 < debian_cloudinit.yml
+# incus launch images:ubuntu/noble/cloud sys-ubu24-dev9 < ubuntu_cloudinit.yml
 config:
   cloud-init.user-data: |
     #cloud-config

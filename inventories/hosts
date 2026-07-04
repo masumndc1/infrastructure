@@ -13,6 +13,7 @@ hypervisors
 laptops
 kvms
 openstacks
+secs
 
 [localhosts]
 localhost
@@ -79,6 +80,7 @@ sys-ubu24-dev8
 sys-alma9-dev9
 sys-deb12-dev9
 sys-deb13-dev9
+sys-freebsd15-dev9
 nova-alma9-dev9
 openstackmac
 sys-suse-dev1
@@ -138,6 +140,15 @@ keystone-ubu24-dev1
 keystone-alma9-dev1
 nova-ubu24-dev1
 db-alma9-dev1
+
+[secs]
+lynis-ubu24-dev9
+openscap-ubu24-dev9
+ebpf-ubu24-dev9
+ebpf-alma9-dev9
+
+[localhosts:vars]
+ansible_connection=local
 
 [all:vars]
 ansible_user = masum

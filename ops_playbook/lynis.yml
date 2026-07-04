@@ -1,0 +1,19 @@
+---
+- hosts: secs
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Install lynis
+      apt:
+        name: ['lynis']
+        state: present
+        update_cache: true
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Install some supported packages
+      apt:
+        name: ['fail2ban', 'apt-show-versions']
+        state: present
+        update_cache: yes
+      when: ansible_distribution == 'Ubuntu'

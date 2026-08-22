@@ -1,0 +1,27 @@
+---
+# this yml will fix asus lan issue
+- hosts: lap-asus
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: install ethtool
+    apt:
+      name: 'ethtool'
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == 'Debian'
+
+  - name: place service config file
+    ansible.builtin.template:
+      src: ../template/jme-phy-fix.j2
+      dest: /etc/systemd/system/jme-phy-fix.service
+      mode: '644'
+    when: ansible_distribution == 'Debian'
+
+  - name: run the service
+    service:
+      name: 'jme-phy-fix'
+      enabled: yes
+      state: started
+    when: ansible_distribution == 'Debian'

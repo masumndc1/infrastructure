@@ -1,0 +1,14 @@
+[Unit]
+Description=Fix JMicron JMC250 PHY Link Settings
+After=sys-subsystem-net-devices-{{ lan_interface }}.device
+Wants=sys-subsystem-net-devices-{{ lan_interface }}.device
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/ip link set {{ lan_interface }} down
+ExecStart=/usr/sbin/ethtool -s {{ lan_interface }} speed 100 duplex full autoneg on
+ExecStart=/usr/bin/ip link set {{ lan_interface }} up
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

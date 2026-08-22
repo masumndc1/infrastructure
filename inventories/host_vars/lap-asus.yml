@@ -2,6 +2,7 @@
 dns1: 8.8.8.8
 ipv4_address: "192.168.3.1/24"
 ipv4_ranges: "192.168.3.10-192.168.3.250"
+lan_interface: "enp7s0f5"
 
 incus_hosts:
   - name: saltmaster

@@ -1,0 +1,8 @@
+guest="linux"
+loader="uefi"
+cpu={{ vm_cpus | default(2) }}
+memory={{ vm_ram | default('2g') }}
+network0_type="virtio-net"
+network0_switch="{{ vm_switch | default('public') }}"
+disk0_type="virtio-blk"
+disk0_name="disk0.qcow2"

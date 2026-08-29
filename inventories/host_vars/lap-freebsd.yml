@@ -1,7 +1,9 @@
+---
 vm_dir: "/zroot/vm"
-vm_name: "debian12"
+vm_name: "debian13"
 vm_cpus: 2
 vm_ram: "2g"
 vm_switch: "public"
-vm_user: "masum"
-ssh_public_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGrsuT11MAXxQkKT8C0hj4ifXeB+KROxyed23/wIOma5 masum@lap-freebsd"
+vm_int: "wlan0"
+iso_url: "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-13.6.0-amd64-netinst.iso"
+iso_name: "debian-13.6.0-amd64-netinst.iso"

@@ -153,6 +153,9 @@ ebpf-alma9-dev9
 [localhosts:vars]
 ansible_connection=local
 
+[lap-freebsd:vars]
+ansible_python_interpreter=/usr/local/bin/python3
+
 [all:vars]
 ansible_user = masum
 ansible_python_interpreter=/usr/bin/python3

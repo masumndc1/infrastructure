@@ -1,0 +1,7 @@
+vm_dir: "/zroot/vm"
+vm_name: "debian12"
+vm_cpus: 2
+vm_ram: "2g"
+vm_switch: "public"
+vm_user: "masum"
+ssh_public_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGrsuT11MAXxQkKT8C0hj4ifXeB+KROxyed23/wIOma5 masum@lap-freebsd"

@@ -5,4 +5,11 @@ memory={{ vm_ram | default('2g') }}
 network0_type="virtio-net"
 network0_switch="{{ vm_switch | default('public') }}"
 disk0_type="virtio-blk"
-disk0_name="disk0.qcow2"
+disk0_name="disk0.img"
+# Enables VNC temporary pass-through
+uefi_internal_gop="YES"
+graphics="yes"
+graphics_res="1024x768"
+graphics_port="5900"
+graphics_wait="no"
+xhci_mouse="yes"

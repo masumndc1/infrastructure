@@ -112,6 +112,7 @@ lap-asus
 lap-acer
 lap-lenovo
 lap-thinkpad
+lap-freebsd
 
 [kvms]
 lap-acer

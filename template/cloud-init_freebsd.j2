@@ -1,0 +1,21 @@
+
+#cloud-config
+hostname: {{ vm_name }}
+fqdn: {{ vm_name }}.local
+manage_etc_hosts: true
+
+users:
+  - name: {{ vm_user | default('sysadmin') }}
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - {{ ssh_public_key }}
+
+packages:
+  - curl
+  - htop
+  - qemu-guest-agent
+
+runcmd:
+  - systemctl enable --now ssh
+  - systemctl enable --now qemu-guest-agent

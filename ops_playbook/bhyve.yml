@@ -3,7 +3,7 @@
   become: true
   gather_facts: true
 
-  tasks: 
+  tasks:
     - name: Ensure cloud image ISO directory exists
       ansible.builtin.file:
         path: "{{ vm_dir }}/.iso"
@@ -11,54 +11,67 @@
         mode: '0755'
       when: ansible_os_family == "FreeBSD"
 
-    - name: Download Debian 12 Generic Cloud image
-      ansible.builtin.get_url:
-        url: "https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2"
-        dest: "{{ vm_dir }}/.iso/debian-12-genericcloud-amd64.qcow2"
-        mode: '0644'
+    - name: list switch
+      ansible.builtin.command:
+        cmd: "vm switch list"
+      register: vm_switch
+      changed_when: false
       when: ansible_os_family == "FreeBSD"
 
-    - name: Create vm-bhyve VM instance directory
+    - name: create public switch
       ansible.builtin.command:
-        cmd: "vm create -c {{ vm_cpus }} -m {{ vm_ram }} {{ vm_name }}"
-        creates: "{{ vm_dir }}/{{ vm_name }}"
+        cmd: "vm switch create public"
+      register: vm_switch
+      changed_when: false
+      when: ("public not in vm_switch.stdout") and
+        ansible_os_family == "FreeBSD"
+
+    - name: add wlan0 to public switch
+      ansible.builtin.command:
+        cmd: "vm switch add public {{ vm_int }}"
+      register: vm_switch_int
+      changed_when: false
+      when: ("{{ vm_int }} not in vm_switch.stdout") and
+        ansible_os_family == "FreeBSD"
+
+    - name: list isos
+      ansible.builtin.command:
+        cmd: "vm iso"
+      register: vm_iso
+      changed_when: false
       when: ansible_os_family == "FreeBSD"
+
+    - name: get the iso
+      ansible.builtin.command:
+        cmd: "vm iso {{ iso_url }}"
+      changed_when: false
+      when: ("{{ iso_name }} not in vm_iso.stdout") and
+         ansible_os_family == "FreeBSD"
+
+    - name: vm install
+      ansible.builtin.command:
+        cmd: "vm install {{ vm_name }} {{ iso_name }}"
+      register: vm_list
+      changed_when: false
+      when: ("{{ vm_name }} not in vm_list.stdout") and
+         ansible_os_family == "FreeBSD"
 
     - name: Render vm-bhyve configuration
       ansible.builtin.template:
-        src: template/vm_config.j2
+        src: ../template/vm_config.j2
         dest: "{{ vm_dir }}/{{ vm_name }}/{{ vm_name }}.conf"
         mode: '0644'
-      when: ansible_os_family == "FreeBSD"
-
-    - name: Import Cloud QCOW2 image into VM disk
-      ansible.builtin.command:
-        cmd: "vm import {{ vm_name }} debian-12-genericcloud-amd64.qcow2"
-        creates: "{{ vm_dir }}/{{ vm_name }}/disk0.qcow2"
-      when: ansible_os_family == "FreeBSD"
-
-    - name: Render cloud-init user-data file
-      ansible.builtin.template:
-        src: template/cloud-init_freebsd.j2
-        dest: "/tmp/{{ vm_name }}-userdata.yaml"
-        mode: '0600'
       when: ansible_os_family == "FreeBSD"
 
     - name: Check if VM is already running
       ansible.builtin.command:
         cmd: "vm list"
-        register: vm_list
-        changed_when: false
+      register: vm_list
+      changed_when: false
       when: ansible_os_family == "FreeBSD"
 
     - name: Start VM with cloud-init seed configuration
       ansible.builtin.command:
-        cmd: "vm start -C -u /tmp/{{ vm_name }}-userdata.yaml {{ vm_name }}"
+        cmd: "vm start {{ vm_name }}"
       when: ("vm_name not in vm_list.stdout") and
         ansible_os_family == "FreeBSD"
-
-    - name: Clean up temporary cloud-init template
-      ansible.builtin.file:
-        path: "/tmp/{{ vm_name }}-userdata.yaml"
-        state: absent
-      when: ansible_os_family == "FreeBSD"

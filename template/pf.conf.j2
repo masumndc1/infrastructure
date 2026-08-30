@@ -1,0 +1,9 @@
+ext_if="{{ vm_int }}"
+vm_net="{{ vm_net }}"
+
+# Perform NAT on Wi-Fi traffic
+nat on $ext_if from $vm_net to any -> ($ext_if)
+
+# Pass all VM traffic
+pass quick on vm-public
+pass out quick on $ext_if from $vm_net to any

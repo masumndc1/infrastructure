@@ -1,0 +1,4 @@
+interface=vm-public
+dhcp-range="{{ vm_iprange }}"
+dhcp-option=option:router,"{{ vm_router }}"
+dhcp-option=option:dns-server,"{{ vm_dns }}"

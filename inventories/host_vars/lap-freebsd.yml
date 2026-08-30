@@ -3,6 +3,7 @@ vm_dir: "/zroot/vm"
 vm_name: "debian13"
 vm_cpus: 2
 vm_ram: "2g"
+vm_size: "20g"
 vm_switch: "public"
 vm_int: "wlan0"
 iso_url: "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-13.6.0-amd64-netinst.iso"

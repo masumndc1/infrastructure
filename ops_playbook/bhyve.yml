@@ -11,58 +11,6 @@
         mode: '0755'
       when: ansible_os_family == "FreeBSD"
 
-    - name: list switch
-      ansible.builtin.command:
-        cmd: "vm switch list"
-      register: vm_switch
-      changed_when: false
-      when: ansible_os_family == "FreeBSD"
-
-    - name: create public switch
-      ansible.builtin.command:
-        cmd: "vm switch create public"
-      register: vm_switch
-      changed_when: false
-      when: ("public not in vm_switch.stdout") and
-        ansible_os_family == "FreeBSD"
-
-    - name: add wlan0 to public switch
-      ansible.builtin.command:
-        cmd: "vm switch add public {{ vm_int }}"
-      register: vm_switch_int
-      changed_when: false
-      when: ("{{ vm_int }} not in vm_switch.stdout") and
-        ansible_os_family == "FreeBSD"
-
-    - name: list isos
-      ansible.builtin.command:
-        cmd: "vm iso"
-      register: vm_iso
-      changed_when: false
-      when: ansible_os_family == "FreeBSD"
-
-    - name: get the iso
-      ansible.builtin.command:
-        cmd: "vm iso {{ iso_url }}"
-      changed_when: false
-      when: ("{{ iso_name }} not in vm_iso.stdout") and
-         ansible_os_family == "FreeBSD"
-
-    - name: vm install
-      ansible.builtin.command:
-        cmd: "vm install {{ vm_name }} {{ iso_name }}"
-      register: vm_list
-      changed_when: false
-      when: ("{{ vm_name }} not in vm_list.stdout") and
-         ansible_os_family == "FreeBSD"
-
-    - name: Render vm-bhyve configuration
-      ansible.builtin.template:
-        src: ../template/vm_config.j2
-        dest: "{{ vm_dir }}/{{ vm_name }}/{{ vm_name }}.conf"
-        mode: '0644'
-      when: ansible_os_family == "FreeBSD"
-
     - name: Check if VM is already running
       ansible.builtin.command:
         cmd: "vm list"
@@ -70,8 +18,36 @@
       changed_when: false
       when: ansible_os_family == "FreeBSD"
 
-    - name: Start VM with cloud-init seed configuration
+    - name: create vm
       ansible.builtin.command:
-        cmd: "vm start {{ vm_name }}"
-      when: ("vm_name not in vm_list.stdout") and
-        ansible_os_family == "FreeBSD"
+        cmd: "vm create -c {{ vm_cpus }} -m {{ vm_ram }} -s {{ vm_size }} {{ vm_name }}"
+        creates: "{{ vm_dir }}/{{ vm_name }}/disk0.img"
+      when:
+        - ansible_os_family == "FreeBSD"
+        - vm_name not in vm_list.stdout
+
+    - name: stop vm before we place the config
+      ansible.builtin.command:
+        cmd: "vm stop {{ vm_name }}"
+      changed_when: false
+      when: ansible_os_family == "FreeBSD"
+
+    - name: place vm conf file
+      ansible.builtin.template:
+        src: ../template/vm_config.j2
+        dest: "{{ vm_dir }}/{{ vm_name }}/{{ vm_name }}.conf"
+        mode: '0644'
+      changed_when: false
+      when: ansible_os_family == "FreeBSD"
+
+    - name: vm install
+      ansible.builtin.command:
+        cmd: "vm install {{ vm_name }} {{ iso_name }}"
+      changed_when: false
+      when:
+        - ansible_os_family == "FreeBSD"
+
+    - name: Manually run VM
+      ansible.builtin.debug:
+        msg: "now run: sudo vm start vm_name"
+      when: ansible_os_family == "FreeBSD"

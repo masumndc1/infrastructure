@@ -1,0 +1,30 @@
+---
+- hosts: lap-freebsd:localhost
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: list switch
+      ansible.builtin.command:
+        cmd: "vm switch list"
+      register: vm_switch
+      changed_when: false
+      when: ansible_os_family == "FreeBSD"
+
+    - name: create public switch
+      ansible.builtin.command:
+        cmd: "vm switch create public"
+      register: vm_switch
+      changed_when: false
+      when:
+        - public not in vm_switch.stdout
+        - ansible_os_family == "FreeBSD"
+
+    - name: add wlan0 to public switch
+      ansible.builtin.command:
+        cmd: "vm switch add public {{ vm_int }}"
+      register: vm_switch_int
+      changed_when: false
+      when:
+        - vm_int not in vm_switch.stdout
+        - ansible_os_family == "FreeBSD"

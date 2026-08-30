@@ -1,0 +1,27 @@
+---
+- hosts: lap-freebsd:localhost
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Ensure cloud image ISO directory exists
+      ansible.builtin.file:
+        path: "{{ vm_dir }}/.iso"
+        state: directory
+        mode: '0755'
+      when: ansible_os_family == "FreeBSD"
+
+    - name: list isos
+      ansible.builtin.command:
+        cmd: "vm iso"
+      register: vm_iso
+      changed_when: false
+      when: ansible_os_family == "FreeBSD"
+
+    - name: get the iso
+      ansible.builtin.command:
+        cmd: "vm iso {{ iso_url }}"
+      changed_when: false
+      when:
+        - iso_name not in vm_iso.stdout
+        - ansible_os_family == "FreeBSD"

@@ -2,29 +2,51 @@
 - hosts: lap-freebsd:localhost
   become: true
   gather_facts: true
+  ignore_errors: true
 
   tasks:
-    - name: list switch
-      ansible.builtin.command:
-        cmd: "vm switch list"
-      register: vm_switch
-      changed_when: false
+    - name: install dnsmasq
+      pkgng:
+        name: 'dnsmasq'
+        state: latest
       when: ansible_os_family == "FreeBSD"
 
-    - name: create public switch
-      ansible.builtin.command:
-        cmd: "vm switch create public"
-      register: vm_switch
-      changed_when: false
-      when:
-        - public not in vm_switch.stdout
-        - ansible_os_family == "FreeBSD"
+    - name: Enable FreeBSD IP forwarding
+      ansible.posix.sysctl:
+        name: net.inet.ip.forwarding
+        value: '1'
+        sysctl_file: /etc/sysctl.conf
+        state: present
+      when: ansible_os_family == "FreeBSD"
 
-    - name: add wlan0 to public switch
+    - name: Create NAT vm-bhyve switch
       ansible.builtin.command:
-        cmd: "vm switch add public {{ vm_int }}"
-      register: vm_switch_int
-      changed_when: false
-      when:
-        - vm_int not in vm_switch.stdout
-        - ansible_os_family == "FreeBSD"
+        cmd: "vm switch create -a {{ vm_ipblock }} public"
+      register: switch_create
+      changed_when: "'created' in switch_create.stdout"
+      failed_when:
+        - switch_create.rc != 0
+        - "'already exists' not in switch_create.stdout"
+
+    - name: place dnsmasq conf file for vm-bhyve
+      ansible.builtin.template:
+        src: ../template/dnsmasq.conf.j2
+        dest: /usr/local/etc/dnsmasq.conf
+        mode: '0644'
+      when: ansible_os_family == "FreeBSD"
+
+    - name: place pf conf
+      ansible.builtin.template:
+        src: ../template/pf.conf.j2
+        dest: /etc/pf.conf
+        mode: "644"
+      when: ansible_os_family == "FreeBSD"
+
+    - name: Ensure dnsmasq and PF are enabled and running
+      ansible.builtin.service:
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      loop:
+        - dnsmasq
+        - pf
